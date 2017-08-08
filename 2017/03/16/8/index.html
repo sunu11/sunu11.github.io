@@ -1,0 +1,821 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="DNS,nslookup," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/w.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文将对dns域传送漏洞进行分析与总结，如有错误，欢迎指出。谢谢! 0x00 基础DNS: 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访">
+<meta name="keywords" content="DNS,nslookup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DNS域传送漏洞">
+<meta property="og:url" content="http://sunu11.com/2017/03/16/8/index.html">
+<meta property="og:site_name" content="SuNu11&#39;Blog">
+<meta property="og:description" content="本文将对dns域传送漏洞进行分析与总结，如有错误，欢迎指出。谢谢! 0x00 基础DNS: 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns1.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns2.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns3.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns4.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns5.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns6.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns7.1.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns7.2.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/dns8.png">
+<meta property="og:updated_time" content="2017-08-08T17:38:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DNS域传送漏洞">
+<meta name="twitter:description" content="本文将对dns域传送漏洞进行分析与总结，如有错误，欢迎指出。谢谢! 0x00 基础DNS: 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访">
+<meta name="twitter:image" content="http://ofum8yjv2.bkt.clouddn.com/dns1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'SuNu11'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2017/03/16/8/"/>
+
+
+
+
+
+  <title> DNS域传送漏洞 | SuNu11'Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SuNu11'Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guide">
+          <a href="/Guide/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            航海图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/03/16/8/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="SuNu11">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/me.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SuNu11'Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SuNu11'Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                DNS域传送漏洞
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T00:28:06+08:00">
+                2017-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/03/16/8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/16/8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文将对dns域传送漏洞进行分析与总结，如有错误，欢迎指出。谢谢!</p>
+<h2 id="0x00-基础"><a href="#0x00-基础" class="headerlink" title="0x00 基础"></a>0x00 基础</h2><p><strong>DNS:</strong> 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访<a id="more"></a>问互联网。DNS使用TCP和UDP端口53。当前，对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">常用DNS记录：</div><div class="line">主机记录(A记录):          A记录是用于名称解析的重要记录，它将特定的主机名映射到对应主机的IP地址上。</div><div class="line">IPv6主机记录(AAAA记录):  与A记录对应，用于将特定的主机名映射到一个主机的IPv6地址。 </div><div class="line">别名(CNAME记录):   	    CNAME记录用于将某个别名指向到某个A记录上，这样就不需要再为某个新名字另外创建一条新的A记录。</div><div class="line">电子邮件交换记录（MX记录):  记录一个邮件域名对应的IP地址</div><div class="line">域名服务器记录 (NS记录):  记录该域名由哪台域名服务器解析</div><div class="line">反向记录(PTR记录):    	也即从IP地址到域名的一条记录</div><div class="line">TXT记录：     			记录域名的相关文本信息</div></pre></td></tr></table></figure></p>
+<p><strong>DNS区域传送:</strong> DNS服务器分为主服务器、备份服务器和缓存服务器。而域传送指的是一台备用服务器使用来自主服务器的数据更新自己的域（zone）数据库。这为运行中的DNS服务提供了一定的冗余度，其目的是为了防止主的域名服务器因意外故障变得不可用时影响到整个域名的解析。<br><strong>DNS域传送漏洞:</strong> 一般DNS区域传送操作只在网络里真的有备用域名DNS服务器时才有必要用到，但许多DNS服务器却被错误地配置成只要有client发出请求，就会向对方提供一个zone数据库的详细信息，即允许不受信任的因特网用户执行DNS区域传送操作。<br><strong>危害:</strong> 便于快速判断出某个特定区域的所有主机，获取域信息，如网络拓扑结构、服务器ip地址，为攻击者的入侵提供大量敏感信息。<br><strong>nslookup</strong><br>nslookup是一个网络管理命令行工具，可用于许多计算机操作系统查询域名系统（DNS）以获取域名或IP地址映射或任何其他特定的DNS记录。<br>使用方式<br>非交互式：<br><img src="http://ofum8yjv2.bkt.clouddn.com/dns1.png" alt="icon"><br>交互式：<br><img src="http://ofum8yjv2.bkt.clouddn.com/dns2.png" alt="icon"><br><strong>dig</strong><br>dig是Linux默认自带的DNS拨测工具<a href="http://www.codeweblog.com/host-nslookup-dig%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank" rel="external">传送门</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">root@sunu11：~# dig -h</div><div class="line">  Usage:  dig [@global-server] [domain] [q-type] [q-class] &#123;q-opt&#125;</div><div class="line">          &#123;global-d-opt&#125; host [@local-server] &#123;local-d-opt&#125;</div><div class="line">          [ host [@local-server] &#123;local-d-opt&#125; [...]]</div><div class="line">  Where:  domain    is in the Domain Name System</div><div class="line">      q-class  is one of (in,hs,ch,...) [default: in]</div><div class="line">      q-type   is one of (a,any,mx,ns,soa,hinfo,axfr,txt,...) [default:a]</div><div class="line">               (Use ixfr=version for type ixfr)</div><div class="line">      q-opt    is one of:</div><div class="line">               -x dot-notation     (shortcut for reverse lookups)</div><div class="line">               -t type             (specify query type)</div><div class="line">      d-opt    is of the form +keyword[=value], where keyword is:</div><div class="line">               +[no]cmd            (Control display of command line)</div><div class="line">               +[no]comments       (Control display of comment lines)</div><div class="line">               +[no]question       (Control display of question)</div><div class="line">               +[no]answer         (Control display of answer)</div><div class="line">               +[no]authority      (Control display of authority)</div><div class="line">               +[no]additional     (Control display of additional)</div><div class="line">               +[no]stats          (Control display of statistics)</div><div class="line">               +[no]short          (Disable everything except short</div><div class="line">                                    form of answer)</div><div class="line">               +[no]all            (Set or clear all display flags)</div><div class="line">      global d-opts and servers (before host name) affect all queries.</div><div class="line">      local d-opts and servers (after host name) affect only that lookup.</div><div class="line">      -h                           (print help and exit)</div><div class="line">      -v                           (print version and exit)</div></pre></td></tr></table></figure></p>
+<h2 id="0x01-实施"><a href="#0x01-实施" class="headerlink" title="0x01 实施"></a>0x01 实施</h2><h3 id="一、收集dns服务器信息"><a href="#一、收集dns服务器信息" class="headerlink" title="一、收集dns服务器信息"></a>一、收集dns服务器信息</h3><p>1、手工使用nslookup命令、whois查询等手段进行对某个域名的dns服务器信息的收集<br><img src="http://ofum8yjv2.bkt.clouddn.com/dns3.png" alt="icon"><br><img src="http://ofum8yjv2.bkt.clouddn.com/dns4.png" alt="icon"><br>2、利用网络空间搜索引擎收集域名服务器信息。如（shadon、zoomeye、fofa等）<br><img src="http://ofum8yjv2.bkt.clouddn.com/dns5.png" alt="icon"><br>3、使用<a href="https://github.com/robertdavidgraham/masscan" target="_blank" rel="external">MASSCAN</a> 进行端口扫描后，获取开放53号端口的dns服务器地址；请参考<a href="http://www.freebuf.com/sectool/112583.html" target="_blank" rel="external">使用指南</a>。<br>4、网上存在一些dns社工裤，也可以从中获取所需要的dns服务器信息。</p>
+<h3 id="二、检测DNS域传送漏洞"><a href="#二、检测DNS域传送漏洞" class="headerlink" title="二、检测DNS域传送漏洞"></a>二、检测DNS域传送漏洞</h3><h5 id="1、使用nmap扫描"><a href="#1、使用nmap扫描" class="headerlink" title="1、使用nmap扫描"></a>1、使用nmap扫描</h5><p>使用如下命令：</p>
+<blockquote>
+<p>nmap –script dns-zone-transfer –script-args dns-zone-transfer.domain=xxx -p 53 -Pn dns.xxx</p>
+</blockquote>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/dns6.png" alt="icon"><br><em>其中dns-zone-transfer.domain参数为指定要查询的域；dns.xxx 为指定的查询域名服务器</em></p>
+<h5 id="2、使用dig命令"><a href="#2、使用dig命令" class="headerlink" title="2、使用dig命令"></a>2、使用dig命令</h5><p><img src="http://ofum8yjv2.bkt.clouddn.com/dns7.1.png" alt="icon"><br><img src="http://ofum8yjv2.bkt.clouddn.com/dns7.2.png" alt="icon"><br><em>其中@指定域名服务器；axfr 为域传送指令；xxx.edu.cn表示要查询的域名</em></p>
+<h5 id="3、nslookup命令"><a href="#3、nslookup命令" class="headerlink" title="3、nslookup命令"></a>3、nslookup命令</h5><h6 id="交互式："><a href="#交互式：" class="headerlink" title="交互式："></a>交互式：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1) 输入nslookup命令进入交互式shell界面;</div><div class="line">2) server 命令参数设定查询将要使用的DNS服务器;针对某个域名可先输入域名获取dns信息。</div><div class="line">3) ls命令列出某个域中的所有域名;如果太长不适合查看可定向保存至文件夹中。</div><div class="line">4) exit命令退出</div></pre></td></tr></table></figure>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/dns8.png" alt="icon"></p>
+<h6 id="非交互式方法"><a href="#非交互式方法" class="headerlink" title="非交互式方法"></a>非交互式方法</h6><p>为了避免和nslookup交换，可以编写一个ls.bat。<code>echo ls %1 | nslookup – %2</code>通过执行<code>ls.bat xxx.edu.cn dns.xxx.edu.cn</code>进行测试。</p>
+<h2 id="0x02-拓展"><a href="#0x02-拓展" class="headerlink" title="0x02 拓展"></a>0x02 拓展</h2><h3 id="单个查询："><a href="#单个查询：" class="headerlink" title="单个查询："></a>单个查询：</h3><p>【使用<code>dztester.py [domain]</code>即可】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># coding:utf-8</div><div class="line"># Build by LandGrey 2016-12-03</div><div class="line">  import re</div><div class="line">  import os</div><div class="line">  import sys</div><div class="line">  </div><div class="line">  def dns_zone_tranfer_finder(domain):</div><div class="line">    print &apos;[+] Nslookup %s&apos; % domain</div><div class="line">    cmd_res = os.popen(&apos;nslookup -type=ns &apos; + domain).read()  # fetch DNS Server List</div><div class="line">    dns_servers = re.findall(&apos;nameserver = ([\w\.]+)&apos;, cmd_res)</div><div class="line">    if len(dns_servers) == 0:</div><div class="line">      print &apos;[+] No DNS Server Found!\n&apos;</div><div class="line">       exit(0)</div><div class="line">    for singledns in dns_servers:</div><div class="line">       print &apos;[+] Using @%s&apos; % singledns</div><div class="line">        cmd_res = os.popen(&apos;dig @%s axfr %s&apos; % (singledns, domain)).read()</div><div class="line">      # print cmd_res</div><div class="line">      if cmd_res.find(&apos;XFR size&apos;) &gt; 0:</div><div class="line">          print &apos;[+] Vulnerable dns server found:&apos;, singledns</div><div class="line">          print cmd_res</div><div class="line">      else:</div><div class="line">          print &apos;[+] No Vulnerable found&apos;</div><div class="line">def usage():</div><div class="line">  print &apos;[+] Usage: python DZT-tester.py [domain]\n&apos;</div><div class="line">  </div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">  if len(sys.argv) != 2:</div><div class="line">      usage()</div><div class="line">  elif &apos;-h&apos; in sys.argv[1]:</div><div class="line">      usage()</div><div class="line">  else:</div><div class="line">      domain = sys.argv[1]</div><div class="line">      print &apos;[+] Test %s&apos; % domain</div><div class="line">      dns_zone_tranfer_finder(domain)</div><div class="line">      print &apos;[+] Finished!&apos;</div></pre></td></tr></table></figure></p>
+<h3 id="批量查询脚本："><a href="#批量查询脚本：" class="headerlink" title="批量查询脚本："></a>批量查询脚本：</h3><p><strong>脚本同一目录下应有<code>dns-zone-transfer</code>目录；<code>dns-zone-transfer</code>目录下有‘dns’子目录；要检测的域名列表存放在<code>dns-zone-transfer\domain.txt</code>中，一行一个。结果存储在<code>dns-zone-transfer\dns</code>目录和<code>dns-zone-transfer\vulnerable_hosts.txt</code>文件中。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"># coding:utf-8</div><div class="line"></div><div class="line">import re</div><div class="line">import os</div><div class="line">import sys</div><div class="line">import threading</div><div class="line"></div><div class="line"></div><div class="line">def dns_zone_tranfer_finder():</div><div class="line">  global c_index</div><div class="line">  while True:</div><div class="line">      lock.acquire()</div><div class="line">      if c_index &gt;= len(DomainLists):</div><div class="line">          lock.release()</div><div class="line">          break</div><div class="line">      domain = DomainLists[c_index].lstrip(&apos;www.&apos;)</div><div class="line">      c_index += 1</div><div class="line">      lock.release()</div><div class="line">      cmd_res = os.popen(&apos;nslookup -type=ns &apos; + domain).read()    # fetch DNS Server List</div><div class="line">      dns_servers = re.findall(&apos;nameserver = ([\w\.]+)&apos;, cmd_res)</div><div class="line">      for server in dns_servers:</div><div class="line">          if len(server) &lt; 5:</div><div class="line">              server += domain</div><div class="line">          cmd_res = os.popen(&apos;dig @%s axfr %s +short&apos; % (server, domain)).read()</div><div class="line">          if cmd_res.find(&apos;XFR size&apos;) &gt; 0 \</div><div class="line">                  and cmd_res.find(&apos;Transfer failed.&apos;) &lt; 0 \</div><div class="line">                  and cmd_res.find(&apos;connection timed out&apos;) &lt; 0:</div><div class="line">              lock.acquire()</div><div class="line">              print &apos;*&apos; * 10 + &apos; Vulnerable dns server found:&apos;, server, &apos;*&apos; * 10</div><div class="line">              lock.release()</div><div class="line">              with open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;vulnerable_hosts.txt&apos;), &apos;a&apos;) as f:</div><div class="line">                  f.write(&apos;%s    %s\n&apos; % (server.ljust(30), domain))</div><div class="line">              with open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;dns&apos;, server + &apos;.txt&apos;), &apos;w&apos;) as f:</div><div class="line">                  f.write(cmd_res)</div><div class="line"></div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">  currentdir = os.path.dirname(sys.argv[0])</div><div class="line">  target = open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;domain.txt&apos;))</div><div class="line">  DomainLists = []</div><div class="line">  for host in target.readlines():</div><div class="line">      DomainLists.append(host)</div><div class="line">  print u&apos;采集 %d 个...&apos; % len(DomainLists)</div><div class="line">  threads = []</div><div class="line">  c_index = 0</div><div class="line">  lock = threading.Lock()</div><div class="line">  for i in range(10):</div><div class="line">      t = threading.Thread(target=dns_zone_tranfer_finder)</div><div class="line">      t.start()</div><div class="line">      threads.append(t)</div><div class="line">  for t in threads:</div><div class="line">      t.join()</div><div class="line">  print &apos;All Done!&apos;</div></pre></td></tr></table></figure></p>
+<p><em>漏洞存在标识主要是dig命令结果中出现特征字符串<code>“XFR size”</code></em></p>
+<h2 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h2><p>linux系统和windows系统都可以检测出使用的DNS是否存在域传送漏洞，如果存在该漏洞，通过执行命令我们可以清楚的看到整个域下的域名解析信息。<br>解决方案：区域传送是DNS常用的功能，严格限制允许区域传送的主机是解决dns域传送漏洞的有效手段。<strong>最后感谢前辈们的文章与辛勤奉献！ 本文作技术研究使用，切勿用本文中的方法违法犯罪！</strong><br><strong>参考链接:</strong><br>李劼杰DNS域传送漏洞系列博客  <a href="http://www.lijiejie.com/?s=DNS%E5%9F%9F%E4%BC%A0%E9%80%81%E6%BC%8F%E6%B4%9E&amp;submit=Search" target="_blank" rel="external">http://www.lijiejie.com/?s=DNS%E5%9F%9F%E4%BC%A0%E9%80%81%E6%BC%8F%E6%B4%9E&amp;submit=Search</a><br>DNS域传送漏洞的收集、检测与利用  <a href="http://blog.csdn.net/c465869935/article/details/53444117" target="_blank" rel="external">http://blog.csdn.net/c465869935/article/details/53444117</a><br>DNS域传送漏洞利用  <a href="https://www.waitalone.cn/dns-domain-transfer-exploits.html" target="_blank" rel="external">https://www.waitalone.cn/dns-domain-transfer-exploits.html</a><br>lijiejie/edu-dns-zone-transfer <a href="https://github.com/lijiejie/edu-dns-zone-transfer/blob/master/vulnerable_hosts.txt" target="_blank" rel="external">https://github.com/lijiejie/edu-dns-zone-transfer/blob/master/vulnerable_hosts.txt</a></p>
+<p>～～</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div align="center">
+ 
+   <div class="">
+   <p><span>
+   <b>本文地址：</b><a href="/2017/03/16/8/" title="DNS域传送漏洞">http://sunu11.com/2017/03/16/8/</a><br/><b>转载请注明出处，谢谢！</b>
+   </span></p>
+   </div>
+ 
+  </div>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DNS/" rel="tag"># DNS</a>
+          
+            <a href="/tags/nslookup/" rel="tag"># nslookup</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/01/7/" rel="next" title="Linux 应急响应总结">
+                <i class="fa fa-chevron-left"></i> Linux 应急响应总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/27/9/" rel="prev" title="Tomcat安全加固">
+                Tomcat安全加固 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/16/8/"
+           data-title="DNS域传送漏洞" data-url="http://sunu11.com/2017/03/16/8/">
+      </div>
+    
+  </div>
+    
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.png"
+               alt="SuNu11" />
+          <p class="site-author-name" itemprop="name">SuNu11</p>
+          <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives/index.html">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://mooder.f4ck0.com:8000/" target="_blank" title="Team Spaces">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Team Spaces
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sunu11" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/sunu11" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.sec-redclub.com/" title="Redbu11" target="_blank">Redbu11</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dbqf.xyz/" title="独步清风" target="_blank">独步清风</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.virzz.com/" title="Virink" target="_blank">Virink</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.monburan.cn/" title="Monburan" target="_blank">Monburan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-基础"><span class="nav-number">1.</span> <span class="nav-text">0x00 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-实施"><span class="nav-number">2.</span> <span class="nav-text">0x01 实施</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、收集dns服务器信息"><span class="nav-number">2.1.</span> <span class="nav-text">一、收集dns服务器信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、检测DNS域传送漏洞"><span class="nav-number">2.2.</span> <span class="nav-text">二、检测DNS域传送漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、使用nmap扫描"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">1、使用nmap扫描</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、使用dig命令"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">2、使用dig命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、nslookup命令"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">3、nslookup命令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#交互式："><span class="nav-number">2.2.0.3.1.</span> <span class="nav-text">交互式：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#非交互式方法"><span class="nav-number">2.2.0.3.2.</span> <span class="nav-text">非交互式方法</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-拓展"><span class="nav-number">3.</span> <span class="nav-text">0x02 拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单个查询："><span class="nav-number">3.1.</span> <span class="nav-text">单个查询：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量查询脚本："><span class="nav-number">3.2.</span> <span class="nav-text">批量查询脚本：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-总结"><span class="nav-number">4.</span> <span class="nav-text">0x03 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SuNu11</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a>Hexo</a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.miitbeian.gov.cn" target="_blank" title="备案信息">京ICP备16045158号</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.cnzz.com/stat/website.php?web_id=4481618" target="_blank" title=" 站长统计">站长统计</a>
+</div>
+<br>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sunu11"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+</body>
+</html>

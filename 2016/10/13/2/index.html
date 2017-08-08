@@ -1,0 +1,803 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Burpsuite," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/w.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="简介描述：Burp Suite 是用于攻击web 应用程序的集成平台。平台中所有工具共享同一robust框架，以便统一处理HTTP请求、持久性、认证、上游代理、日志记录、报警和可扩展性。">
+<meta name="keywords" content="Burpsuite">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工具系列之Burpsuite学习">
+<meta property="og:url" content="http://sunu11.com/2016/10/13/2/index.html">
+<meta property="og:site_name" content="SuNu11&#39;Blog">
+<meta property="og:description" content="简介描述：Burp Suite 是用于攻击web 应用程序的集成平台。平台中所有工具共享同一robust框架，以便统一处理HTTP请求、持久性、认证、上游代理、日志记录、报警和可扩展性。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-11-28T15:31:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="工具系列之Burpsuite学习">
+<meta name="twitter:description" content="简介描述：Burp Suite 是用于攻击web 应用程序的集成平台。平台中所有工具共享同一robust框架，以便统一处理HTTP请求、持久性、认证、上游代理、日志记录、报警和可扩展性。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'SuNu11'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2016/10/13/2/"/>
+
+
+
+
+
+  <title> 工具系列之Burpsuite学习 | SuNu11'Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SuNu11'Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guide">
+          <a href="/Guide/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            航海图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2016/10/13/2/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="SuNu11">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/me.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SuNu11'Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SuNu11'Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                工具系列之Burpsuite学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-13T14:44:41+08:00">
+                2016-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/神器/" itemprop="url" rel="index">
+                    <span itemprop="name">神器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/10/13/2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/13/2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>描述：Burp Suite 是用于攻击web 应用程序的集成平台。平台中所有工具共享同一robust框架，以便统一处理HTTP请求、持久性、认证、上游代理、日志记录、报警和可扩展性。<a id="more"></a>Burp Suite允许攻击者结合手工和自动技术去枚举、分析、攻击Web应用程序。具体作用如：HTTP服务端接口测试；HTTP客户端和服务器端通信测试；Cookie统计分析；WEB页面爬取；WEB常用编码和解码；字符串随机性简单分析；差异对比分析。 </p>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>options： 对整个burpsuite管理，可选择记录日志。<br>comparer：对比。从其他模块转入，用words或者bytes做对比。<br>decoder：编码。encode as 编码，decode as 解码。smart decode 自动分析解码。<br>sequencer：分析字符的随机性，如分析cookie<br>reperater：重放<br>intruder：攻击<br>scanner：扫描<br>spider：爬虫<br>proxy：核心<br>target：为spider和scanner模块设置目标 设置分析域，site map 网站结构，图。<br>alerts：为burpsuite报错，输出错误日志 </p>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>Proxy功能： http代理功能，处理http请求，处理http响应。<br>intercept：拦截<br>history：历史<br>options：设置&gt;&gt;proxy listeners 设置代理 （intercept client request：对客户端的请求做拦截 intercept server responses：对服务端的回复做拦截，默认不做拦截，需自己打勾）<br>response modification：修改返回值<br>match and replace：若发现请求或应答中某些字符符合你设置的字符则可以删除或修改。<br>miscellaneous：其他。<br>intercept： forward：放过，drop 丢弃， intercept is off 不做拦截。<br>history 单击下面方框可设置过滤器。<br>interface： 当本地端口已被占用，使用proxy中的options中的proxy listener更改端口，也可以在proxy listener 中设置其他主机的IP与端口进行监听<br>Redirect：请求处理，更改包的访问地址与端口。可以选择是否用ssl加密发送。当使用ssl时只有网站采用ssl的部分才能得到回应。<br>invisible：代理的标准即设置了代理与未设置代理请求包的区别。<br>certificate：证书。三个选项。下面是可以自己导入证书。 </p>
+<h2 id="Repeater-（老式步枪，一次一发）"><a href="#Repeater-（老式步枪，一次一发）" class="headerlink" title="Repeater （老式步枪，一次一发）"></a>Repeater （老式步枪，一次一发）</h2><p>先通过proxy抓包，然后将包发送到repeater 可以通过重放修改包头信息。 repeater设置项在最上方，可设置更新长度，解压，如果对方选择跳转是否跟随。跟踪cookies，菜单栏。在右上角有一个target可以设置发送主机与端口。use HTTPS 是可以将http转换成https，如转至访问支付宝。<br>** Intruder （冲锋枪，可连发）<br>最上方设置项：开始攻击，打开保存过的攻击，保存攻击配置（保存payload配置），拷贝/下载攻击配置，new tab behavior 新建窗口（），自动攻击点，加载数据（可使用buit-in lists 也可以打开自己的攻击文本）<br>options：（设置–攻击频率，修改数据）与repeater右上角target差不多。<br>Targer（目标）：</p>
+<h2 id="positions-（攻击点，参数）"><a href="#positions-（攻击点，参数）" class="headerlink" title="positions （攻击点，参数）"></a>positions （攻击点，参数）</h2><p>Clear$：关掉所有标记的攻击点，选中想要攻击的参数选择add$，或者过长的参数选择开始点add然后在参数结尾再选择一次add。<br>payload（攻击类型的选择即子弹选择）：<br>1、sniper：狙击，对一个参数进行攻击 payload type，可以选择参数内容。对于每一个攻击点用存在的攻击内容依次抡一遍<br>2、battering ram：对多个参数进行同一种攻击<br>3、pitchfork：叉子模式，可自行设置攻击点的攻击内容。保证每个攻击点的payload数量相同，否则选用最少攻击次数<br>4、cluster bomb：设置相似pitchfork，必须为每个攻击点设置payload，攻击次数是每个参数的payload相互组合发送攻击，次数最多 </p>
+<h2 id="payload-攻击集合）"><a href="#payload-攻击集合）" class="headerlink" title="payload (攻击集合）"></a>payload (攻击集合）</h2><p>payload sets 设置集合个数，即选择几个攻击点，type几种攻击类型=子弹种类：数字、simple list（内置的攻击行在payload option中选择如xss） 等等，也就是字典生成器<br>runtime file 选择大型字典 numbers 数字字典，可用于order by、union联合查询、brute forcer 暴力破解，输入的字符按位数自动排列进行暴力破解）<br>payload option 展示字典内容<br>payload processing 对你的字典进行处理，强化字典。（增加内容add prefix/suffix 增加前后缀，match/replace替换字典中的某些字符，substring 当字典中每个字符串过长，可以截取字符串中某几个字符，reverse substring 截取中间几个字符倒一下顺序，modify case 大小写的转换，Encode 编码【常用】）<br>payload encoding 为字典进行编码。等于 Encode 为快速选用而设计。 </p>
+<h2 id="options-设置项"><a href="#options-设置项" class="headerlink" title="options (设置项)"></a>options (设置项)</h2><p>Request Headers：当服务器不支持长链接或者不想造成长链接可勾选 set connection：close<br>update content-length header： 计算包长度<br>request engine：n（时间上的设置，频率）umber of threads 线程数<br>number of retries on network failure 连接失败后 重新连接次数<br>pause before retry（millisecond） 每个包之间的时间间隔<br>throttle 发包时间设置，start time 点击开始攻击按钮后的启动时间，immediate 马上攻击<br>in__ minutes 自己设置时间<br>Attack results （攻击结果的记录）：store requests 从下请求，store respond 从下返回，make unmodified<br>baseline request 发送一次正常页面判断对方是否正常，使用dos攻击，压力测试，不记录返回结果。store<br>full payload 是否保存所有数据<br>Grep-match：添加搜索值，打勾后若返回数据中存在预选值则会被划钩 ；case sensitive match 判断区分大小写是否敏感；exclude http headers 检索不包括包头中的数据<br>Grep-extract：对上面检索的一个扩展，打开add 可以设置偏移量，能提取你想看的从某个位置到另一个位置中间的值。<br>Grep-payloads：判断提交值 在返回值中是否存在提交的值–对XSS很重要；判断大小写是否敏感；不包括http头；编码URL Redirection 如果对放返回一个需要跳转的请求，设置是否跳转过去</p>
+<h2 id="Scanner-扫描模块"><a href="#Scanner-扫描模块" class="headerlink" title="Scanner (扫描模块)"></a>Scanner (扫描模块)</h2><p>results：扫描结果，有漏洞描述，修复方式<br>scan queue：扫描队列，扫描进程<br>live scanning：正在进行的扫描，live active scanning 主动扫描，主动提交数据，然后根据返回值分析得出漏洞。passive scanning 分析在扫描历史中的数据。默认打开，<br>options： 扫描设置 attack insertion points：URL参数更改，url，body，cookie三者的位置关系。可排除的攻击参数（缩小工作量），active scanning areas 动态扫描区域（采用payload类型）；passive scanning areas 静态扫描区域 </p>
+<h2 id="Options-整体配置"><a href="#Options-整体配置" class="headerlink" title="Options (整体配置)"></a>Options (整体配置)</h2><p>misc : 其他<br>hotkeys 设置快捷键；<br>logging 日志（日志信息可以传给其他工具当做输入使用）；<br>temporary files location 临时文件目录，自动备份。<br>scheduled tasks 自己设置定时任务，如扫描，爬行等。<br>display： user interface 字体大小与风格，Http Message display 对http 信息的数据的设置 character sets 编码，解码方式。<br>html rendeing  html渲染。<br>connections 链接<br>platform authentication 提供登录页面，当有账号与密码时可用用来爬取登录页面<br>upstream proxy server 用外网某地址做代理。走http的<br>socks proxy 走socks代理服务器<br>timeout 整个软件的时间设置<br>hostname resolution 以burp suite做一个dns服务器 用于本地host更改后转发数据。<br>out_of_scope requests 处理没在域内的访问<br>http 整个软件所有与http有关的选项都遵循这边的设置。<br>redirections 是否跳转，哪些跳转<br>streaming response 进行长连接，设置长时间的代理。自己加 status 100 response 处理100返回值当需要post一个大的数据包时会先发送一个100的问候，当服务端返回100后才开始发送大数据包。<br>ssl–设置ssl属性<br>client ssl certificate：当取得某网站证书，可在此处使用证书。当访问一个存在ssl加密的网址时将证书存放在server SSL certificate (证书列）中.<br>ssl negotiation：进行协议的选择<br>sessions：保存sessions信息 </p>
+<h2 id="spider-爬虫"><a href="#spider-爬虫" class="headerlink" title="spider (爬虫)"></a>spider (爬虫)</h2><p>options： crawler setting 设置爬找哪些东西。<br>form submission 自动匹配爬取到的数据。<br>request headers 设置爬虫头。<br>control 爬虫范围</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>burpsuite可以说是WEB测试必备神器之一，功能强大。其他介绍可以参考：<br><a href="http://www.nxadmin.com/tools/689.html" target="_blank" rel="external">http://www.nxadmin.com/tools/689.html</a><br><a href="https://portswigger.net/burp/download.html" target="_blank" rel="external">https://portswigger.net/burp/download.html</a><br>..</p>
+<p>另外，分享一个我手中最新破解版的burpsuit–1.7.08：<br><a href="http://pan.baidu.com/s/1dFsU0JR" target="_blank" rel="external">http://pan.baidu.com/s/1dFsU0JR</a>     <br> 密码：l3nl</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div align="center">
+ 
+   <div class="">
+   <p><span>
+   <b>本文地址：</b><a href="/2016/10/13/2/" title="工具系列之Burpsuite学习">http://sunu11.com/2016/10/13/2/</a><br/><b>转载请注明出处，谢谢！</b>
+   </span></p>
+   </div>
+ 
+  </div>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Burpsuite/" rel="tag"># Burpsuite</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/08/1/" rel="next" title="太初">
+                <i class="fa fa-chevron-left"></i> 太初
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/30/3/" rel="prev" title="OpenStack云计算平台初体验">
+                OpenStack云计算平台初体验 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/13/2/"
+           data-title="工具系列之Burpsuite学习" data-url="http://sunu11.com/2016/10/13/2/">
+      </div>
+    
+  </div>
+    
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.png"
+               alt="SuNu11" />
+          <p class="site-author-name" itemprop="name">SuNu11</p>
+          <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives/index.html">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://mooder.f4ck0.com:8000/" target="_blank" title="Team Spaces">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Team Spaces
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sunu11" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/sunu11" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.sec-redclub.com/" title="Redbu11" target="_blank">Redbu11</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dbqf.xyz/" title="独步清风" target="_blank">独步清风</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.virzz.com/" title="Virink" target="_blank">Virink</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.monburan.cn/" title="Monburan" target="_blank">Monburan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块"><span class="nav-number">2.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy"><span class="nav-number">3.</span> <span class="nav-text">Proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Repeater-（老式步枪，一次一发）"><span class="nav-number">4.</span> <span class="nav-text">Repeater （老式步枪，一次一发）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#positions-（攻击点，参数）"><span class="nav-number">5.</span> <span class="nav-text">positions （攻击点，参数）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#payload-攻击集合）"><span class="nav-number">6.</span> <span class="nav-text">payload (攻击集合）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#options-设置项"><span class="nav-number">7.</span> <span class="nav-text">options (设置项)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scanner-扫描模块"><span class="nav-number">8.</span> <span class="nav-text">Scanner (扫描模块)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Options-整体配置"><span class="nav-number">9.</span> <span class="nav-text">Options (整体配置)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spider-爬虫"><span class="nav-number">10.</span> <span class="nav-text">spider (爬虫)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SuNu11</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a>Hexo</a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.miitbeian.gov.cn" target="_blank" title="备案信息">京ICP备16045158号</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.cnzz.com/stat/website.php?web_id=4481618" target="_blank" title=" 站长统计">站长统计</a>
+</div>
+<br>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sunu11"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+</body>
+</html>
