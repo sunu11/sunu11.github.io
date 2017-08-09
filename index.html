@@ -1738,40 +1738,6 @@
 
 
           
-      <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
-      <div id="container" style="display:none"></div>
-      <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-      <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-      <script>
-      const myTheme = {
-    	render(state, instance) {
-          const container = document.createElement('div');
-          container.lang = "en-US";
-          container.className = 'gitment-container gitment-root-container';
-          container.appendChild(instance.renderHeader(state, instance));
-          container.appendChild(instance.renderEditor(state, instance));
-          container.appendChild(instance.renderComments(state, instance));
-          container.appendChild(instance.renderFooter(state, instance));
-          return container;
-      }
-    }
-    function showGitment() {
-      $("#gitment_title").attr("style", "display:none");
-      $("#container").attr("style", "").addClass("gitment_container");
-      var gitment = new Gitment({
-    	id: window.location.pathname,
-    	theme: myTheme,
-    	owner: 'sunu11',
-    	repo: 'sunu11.github.io',
-    	oauth: {
-          client_id: '2b3bd20281e15e10d935',
-          client_secret: '198a4657de8b063c56cac6a5ec89474290b4aa1c'
-    	}
-      });
-        gitment.render('container');
-    }
-    </script>  
-
 
         </div>
         
