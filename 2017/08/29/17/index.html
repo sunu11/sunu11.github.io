@@ -84,19 +84,19 @@
 
 
 
-<meta name="description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64位">
+<meta name="description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LNK文件（快捷方式）远程代码执行漏洞（复现）">
 <meta property="og:url" content="http://sunu11.com/2017/08/29/17/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64位">
+<meta property="og:description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-21.png">
 <meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-22.png">
-<meta property="og:updated_time" content="2017-08-29T13:24:13.000Z">
+<meta property="og:updated_time" content="2017-08-29T13:26:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LNK文件（快捷方式）远程代码执行漏洞（复现）">
-<meta name="twitter:description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64位">
+<meta name="twitter:description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关">
 <meta name="twitter:image" content="http://ofum8yjv2.bkt.clouddn.com/q-21.png">
 
 
@@ -371,7 +371,7 @@
 
       
         <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞</p>
-<p>概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。</p>
+<p>概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关<a id="more"></a>的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。</p>
 <h3 id="复现："><a href="#复现：" class="headerlink" title="复现："></a>复现：</h3><p>攻击机kali：192.168.86.180</p>
 <p>靶机win10（64位）：192.168.86.177</p>
 <p>首先kali下载exp：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /opt</div><div class="line">Wget   https://raw.githubusercontent.com/ykoster/metasploit-framework/169e00bf3442447324df064192db62cdc5b5b860/modules/exploits/windows/fileformat/cve_2017_8464_lnk_rce.rb</div></pre></td></tr></table></figure></p>
