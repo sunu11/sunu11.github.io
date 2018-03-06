@@ -74,6 +74,8 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml" />
+
 
 
 
@@ -390,7 +392,15 @@
          <p><b><font face="楷体" size="4">简介</font></b></p><p>OpenStack是一个旨在为公共及私有云的建设与管理提供软件的开源项目;是IaaS(基础设施即服务)组件，让任何人都可以自行建立和提供云端运算服务。此外，OpenStack也用作建立防火墙内的“私有云”（Private&nbsp;Cloud），提供机构或企业内各部门共享资源。</p><p><b><font face="楷体" size="4">构建思路</font></b></p><p>第一步是设置正确的硬件和网络环境。尽管OpenStack允许在一个单一的平面网络上部署一切，从安全的角度来看并不安全。<a id="more"></a>取决于你所使用的管理程序以及虚拟网络接口，它会允许guest虚拟机嗅探管理流量。建议至少使用两个网络：一个用来管理流量，一个用来进行虚拟机之间的对话。这意味着所有的云计算结点中你需要两个网卡（一个运行实例）和网络管理者。这些应该运行在不同的IP范围中。计算结点和实例的网络也需要支持VLAN标记，因为这是在“项目”之间隔绝流量所使用的机制。一个项目等价于你的亚马逊EC2账户，除了你不能按照你所希望的数目创建和分配之外。每一个项目都有自己的管理员和用户，在既定项目中的所有实例可以彼此通信。通过指派每一个项目自己的VLAN以及内部和外部的IP地址池来执行。</p><p>一旦硬件和网络设置好，下一步就是确定在哪里部署所有的OpenStack组件。标准部署应有一个控制器和一系列计算结点。控制器运行消息服务器，数据库和其他的组件来编排云，同时计算结点运行实例。但是你也可以分解控制器为地理的部分，从而改善性能，像把MySQL放在不同的物理盒中。对于安全而言，最关键的是确保每一部分都安装在安全的主机上，你只需要将其附加在网络上，让云运转即可。</p><p>只有两部分需要暴露给外面的世界（即使那只是你的企业网络）：API服务器/Web 控制台（如果开启）和网络管理者。这些服务器需要过硬，你甚至可以使用第三方网络接口来隔离后端管理用户连接产生的流量。</p><p><b><font face="楷体" size="4">操作</font></b></p><p><font size="3" face="楷体">准备</font></p><p>环境: windows系统，openstack云平台（172.17.142.2 cloud.X.X.cn）<br></p><p>修改windows系统主机名称&amp;IP地址映射文件：/windows/system32/drivers/etc/hosts<br></p><p>追加：172.17.142.2&nbsp;&nbsp;&nbsp;&nbsp;cloud.X.X.cn<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;172.17.143.130&nbsp;&nbsp;controller<br></p><p>ip地址172.17.143.130要根据后面绑定控制节点浮动ip来修改。<br></p><p>以用户名test，密码test登录云平台<a href="https://cloud.X.X.cn。" target="_blank" rel="external">https://cloud.X.X.cn。</a></p><p><span style="font-family: 楷体; font-size: medium;">网络管理</span></p><p>1、创建网络<br></p><p>&nbsp;网络名称：135043204_network<br></p><p>&nbsp;网络地址：192.32.4.0/24<br></p><p>&nbsp;gateway: 192.32.4.254<br></p><p>&nbsp;地址池：192.32.4.10,192.32.4.200<br></p><p>&nbsp; DNS：211.71.232.65</p><p><img style="max-width: 100%; width: 602.8px; height: 114.4px;" src="http://ofum8yjv2.bkt.clouddn.com/a.png" class=""><span style="font-family: 宋体; font-size: medium;"><br></span></p><p>2、创建路由器135043204_router<br></p><p>&nbsp; &nbsp; &nbsp;选择外部网络：admin_floating_net&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;配置路由器135043204_router，增加接口：选择子网135043204_network</p><p align="left" style="text-align: left;"><img style="max-width: 100%; width: 587.4px; height: 185.9px;" src="http://ofum8yjv2.bkt.clouddn.com/b.png" class=""></p><p align="left" style="text-align: left;"><span style="font-family: 楷体; font-size: medium;">安装配置控制节点</span></p><p>1、以快照镜像mitaka-controller启动虚拟机；<br></p><p>2、实例名称为：135043204_controller，可用域：nova，实例数：1<br></p><p>&nbsp; &nbsp; &nbsp;源选实例快照：mitaka-controller<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flavor:4core8gram10gdisk&nbsp;</p><p>&nbsp; &nbsp; &nbsp;网络先选:135043204_network,再选ext_network<font color="#ff00ff">（tips：在选择网络时，系统默认为第一个网卡的网 &nbsp; 络建立路由）</font></p><p>&nbsp; &nbsp; &nbsp;安全组选：default<br></p><p>&nbsp; &nbsp; &nbsp;秘钥对选：创建135043204</p><p>&nbsp; &nbsp; &nbsp;启动实例。</p><p>&nbsp; &nbsp; &nbsp;绑定浮动ip（tips根据此浮动ip,修改/windows/system32/drivers/etc/hosts文件中的controller对应的ip.）</p><p><img style="max-width: 100%; width: 607.2px; height: 139.7px;" src="http://ofum8yjv2.bkt.clouddn.com/c.png" class=""><br></p><p>3、通过浮动ip远程连接controller<br></p><p>&nbsp; &nbsp; &nbsp;直接通过Xshell，选择public&nbsp;key认证方法，导入创建的私钥135043204，用户名为：centos连接。</p><p>&nbsp; &nbsp; &nbsp;连接后，切换到root身份,root密码为huawei</p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;su&nbsp;-<br></p><p>&nbsp; &nbsp; &nbsp;修改/etc/ssh/sshd_config<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速定位password<br></p><p>&nbsp; &nbsp; &nbsp;将PasswordAuthentication&nbsp;no行中的no修改为yes</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;PasswordAuthentication&nbsp;yes</p><p>&nbsp; &nbsp; &nbsp;存盘退出。<br></p><p>&nbsp; &nbsp; &nbsp;重启sshd服务。<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;sshd<br></p><p>&nbsp; &nbsp; &nbsp;服务查看,注意颜色为红色的服务名称。<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;systemctl<br></p><p>&nbsp; &nbsp; &nbsp;禁用cloud相关服务<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;systemctl&nbsp;disable&nbsp;cloud-config&nbsp;cloud-init&nbsp;cloud-final&nbsp;cloud-init-local<br></p><p>&nbsp; &nbsp; &nbsp;主机名查看</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; hostname</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; cat&nbsp;/etc/hostname &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p><p>&nbsp; &nbsp; &nbsp;主机名设置<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;hostnamectl&nbsp;set-hostname&nbsp;controller<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;ip&nbsp;查看</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ip&nbsp;a</p><p>&nbsp; &nbsp; &nbsp;配置ip&amp;host映射<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/hosts<br></p><p>&nbsp; &nbsp; &nbsp;修改controller对应的ip，（tips：compute对应的ip根据计算节点ip来修改。）<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;192.32.4.13&nbsp;controller<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;192.32.4.15&nbsp;compute</p><p><img style="max-width: 100%; width: 585.2px; height: 348.7px;" src="http://ofum8yjv2.bkt.clouddn.com/d.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;配置nosql数据库，修改bind_ip为192.32.4.13<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/mongod.conf&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;mongod</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/e.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;配置mysql数据库,修改bind-address为192.32.4.13</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;vi&nbsp;/etc/my.cnf.d/openstack.cnf&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;mariadb</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/d.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;重启rabbitmq-server<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;rabbitmq-server</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/g.png"><br></p><p>&nbsp; &nbsp; &nbsp;配置&nbsp;linuxbridge_agent，配置physical_interface_mappings，local_ip&nbsp;，配置local_ip为192.32.4.13<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;vi&nbsp;/etc/neutron/plugins/ml2/linuxbridge_agent.ini&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;重启neutron-linuxbridge-agent<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;neutron-linuxbridge-agent</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/h.png" class=""></p><p>&nbsp; &nbsp; &nbsp;查看日志：<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cat /var/log/neutron/linuxbridge-agent.log</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat /var/log/neutron/dhcp-agent.log</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat /var/log/neutron/server.log</p><p>&nbsp; &nbsp; &nbsp;重启controller</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;reboot</p><p><span style="font-family: 楷体; font-size: medium;">安装配置计算节点</span></p><p>以快照镜像mitaka-compute启动虚拟机；<br></p><p>实例名称为：135043204_compute，可用域：nova，实例数：1<br></p><p>源选实例快照：mitaka-compute<br></p><p>flavor:2core4g_10g<br></p><p>网络选:135043204_network,ext_network<br></p><p>安全组选：default<br></p><p>秘钥对选：135043204<br></p><p>单击启动实例。绑定浮动ip。</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/i.png"><br></p><p>通过浮动ip远程连接compute<br></p><p>直接通过Xshell，选择public&nbsp;key认证方法，使用私钥135043204，用户名为：centos连接。<br></p><p>连接后，切换到root身份<br></p><p>su&nbsp;-<br></p><p>修改/etc/ssh/sshd_config<br></p><p>快速定位password<br></p><p>将PasswordAuthentication&nbsp;no行中的no修改为yes<br></p><p>PasswordAuthentication&nbsp;yes<br></p><p>存盘退出。<br></p><p>重启sshd服务。<br></p><p>systemctl&nbsp;restart&nbsp;sshd</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/j.png"><br></p><p>服务查看<br></p><p>systemctl<br></p><p>禁用cloud相关服务<br></p><p>systemctl&nbsp;disable&nbsp;cloud-config&nbsp;cloud-init&nbsp;cloud-final&nbsp;cloud-init-local<br></p><p>主机名查看<br></p><p>&nbsp;&nbsp;hostname<br></p><p>&nbsp;&nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>主机名设置<br></p><p>&nbsp;&nbsp;hostnamectl&nbsp;set-hostname&nbsp;compute<br></p><p>&nbsp;&nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>ip&nbsp;查看<br></p><p>&nbsp;&nbsp;ip&nbsp;a</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/k.png"><br></p><p>配置ip&amp;host映射<br></p><p>&nbsp; &nbsp; &nbsp;vi&nbsp;/etc/hosts<br></p><p>配置&nbsp;linuxbridge_agent，配置physical_interface_mappings，local_ip&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/neutron/plugins/ml2/linuxbridge_agent.ini&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;local_ip&nbsp;=&nbsp;&nbsp;192.32.4.15<br></p><p>重启neutron-linuxbridge-agent<br></p><p>&nbsp;&nbsp;&nbsp;systemctl&nbsp;restart&nbsp;neutron-linuxbridge-agent<br></p><p>&nbsp;&nbsp;&nbsp;查看日志：<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/linuxbridge-agent.log&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/dhcp-agent.log&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/server.log&nbsp;<br></p><p>配置/etc/nova/nova.conf，配置my_ip<br></p><p>&nbsp;&nbsp;my_ip&nbsp;=&nbsp;192.32.4.15</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/l.png" class=""></p><p>重新启动openstack-nova-compute<br></p><p>systemctl restart openstack-nova-compute</p><p>&nbsp;reboot</p><p><span style="font-family: 楷体; font-size: medium;">测试</span></p><p>1、以管理员身份登录<a href="http://controller/dashboard" target="_blank" rel="external">http://controller/dashboard</a></p><p>domain:default</p><p>user name:admin</p><p>password:ADMIN_PASS</p><p>创建云主机类型</p><p>S135043199:1vcpu,64Mram,1g硬盘</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/m.png" class=""><br></p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/n.png"><br></p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/n.png"><br></p><p>2、以普通用户身份登录<a href="http://controller/dashboard" target="_blank" rel="external">http://controller/dashboard</a></p><p>domain:default</p><p>user name:demo</p><p>password:DEMO_PASS</p><p>创建2个云主机</p><p>实例名称:s135043199</p><p>镜像:cirros</p><p>flavor:s135043199</p><p>network:    selfservice</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/o.png"><br></p><p>3、通过控制台访问创建好的虚拟机s135043199-2</p><p>用户名cirros、密码cubswin:)</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/p.png"><br></p><p>测试两台虚拟机的连通性。</p><p><img style="max-width:100%;" src="http://ofum8yjv2.bkt.clouddn.com/q.png" class=""><br></p><p>到此私有云平台就部署并测试成功。</p><p>&nbsp;</p><p><font face="楷体" size="4"><b>安全性建议</b></font>（–取自百度百科）：</p><p><em> MySQL服务器使用指定的用户账户，不是根MySQL管理账户。这个账户和密码将会暴露在每一个云结点上，即使使用基于证书的认证，因此所有结点需要访问这个数据库服务器。</em></p><p> MySQL配置文件中，限制访问服务器，OpenStack用户账户为唯一授权IP地址。</p><p><em> 移除任何不需要的OS组件并确保你所设置的服务器只支持通过SSH的基于密钥的登陆。</em></p><p> 默认MySQL和RabbitMQ（消息服务器）流量不加密。如果你隔离了管理网络和坚固的主机，这就不应该是一个很糟糕的风险。如果你的云网络易于嗅探（例如，它和其他服务器共享网络），你需要加密流量。你可以使用OpenSSL来进行MySQL 和RabbitMQ处理。）</p><p><br></p>
       
     </div>
-
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div> 
     <div>
       
         
@@ -435,7 +445,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/OpenStack/" rel="tag"># OpenStack</a>
+            <a href="/tags/OpenStack/" rel="tag"><i class="fa fa-tag"></i> OpenStack</a>
           
         </div>
       
@@ -519,7 +529,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives/index.html">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -527,7 +537,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -536,7 +546,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -544,6 +554,13 @@
 
         </nav>
 
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
         
 
         <div class="links-of-author motion-element">
@@ -631,7 +648,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
