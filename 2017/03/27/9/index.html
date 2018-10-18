@@ -94,24 +94,24 @@
 <meta property="og:site_name" content="SuNu11&#39;Blog">
 <meta property="og:description" content="总结一些tomcat加固的要点：1、删除$CATALINA_HOME/webapps下默认的所有目录文件。因为线上是不使用 Tomcat 默认提供的管理页面，另外删掉管理页面的两个配置文件">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z1.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z2.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z3.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z4.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z5.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z6.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z7.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z8.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z9.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z10.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z11.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z12.png">
-<meta property="og:image" content="http://ofum8yjv2.bkt.clouddn.com/z13.png">
-<meta property="og:updated_time" content="2017-08-08T17:38:38.000Z">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z1.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z2.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z3.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z4.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z5.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z6.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z7.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z8.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z9.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z10.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z11.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z12.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z13.png">
+<meta property="og:updated_time" content="2018-10-18T07:51:09.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat安全加固">
 <meta name="twitter:description" content="总结一些tomcat加固的要点：1、删除$CATALINA_HOME/webapps下默认的所有目录文件。因为线上是不使用 Tomcat 默认提供的管理页面，另外删掉管理页面的两个配置文件">
-<meta name="twitter:image" content="http://ofum8yjv2.bkt.clouddn.com/z1.png">
+<meta name="twitter:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/z1.png">
 
 
 
@@ -394,7 +394,7 @@
       
 
       
-        <p><strong>总结一些tomcat加固的要点</strong>：<br>1、删除$CATALINA_HOME/webapps下默认的所有目录文件。因为线上是不使用 Tomcat 默认提供的管理页面，另外删掉管理页面的两个配置文件<a id="more"></a><strong>host-manager.xml</strong>和<strong>manager.xml</strong>。位于<em>$CATALINA_HOME/conf/Catalina/localhost</em>。<br>2、为了tomcat版本信息泄露，隐藏或者伪装tomcat的版本信息。<br>默认Tomcat的版本信息如下:<br><img src="http://ofum8yjv2.bkt.clouddn.com/z1.png" alt="icon"><br>方法1、解压下图jar包，得到META-INF和org文件，修改<em>org/apache/catalina/util/ServerInfo.properties</em> 文件中的serverinfo字段实现更改tomcat的版本信息<br><img src="http://ofum8yjv2.bkt.clouddn.com/z2.png" alt="icon"><br><img src="http://ofum8yjv2.bkt.clouddn.com/z3.png" alt="icon"><br>修改完之后：<br><img src="http://ofum8yjv2.bkt.clouddn.com/z4.png" alt="icon"><br>方法2、修改<em>$CATALINA_HOME/conf/server.xml</em>，在Connector节点添加server字段。<br><img src="http://ofum8yjv2.bkt.clouddn.com/z5.png" alt="icon"><br>3、用户管理:<br>如果不需要web部署应用，可以注释或者删除<em>tomcat-users.xml</em>下用户权限相关配置<br><img src="http://ofum8yjv2.bkt.clouddn.com/z6.png" alt="icon"><br> 4、如不需要自动部署，关闭自动部$CATALINA_HOME/署功能<br>修改conf/server.xml中的host字段，将下图处修改为：<em>unpackWARs=”false” autoDeploy=”false”</em>。<br><img src="http://ofum8yjv2.bkt.clouddn.com/z7.png" alt="icon"><br>5、启动cookie的httpOnly属性；<br>修改 <em>$CATALINA_HOME/conf/context.xml</em>中添加如下图所示配置：<br><img src="http://ofum8yjv2.bkt.clouddn.com/z8.png" alt="icon"><br>启动cookie的secure属性，只允许cookie在加密方式下传输；<br>在web.xml中sesion-config节点配置cooker-config。<br><img src="http://ofum8yjv2.bkt.clouddn.com/z9.png" alt="icon"><br>6、服务权限控制：<br>tomcat以非root权限启动，应用部署目录权限和tomcat服务启动用户分离，如tomcat以tomcat用户启动，而部署应用的目录设置为nobody用户750.<br>7、AJP端口管理<br>AJP是为 Tomcat 与 HTTP 服务器之间通信而定制的协议，能提供较高的通信速度和效率。如果tomcat前端放的是apache的时候，会使用到AJP这个连接器。前端如果是由nginx做的反向代理的话可以不使用此连接器，因此需要注销掉该连接器。<br>修改如下图所示：<br><img src="http://ofum8yjv2.bkt.clouddn.com/z10.png" alt="icon"><br> 8、禁止列目录：<br>修改web.xml如下图所示<br><img src="http://ofum8yjv2.bkt.clouddn.com/z11.png" alt="icon"><br> 9、自定义错误页面（40X、50X），防止信息泄露：<br><img src="http://ofum8yjv2.bkt.clouddn.com/z12.png" alt="icon"><br> 10、依据实际情况，定义会话超时时间：<br><img src="http://ofum8yjv2.bkt.clouddn.com/z13.png" alt="icon"><br>11、合理设置maxThreads，一般设置为8000以下，如果网址访问量非常大，建议运行多个tomcat做负载均衡处理且需注意jvm的参数配置。当心由于jvm参数过小而崩溃。配置命令在<em>$CATALINA_HOME/conf/server.xml</em>中。<br>12、强烈建议不要使用 Tomcat 的虚拟主机，推荐每个站点使用一个实例。即可以启动多个 Tomcat。<br>里面包含多个虚拟主机。因为tomcat是多线程，共享内存，任何一个虚拟主机中的应用崩溃，都会影响到所有应用程序。虽然采用多实例的方式会产生过多的开销，但至少保障了应用程序的隔离和安全。<br><strong>注意升级过程中</strong>：<br>1、避免跨大版本的升级<br>2、将当前老版本tomcat的server.xml(<em>Tomcat主配置文件Server、Service、Engine、Host、Context、Connector</em>)、catalina.sh(<em>配置环境context .xml:指定tomcat和应用的启动路径、java运行时路径、java运行时参数、远程调试参数</em>)web.xml(<em>配置整个tomcat的jsp和servlet工作中的一些情况:servlet、servlet-mapping、session-config、mime-mapping、welcom-file-list、监听器、过滤器、error-page</em>)、tomcat-users.xml(<em>配置用户</em>)文件进行备份，然后部署完新版本的tomcat之后，将这些配置文件覆盖过去即可，再停掉旧版本，启动新版本即可。</p>
+        <p><strong>总结一些tomcat加固的要点</strong>：<br>1、删除$CATALINA_HOME/webapps下默认的所有目录文件。因为线上是不使用 Tomcat 默认提供的管理页面，另外删掉管理页面的两个配置文件<a id="more"></a><strong>host-manager.xml</strong>和<strong>manager.xml</strong>。位于<em>$CATALINA_HOME/conf/Catalina/localhost</em>。<br>2、为了tomcat版本信息泄露，隐藏或者伪装tomcat的版本信息。<br>默认Tomcat的版本信息如下:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z1.png" alt="icon"><br>方法1、解压下图jar包，得到META-INF和org文件，修改<em>org/apache/catalina/util/ServerInfo.properties</em> 文件中的serverinfo字段实现更改tomcat的版本信息<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z2.png" alt="icon"><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z3.png" alt="icon"><br>修改完之后：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z4.png" alt="icon"><br>方法2、修改<em>$CATALINA_HOME/conf/server.xml</em>，在Connector节点添加server字段。<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z5.png" alt="icon"><br>3、用户管理:<br>如果不需要web部署应用，可以注释或者删除<em>tomcat-users.xml</em>下用户权限相关配置<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z6.png" alt="icon"><br> 4、如不需要自动部署，关闭自动部$CATALINA_HOME/署功能<br>修改conf/server.xml中的host字段，将下图处修改为：<em>unpackWARs=”false” autoDeploy=”false”</em>。<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z7.png" alt="icon"><br>5、启动cookie的httpOnly属性；<br>修改 <em>$CATALINA_HOME/conf/context.xml</em>中添加如下图所示配置：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z8.png" alt="icon"><br>启动cookie的secure属性，只允许cookie在加密方式下传输；<br>在web.xml中sesion-config节点配置cooker-config。<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z9.png" alt="icon"><br>6、服务权限控制：<br>tomcat以非root权限启动，应用部署目录权限和tomcat服务启动用户分离，如tomcat以tomcat用户启动，而部署应用的目录设置为nobody用户750.<br>7、AJP端口管理<br>AJP是为 Tomcat 与 HTTP 服务器之间通信而定制的协议，能提供较高的通信速度和效率。如果tomcat前端放的是apache的时候，会使用到AJP这个连接器。前端如果是由nginx做的反向代理的话可以不使用此连接器，因此需要注销掉该连接器。<br>修改如下图所示：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z10.png" alt="icon"><br> 8、禁止列目录：<br>修改web.xml如下图所示<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z11.png" alt="icon"><br> 9、自定义错误页面（40X、50X），防止信息泄露：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z12.png" alt="icon"><br> 10、依据实际情况，定义会话超时时间：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/z13.png" alt="icon"><br>11、合理设置maxThreads，一般设置为8000以下，如果网址访问量非常大，建议运行多个tomcat做负载均衡处理且需注意jvm的参数配置。当心由于jvm参数过小而崩溃。配置命令在<em>$CATALINA_HOME/conf/server.xml</em>中。<br>12、强烈建议不要使用 Tomcat 的虚拟主机，推荐每个站点使用一个实例。即可以启动多个 Tomcat。<br>里面包含多个虚拟主机。因为tomcat是多线程，共享内存，任何一个虚拟主机中的应用崩溃，都会影响到所有应用程序。虽然采用多实例的方式会产生过多的开销，但至少保障了应用程序的隔离和安全。<br><strong>注意升级过程中</strong>：<br>1、避免跨大版本的升级<br>2、将当前老版本tomcat的server.xml(<em>Tomcat主配置文件Server、Service、Engine、Host、Context、Connector</em>)、catalina.sh(<em>配置环境context .xml:指定tomcat和应用的启动路径、java运行时路径、java运行时参数、远程调试参数</em>)web.xml(<em>配置整个tomcat的jsp和servlet工作中的一些情况:servlet、servlet-mapping、session-config、mime-mapping、welcom-file-list、监听器、过滤器、error-page</em>)、tomcat-users.xml(<em>配置用户</em>)文件进行备份，然后部署完新版本的tomcat之后，将这些配置文件覆盖过去即可，再停掉旧版本，启动新版本即可。</p>
 <p>～～</p>
 
       
