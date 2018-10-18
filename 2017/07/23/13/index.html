@@ -97,9 +97,8 @@
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/q-13.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/q-14.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/q-15.png">
-<meta property="og:image" content="http://www.freebuf.com/sectool/108568.html">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/q-16.png">
-<meta property="og:updated_time" content="2018-10-18T07:54:13.449Z">
+<meta property="og:updated_time" content="2018-10-18T09:41:56.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我与XSS的感情之路(2)">
 <meta name="twitter:description" content="接着上一文过来，这一部分是第二个环境的做题记录。">
@@ -401,7 +400,7 @@
 <p><strong><em>Stage#19：<a href="http://sqler.win/xss/level19.php?arg01=a&amp;arrg02=b" target="_blank" rel="external">http://sqler.win/xss/level19.php?arg01=a&amp;arrg02=b</a></em></strong><br>右键查看元素可以看到一个swf文件被调用，然后设想为flash xss，通过下载该文件，使用JPEXS进行分析，发现为actionscript 2.0，然后知道actionscript 2.0是有可以使用getURL来执行javascript下面以一个实例来剖析Flash XSS过程。有点拗口，，,然后对应本题，定位geturl函数：</p>
 <p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-15.png" alt="图15"><br>可以看到在sIFR的内容中当getURL打开时，version是可以传入到loc4中的，因此定位contentIsLink函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">function contentIsLink()</div><div class="line">  &#123;</div><div class="line">     return this.content.indexOf(&quot;&lt;a &quot;) == 0 &amp;&amp; (this.content.indexOf(&quot;&lt;a &quot;) == this.content.lastIndexOf(&quot;&lt;a &quot;) &amp;&amp; this.content.indexOf(&quot;&lt;/a&gt;&quot;) == this.content.length - 4);</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
 <p>然后可以根据contentIsLink函数构造出payload:<br><code>http://sqler.win/xss/level19.php?arg01=version&amp;arg02=%3Ca%20href=%22javascript:alert(1)%22%3E1%3C/a%3E</code></p>
-<p><strong><em>Stage#20：<a href="http://sqler.win/xss/level20.php?arg01=a&amp;arg02=b" target="_blank" rel="external">http://sqler.win/xss/level20.php?arg01=a&amp;arg02=b</a></em></strong><br>本题个人感觉比上一题容易做出来，，下载swf文件使用JPEXS进行分析后可以发现是zeroclipboard.swf，然后百度一发，<img src="http://www.freebuf.com/sectool/108568.html" alt="freebuf">第一个，粘贴即可payload：<br><code>http://sqler.win/xss/xsf04.swf?id=\%22))}catch(e){(alert)(/XSS/.source);}//&amp;width=500&amp;height=500</code><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-16.png" alt="图16"></p>
+<p><strong><em>Stage#20：<a href="http://sqler.win/xss/level20.php?arg01=a&amp;arg02=b" target="_blank" rel="external">http://sqler.win/xss/level20.php?arg01=a&amp;arg02=b</a></em></strong><br>本题个人感觉比上一题容易做出来，，下载swf文件使用JPEXS进行分析后可以发现是zeroclipboard.swf，然后百度一发，<a href="http://www.freebuf.com/sectool/108568.html" target="_blank" rel="external">freebuf</a>第一个，粘贴即可payload：<br><code>http://sqler.win/xss/xsf04.swf?id=\%22))}catch(e){(alert)(/XSS/.source);}//&amp;width=500&amp;height=500</code><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-16.png" alt="图16"></p>
 
       
     </div>
@@ -553,7 +552,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives/index.html">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -561,7 +560,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -570,7 +569,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
