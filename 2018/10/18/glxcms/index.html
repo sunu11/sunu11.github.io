@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="代码审计,glxcms," />
+  <meta name="keywords" content="漏洞披漏,glxcms," />
 
 
 
@@ -87,7 +87,7 @@
 
 
 <meta name="description" content="cms简介Gxlcms新闻系统是一个以php+mysql进行开发的新闻类cms内容管理系统。Gxlcms新闻系统的优势：前台与后台采用隔离方式，模板化设计，">
-<meta name="keywords" content="代码审计,glxcms">
+<meta name="keywords" content="漏洞披漏,glxcms">
 <meta property="og:type" content="article">
 <meta property="og:title" content="glxcms漏洞披漏">
 <meta property="og:url" content="http://sunu11.com/2018/10/18/glxcms/index.html">
@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/glx-7.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/glx-8.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/glx-9.png">
-<meta property="og:updated_time" content="2018-10-18T15:35:54.946Z">
+<meta property="og:updated_time" content="2018-10-31T09:13:06.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="glxcms漏洞披漏">
 <meta name="twitter:description" content="cms简介Gxlcms新闻系统是一个以php+mysql进行开发的新闻类cms内容管理系统。Gxlcms新闻系统的优势：前台与后台采用隔离方式，模板化设计，">
@@ -338,8 +338,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/漏洞披漏/" itemprop="url" rel="index">
-                    <span itemprop="name">漏洞披漏</span>
+                  <a href="/categories/代码审计/" itemprop="url" rel="index">
+                    <span itemprop="name">代码审计</span>
                   </a>
                 </span>
 
@@ -381,10 +381,10 @@
 
       
         <h3 id="cms简介"><a href="#cms简介" class="headerlink" title="cms简介"></a>cms简介</h3><p>Gxlcms新闻系统是一个以php+mysql进行开发的新闻类cms内容管理系统。<br>Gxlcms新闻系统的优势：前台与后台采用隔离方式，模板化设计，<a id="more"></a>让只要你会前端就可以做一个新闻网站！后台设计简单明了，小白用户一看就会明白！程序功能也非常完善！<br>1.目前程序支持三种路由模式：静态生成，伪静态，动态；<br>2.支持两种存储模式：本地存储，FTP存储<br>3.接入百度主动推送功能！让你每篇新闻/资讯都可以及时被百度发现<br>4.图片水印功能：只要开启图片水印，不管是标图图片或者是内容图片统统添加水印，水印功能支持9宫格设计，让你可以随意把图片水印加到任意地方<br>5.数据库一键备份/还原，让你可以轻松的把网站迁移到任何服务器上<br>6.缓存功能：模板缓存，数据库缓存，网站页面缓存<br>7.友情链接：支持图片链接和文字链接<br>8.广告模块：只要后台添加广告后，全部js生成到前台，让你不用费事修改模板<br>9.采集功能，我们支持火车头采集，火车头接口已经在插件中心里面，只需要你下载后，就可以采集上万新闻内容，为了防止重名新闻，我们对接口做了细腻化的功能，支持入库重名判断，当有重名新闻自动过滤<br>10.扩展功能：扩展性，可以在插件中心下载，招聘模块，图集模块，会员中心模块，交友模块等等模块进行安装（开发中）<br><a href="https://gitee.com/gxlcms/Gxlcmsv2.0-20180915" target="_blank" rel="external">源码下载地址:</a><br><a href="http://news.gxlcms.com/" target="_blank" rel="external">Demo地址：</a><br>官网更新补丁链接：待补充</p>
-<h3 id="漏洞详情："><a href="#漏洞详情：" class="headerlink" title="漏洞详情："></a>漏洞详情：</h3><h4 id="1、后台sql注入漏洞"><a href="#1、后台sql注入漏洞" class="headerlink" title="1、后台sql注入漏洞"></a>1、后台sql注入漏洞</h4><h5 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h5><p>从\lib\admin\action\dataaction.class.php文件中处理数据库备份方法可知：<br>$table是从$_POST[‘ids’]中传入，且可控。然后，在32行代码中与TRUNCATE TABLE 拼接存入sql文件，然后在后续导入还原功能中执行，因此我们可以控制生成的sql文件，并且执行任意sql语句。<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-1.png" alt="图1"><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-2.png" alt="图2"><br>构造sql注入语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ids%5B%5D=gxl_actor`;</div><div class="line">select sleep(3);--%20</div></pre></td></tr></table></figure></p>
+<h3 id="漏洞详情："><a href="#漏洞详情：" class="headerlink" title="漏洞详情："></a>漏洞详情：</h3><h4 id="1、后台sql注入漏洞-CVE-2018-18488"><a href="#1、后台sql注入漏洞-CVE-2018-18488" class="headerlink" title="1、后台sql注入漏洞(CVE-2018-18488)"></a>1、后台sql注入漏洞(CVE-2018-18488)</h4><h5 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h5><p>从\lib\admin\action\dataaction.class.php文件中处理数据库备份方法可知：<br>$table是从$_POST[‘ids’]中传入，且可控。然后，在32行代码中与TRUNCATE TABLE 拼接存入sql文件，然后在后续导入还原功能中执行，因此我们可以控制生成的sql文件，并且执行任意sql语句。<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-1.png" alt="图1"><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-2.png" alt="图2"><br>构造sql注入语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ids%5B%5D=gxl_actor`;</div><div class="line">select sleep(3);--%20</div></pre></td></tr></table></figure></p>
 <p>我们发送数据包后，生成的sql文件如下所示：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-3.png" alt="图3"><br>然后在进行备份还原：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-4.png" alt="图4"><br>可看到延迟，我们注入select sleep(1)后通过sql备份还原功能执行sql文件：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-5.png" alt="图5"><br>因此判断存在注入。</p>
 <h5 id="修复建议："><a href="#修复建议：" class="headerlink" title="修复建议："></a>修复建议：</h5><p>对ids参数值进行过滤</p>
-<h4 id="2、前台任意sql备份文件下载："><a href="#2、前台任意sql备份文件下载：" class="headerlink" title="2、前台任意sql备份文件下载："></a>2、前台任意sql备份文件下载：</h4><h5 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h5><p>从\lib\admin\action\dataaction.class.php文件中处理数据库备份方法可知生成备份文件的方法如下：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-6.png" alt="图6"><br>看到<code>mt_rand</code>函数：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-7.png" alt="php官网"><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-8.png" alt="先知社区"></p>
+<h4 id="2、前台任意sql备份文件下载：-CVE-2018-18487"><a href="#2、前台任意sql备份文件下载：-CVE-2018-18487" class="headerlink" title="2、前台任意sql备份文件下载：(CVE-2018-18487)"></a>2、前台任意sql备份文件下载：(CVE-2018-18487)</h4><h5 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h5><p>从\lib\admin\action\dataaction.class.php文件中处理数据库备份方法可知生成备份文件的方法如下：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-6.png" alt="图6"><br>看到<code>mt_rand</code>函数：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-7.png" alt="php官网"><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-8.png" alt="先知社区"></p>
 <p>然后结合cms的sql文件生成代码:<br><code>Sql文件名字：年月日_随机数_1.sql</code></p>
 <p>通过随机数值来爆破种子的过程，外国朋友写了一个工具：php_mt_seed（官方使用说明：<a href="http://www.openwall.com/php_mt_seed/README" target="_blank" rel="external">http://www.openwall.com/php_mt_seed/README</a> ）。使用工具获得随机数，拼接sql文件名称。<br>然后在管理员未修改源码目录的情况下访问默认路径即可未授权下载备份的sql文件：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/glx-9.png" alt="图9"></p>
 <h5 id="修复建议：-1"><a href="#修复建议：-1" class="headerlink" title="修复建议："></a>修复建议：</h5><p>可参考phpcms小于V9.6.2 authkey泄露的修复方式在每次生成随机数之前都手动播种一次，<br>或者采用时间戳的方式。</p>
@@ -445,7 +445,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/代码审计/" rel="tag"><i class="fa fa-tag"></i> 代码审计</a>
+            <a href="/tags/漏洞披漏/" rel="tag"><i class="fa fa-tag"></i> 漏洞披漏</a>
           
             <a href="/tags/glxcms/" rel="tag"><i class="fa fa-tag"></i> glxcms</a>
           
@@ -465,6 +465,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/31/baserCMS/" rel="prev" title="baserCMS 漏洞披漏">
+                baserCMS 漏洞披漏 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -536,7 +540,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives/index.html">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -544,7 +548,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -553,7 +557,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -658,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cms简介"><span class="nav-number">1.</span> <span class="nav-text">cms简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞详情："><span class="nav-number">2.</span> <span class="nav-text">漏洞详情：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、后台sql注入漏洞"><span class="nav-number">2.1.</span> <span class="nav-text">1、后台sql注入漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#漏洞分析"><span class="nav-number">2.1.1.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修复建议："><span class="nav-number">2.1.2.</span> <span class="nav-text">修复建议：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、前台任意sql备份文件下载："><span class="nav-number">2.2.</span> <span class="nav-text">2、前台任意sql备份文件下载：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#漏洞分析-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修复建议：-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">修复建议：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cms简介"><span class="nav-number">1.</span> <span class="nav-text">cms简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞详情："><span class="nav-number">2.</span> <span class="nav-text">漏洞详情：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、后台sql注入漏洞-CVE-2018-18488"><span class="nav-number">2.1.</span> <span class="nav-text">1、后台sql注入漏洞(CVE-2018-18488)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#漏洞分析"><span class="nav-number">2.1.1.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修复建议："><span class="nav-number">2.1.2.</span> <span class="nav-text">修复建议：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、前台任意sql备份文件下载：-CVE-2018-18487"><span class="nav-number">2.2.</span> <span class="nav-text">2、前台任意sql备份文件下载：(CVE-2018-18487)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#漏洞分析-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修复建议：-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">修复建议：</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
