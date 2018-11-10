@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="phpmyadmin，漏洞总结," />
+  <meta name="keywords" content="phpmyadmin,漏洞总结,CVE-2018-12613," />
 
 
 
@@ -86,13 +86,13 @@
 
 
 
-<meta name="description" content="前言：在漏洞纰漏之后，就对该漏洞进行了分析复现，本来打算投freebuf，谁知道被抢了先2333，贴图留念～～～">
-<meta name="keywords" content="phpmyadmin，漏洞总结">
+<meta name="description" content="前言：在漏洞披漏之后，就对该漏洞进行了分析复现，本来打算投freebuf，谁知道被抢了先2333，贴图留念～～～">
+<meta name="keywords" content="phpmyadmin,漏洞总结,CVE-2018-12613">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CVE-2018-12613漏洞学习总结">
 <meta property="og:url" content="http://sunu11.com/2018/07/25/22/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="前言：在漏洞纰漏之后，就对该漏洞进行了分析复现，本来打算投freebuf，谁知道被抢了先2333，贴图留念～～～">
+<meta property="og:description" content="前言：在漏洞披漏之后，就对该漏洞进行了分析复现，本来打算投freebuf，谁知道被抢了先2333，贴图留念～～～">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/22-1.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/22-2.png">
@@ -106,10 +106,10 @@
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/22-10.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/22-11.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/22-12.png">
-<meta property="og:updated_time" content="2018-10-18T08:01:35.726Z">
+<meta property="og:updated_time" content="2018-11-03T12:03:13.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CVE-2018-12613漏洞学习总结">
-<meta name="twitter:description" content="前言：在漏洞纰漏之后，就对该漏洞进行了分析复现，本来打算投freebuf，谁知道被抢了先2333，贴图留念～～～">
+<meta name="twitter:description" content="前言：在漏洞披漏之后，就对该漏洞进行了分析复现，本来打算投freebuf，谁知道被抢了先2333，贴图留念～～～">
 <meta name="twitter:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/22-1.png">
 
 
@@ -341,8 +341,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/漏洞分析/" itemprop="url" rel="index">
-                    <span itemprop="name">漏洞分析</span>
+                  <a href="/categories/WEB安全/" itemprop="url" rel="index">
+                    <span itemprop="name">WEB安全</span>
                   </a>
                 </span>
 
@@ -383,7 +383,7 @@
       
 
       
-        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>在漏洞纰漏之后，就对该漏洞进行了分析复现，本来打算投freebuf，谁知道被抢了先2333，贴图留念～～～<a id="more"></a><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/22-1.png" alt="22-1"></p>
+        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>在漏洞披漏之后，就对该漏洞进行了分析复现，本来打算投freebuf，谁知道被抢了先2333，贴图留念～～～<a id="more"></a><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/22-1.png" alt="22-1"></p>
 <h4 id="CVE-2018-12613："><a href="#CVE-2018-12613：" class="headerlink" title="CVE-2018-12613："></a>CVE-2018-12613：</h4><p>2018年6月19日，phpMyAdmin在最新版本修复了一个严重级别的漏洞。攻击者必须拥有后台权限，phpMyAdmin4.8.0和4.8.1均受漏洞影响。</p>
 <h4 id="漏洞分析："><a href="#漏洞分析：" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><blockquote>
 <p>首先在如下图所示的index.php中存在一处包含指定文件的代码：</p>
@@ -479,7 +479,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/phpmyadmin，漏洞总结/" rel="tag"><i class="fa fa-tag"></i> phpmyadmin，漏洞总结</a>
+            <a href="/tags/phpmyadmin/" rel="tag"><i class="fa fa-tag"></i> phpmyadmin</a>
+          
+            <a href="/tags/漏洞总结/" rel="tag"><i class="fa fa-tag"></i> 漏洞总结</a>
+          
+            <a href="/tags/CVE-2018-12613/" rel="tag"><i class="fa fa-tag"></i> CVE-2018-12613</a>
           
         </div>
       
@@ -572,7 +576,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives/index.html">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -580,7 +584,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -589,7 +593,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
