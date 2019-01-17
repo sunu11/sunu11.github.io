@@ -1,4 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6,15 +15,11 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -27,35 +32,39 @@
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
 
-  
-  
-  
-  
+
+
+
+
+
+
 
   
-    
-    
   
-
   
-
-  
-
-  
-
   
 
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -63,30 +72,57 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="OpenStack," />
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
 
 
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/w.ico?v=6.7.0">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml" />
-
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/w.ico?v=6.7.0">
 
 
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/w.ico?v=6.7.0">
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/w.ico?v=5.1.0" />
+
+  <link rel="mask-icon" href="/images/w.ico?v=6.7.0" color="#222">
 
 
 
 
 
 
-<meta name="description" content="简介OpenStack是一个旨在为公共及私有云的建设与管理提供软件的开源项目;是IaaS(基础设施即服务)组件，让任何人都可以自行建立和提供云端运算服务。此外，OpenStack也用作建立防火墙内的“私有云”（Private&amp;nbsp;Cloud），提供机构或企业内各部门共享资源。构建思路第一步是设置正确的硬件和网络环境。尽管OpenStack允许在一个单一的平面网络上部署一切，从安全的角度来看并">
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.7.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="简介OpenStack是一个旨在为公共及私有云的建设与管理提供软件的开源项目;是IaaS(基础设施即服务)组件，让任何人都可以自行建立和提供云端运算服务。此外，OpenStack也用作建立防火墙内的“私有云”（Private&amp;nbsp;Cloud），提供机构或企业内各部门共享资源。构建思路第一步是设置正确的硬件和网络环境。尽管OpenStack允许在一个单一的平面网络上部署一切，从安全的角度来看并">
 <meta name="keywords" content="OpenStack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenStack云计算平台初体验">
@@ -112,7 +148,7 @@
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/o.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/p.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/q.png">
-<meta property="og:updated_time" content="2018-11-03T11:51:23.669Z">
+<meta property="og:updated_time" content="2018-11-03T11:51:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenStack云计算平台初体验">
 <meta name="twitter:description" content="简介OpenStack是一个旨在为公共及私有云的建设与管理提供软件的开源项目;是IaaS(基础设施即服务)组件，让任何人都可以自行建立和提供云端运算服务。此外，OpenStack也用作建立防火墙内的“私有云”（Private&amp;nbsp;Cloud），提供机构或企业内各部门共享资源。构建思路第一步是设置正确的硬件和网络环境。尽管OpenStack允许在一个单一的平面网络上部署一切，从安全的角度来看并">
@@ -120,41 +156,22 @@
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 'undefined',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2016/10/30/3/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
   };
 </script>
 
-
-
-  <link rel="canonical" href="http://sunu11.com/2016/10/30/3/"/>
-
-
-
-
-
-  <title> OpenStack云计算平台初体验 | SuNu11'Blog </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>OpenStack云计算平台初体验 | SuNu11'Blog</title>
   
 
 
@@ -164,136 +181,260 @@
 
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"></script>
-  </div>
 
 
 
 
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">SuNu11'Blog</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SuNu11'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">记录分享学习生活</h1>
+      
+    
+    
   </div>
-  <p class="site-subtitle"></p>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
+
 
 <nav class="site-nav">
-  
-
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-guide">
-          <a href="/Guide/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
-            
-            航海图
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
+          
+          <li class="menu-item menu-item-首页">
 
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-导航图">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Guide/" rel="section"><i class="menu-item-icon fa fa-fw fa-globe"></i> <br>导航图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-公益404">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404.html" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
       
     </ul>
   
 
   
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
 </nav>
 
 
 
- </div>
+  
+
+
+
+</div>
     </header>
+
+    
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
 
@@ -306,67 +447,91 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2016/10/30/3/">
+  
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="SuNu11">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/me.png">
-  </span>
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sunu11.com/2016/10/30/3/">
 
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="SuNu11'Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="SuNu11'Blog" src="">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SuNu11">
+      <meta itemprop="description" content="淡泊以明志，宁静以致远">
+      <meta itemprop="image" content="/images/me.png">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SuNu11'Blog">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                OpenStack云计算平台初体验
+          <h2 class="post-title" itemprop="name headline">OpenStack云计算平台初体验
+
               
             
-          </h1>
+          </h2>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-30T20:14:50+08:00">
-                2016-10-30
-              </time>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-10-30 20:14:50" itemprop="dateCreated datePublished" datetime="2016-10-30T20:14:50+08:00">2016-10-30</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-03 19:51:23" itemprop="dateModified" datetime="2018-11-03T19:51:23+08:00">2018-11-03</time>
+              
             
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
+            
               <span class="post-meta-divider">|</span>
+            
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/云相关/" itemprop="url" rel="index">
-                    <span itemprop="name">云相关</span>
-                  </a>
-                </span>
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/云相关/" itemprop="url" rel="index"><span itemprop="name">云相关</span></a></span>
 
                 
                 
@@ -376,11 +541,12 @@
 
           
             
+            
           
 
           
-
           
+
           
 
           
@@ -391,64 +557,89 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
       
 
       
-         <p><b><font face="楷体" size="4">简介</font></b></p><p>OpenStack是一个旨在为公共及私有云的建设与管理提供软件的开源项目;是IaaS(基础设施即服务)组件，让任何人都可以自行建立和提供云端运算服务。此外，OpenStack也用作建立防火墙内的“私有云”（Private&nbsp;Cloud），提供机构或企业内各部门共享资源。</p><p><b><font face="楷体" size="4">构建思路</font></b></p><p>第一步是设置正确的硬件和网络环境。尽管OpenStack允许在一个单一的平面网络上部署一切，从安全的角度来看并不安全。<a id="more"></a>取决于你所使用的管理程序以及虚拟网络接口，它会允许guest虚拟机嗅探管理流量。建议至少使用两个网络：一个用来管理流量，一个用来进行虚拟机之间的对话。这意味着所有的云计算结点中你需要两个网卡（一个运行实例）和网络管理者。这些应该运行在不同的IP范围中。计算结点和实例的网络也需要支持VLAN标记，因为这是在“项目”之间隔绝流量所使用的机制。一个项目等价于你的亚马逊EC2账户，除了你不能按照你所希望的数目创建和分配之外。每一个项目都有自己的管理员和用户，在既定项目中的所有实例可以彼此通信。通过指派每一个项目自己的VLAN以及内部和外部的IP地址池来执行。</p><p>一旦硬件和网络设置好，下一步就是确定在哪里部署所有的OpenStack组件。标准部署应有一个控制器和一系列计算结点。控制器运行消息服务器，数据库和其他的组件来编排云，同时计算结点运行实例。但是你也可以分解控制器为地理的部分，从而改善性能，像把MySQL放在不同的物理盒中。对于安全而言，最关键的是确保每一部分都安装在安全的主机上，你只需要将其附加在网络上，让云运转即可。</p><p>只有两部分需要暴露给外面的世界（即使那只是你的企业网络）：API服务器/Web 控制台（如果开启）和网络管理者。这些服务器需要过硬，你甚至可以使用第三方网络接口来隔离后端管理用户连接产生的流量。</p><p><b><font face="楷体" size="4">操作</font></b></p><p><font size="3" face="楷体">准备</font></p><p>环境: windows系统，openstack云平台（172.17.142.2 cloud.X.X.cn）<br></p><p>修改windows系统主机名称&amp;IP地址映射文件：/windows/system32/drivers/etc/hosts<br></p><p>追加：172.17.142.2&nbsp;&nbsp;&nbsp;&nbsp;cloud.X.X.cn<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;172.17.143.130&nbsp;&nbsp;controller<br></p><p>ip地址172.17.143.130要根据后面绑定控制节点浮动ip来修改。<br></p><p>以用户名test，密码test登录云平台<a href="https://cloud.X.X.cn。" target="_blank" rel="external">https://cloud.X.X.cn。</a></p><p><span style="font-family: 楷体; font-size: medium;">网络管理</span></p><p>1、创建网络<br></p><p>&nbsp;网络名称：135043204_network<br></p><p>&nbsp;网络地址：192.32.4.0/24<br></p><p>&nbsp;gateway: 192.32.4.254<br></p><p>&nbsp;地址池：192.32.4.10,192.32.4.200<br></p><p>&nbsp; DNS：211.71.232.65</p><p><img style="max-width: 100%; width: 602.8px; height: 114.4px;" src="http://n-b.oss-cn-beijing.aliyuncs.com/a.png" class=""><span style="font-family: 宋体; font-size: medium;"><br></span></p><p>2、创建路由器135043204_router<br></p><p>&nbsp; &nbsp; &nbsp;选择外部网络：admin_floating_net&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;配置路由器135043204_router，增加接口：选择子网135043204_network</p><p align="left" style="text-align: left;"><img style="max-width: 100%; width: 587.4px; height: 185.9px;" src="http://n-b.oss-cn-beijing.aliyuncs.com/b.png" class=""></p><p align="left" style="text-align: left;"><span style="font-family: 楷体; font-size: medium;">安装配置控制节点</span></p><p>1、以快照镜像mitaka-controller启动虚拟机；<br></p><p>2、实例名称为：135043204_controller，可用域：nova，实例数：1<br></p><p>&nbsp; &nbsp; &nbsp;源选实例快照：mitaka-controller<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flavor:4core8gram10gdisk&nbsp;</p><p>&nbsp; &nbsp; &nbsp;网络先选:135043204_network,再选ext_network<font color="#ff00ff">（tips：在选择网络时，系统默认为第一个网卡的网 &nbsp; 络建立路由）</font></p><p>&nbsp; &nbsp; &nbsp;安全组选：default<br></p><p>&nbsp; &nbsp; &nbsp;秘钥对选：创建135043204</p><p>&nbsp; &nbsp; &nbsp;启动实例。</p><p>&nbsp; &nbsp; &nbsp;绑定浮动ip（tips根据此浮动ip,修改/windows/system32/drivers/etc/hosts文件中的controller对应的ip.）</p><p><img style="max-width: 100%; width: 607.2px; height: 139.7px;" src="http://n-b.oss-cn-beijing.aliyuncs.com/c.png" class=""><br></p><p>3、通过浮动ip远程连接controller<br></p><p>&nbsp; &nbsp; &nbsp;直接通过Xshell，选择public&nbsp;key认证方法，导入创建的私钥135043204，用户名为：centos连接。</p><p>&nbsp; &nbsp; &nbsp;连接后，切换到root身份,root密码为huawei</p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;su&nbsp;-<br></p><p>&nbsp; &nbsp; &nbsp;修改/etc/ssh/sshd_config<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速定位password<br></p><p>&nbsp; &nbsp; &nbsp;将PasswordAuthentication&nbsp;no行中的no修改为yes</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;PasswordAuthentication&nbsp;yes</p><p>&nbsp; &nbsp; &nbsp;存盘退出。<br></p><p>&nbsp; &nbsp; &nbsp;重启sshd服务。<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;sshd<br></p><p>&nbsp; &nbsp; &nbsp;服务查看,注意颜色为红色的服务名称。<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;systemctl<br></p><p>&nbsp; &nbsp; &nbsp;禁用cloud相关服务<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;systemctl&nbsp;disable&nbsp;cloud-config&nbsp;cloud-init&nbsp;cloud-final&nbsp;cloud-init-local<br></p><p>&nbsp; &nbsp; &nbsp;主机名查看</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; hostname</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; cat&nbsp;/etc/hostname &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p><p>&nbsp; &nbsp; &nbsp;主机名设置<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;hostnamectl&nbsp;set-hostname&nbsp;controller<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;ip&nbsp;查看</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ip&nbsp;a</p><p>&nbsp; &nbsp; &nbsp;配置ip&amp;host映射<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/hosts<br></p><p>&nbsp; &nbsp; &nbsp;修改controller对应的ip，（tips：compute对应的ip根据计算节点ip来修改。）<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;192.32.4.13&nbsp;controller<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;192.32.4.15&nbsp;compute</p><p><img style="max-width: 100%; width: 585.2px; height: 348.7px;" src="http://n-b.oss-cn-beijing.aliyuncs.com/d.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;配置nosql数据库，修改bind_ip为192.32.4.13<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/mongod.conf&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;mongod</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/e.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;配置mysql数据库,修改bind-address为192.32.4.13</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;vi&nbsp;/etc/my.cnf.d/openstack.cnf&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;mariadb</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/d.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;重启rabbitmq-server<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;rabbitmq-server</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/g.png"><br></p><p>&nbsp; &nbsp; &nbsp;配置&nbsp;linuxbridge_agent，配置physical_interface_mappings，local_ip&nbsp;，配置local_ip为192.32.4.13<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;vi&nbsp;/etc/neutron/plugins/ml2/linuxbridge_agent.ini&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;重启neutron-linuxbridge-agent<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;neutron-linuxbridge-agent</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/h.png" class=""></p><p>&nbsp; &nbsp; &nbsp;查看日志：<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cat /var/log/neutron/linuxbridge-agent.log</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat /var/log/neutron/dhcp-agent.log</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat /var/log/neutron/server.log</p><p>&nbsp; &nbsp; &nbsp;重启controller</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;reboot</p><p><span style="font-family: 楷体; font-size: medium;">安装配置计算节点</span></p><p>以快照镜像mitaka-compute启动虚拟机；<br></p><p>实例名称为：135043204_compute，可用域：nova，实例数：1<br></p><p>源选实例快照：mitaka-compute<br></p><p>flavor:2core4g_10g<br></p><p>网络选:135043204_network,ext_network<br></p><p>安全组选：default<br></p><p>秘钥对选：135043204<br></p><p>单击启动实例。绑定浮动ip。</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/i.png"><br></p><p>通过浮动ip远程连接compute<br></p><p>直接通过Xshell，选择public&nbsp;key认证方法，使用私钥135043204，用户名为：centos连接。<br></p><p>连接后，切换到root身份<br></p><p>su&nbsp;-<br></p><p>修改/etc/ssh/sshd_config<br></p><p>快速定位password<br></p><p>将PasswordAuthentication&nbsp;no行中的no修改为yes<br></p><p>PasswordAuthentication&nbsp;yes<br></p><p>存盘退出。<br></p><p>重启sshd服务。<br></p><p>systemctl&nbsp;restart&nbsp;sshd</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/j.png"><br></p><p>服务查看<br></p><p>systemctl<br></p><p>禁用cloud相关服务<br></p><p>systemctl&nbsp;disable&nbsp;cloud-config&nbsp;cloud-init&nbsp;cloud-final&nbsp;cloud-init-local<br></p><p>主机名查看<br></p><p>&nbsp;&nbsp;hostname<br></p><p>&nbsp;&nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>主机名设置<br></p><p>&nbsp;&nbsp;hostnamectl&nbsp;set-hostname&nbsp;compute<br></p><p>&nbsp;&nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>ip&nbsp;查看<br></p><p>&nbsp;&nbsp;ip&nbsp;a</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/k.png"><br></p><p>配置ip&amp;host映射<br></p><p>&nbsp; &nbsp; &nbsp;vi&nbsp;/etc/hosts<br></p><p>配置&nbsp;linuxbridge_agent，配置physical_interface_mappings，local_ip&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/neutron/plugins/ml2/linuxbridge_agent.ini&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;local_ip&nbsp;=&nbsp;&nbsp;192.32.4.15<br></p><p>重启neutron-linuxbridge-agent<br></p><p>&nbsp;&nbsp;&nbsp;systemctl&nbsp;restart&nbsp;neutron-linuxbridge-agent<br></p><p>&nbsp;&nbsp;&nbsp;查看日志：<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/linuxbridge-agent.log&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/dhcp-agent.log&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/server.log&nbsp;<br></p><p>配置/etc/nova/nova.conf，配置my_ip<br></p><p>&nbsp;&nbsp;my_ip&nbsp;=&nbsp;192.32.4.15</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/l.png" class=""></p><p>重新启动openstack-nova-compute<br></p><p>systemctl restart openstack-nova-compute</p><p>&nbsp;reboot</p><p><span style="font-family: 楷体; font-size: medium;">测试</span></p><p>1、以管理员身份登录<a href="http://controller/dashboard" target="_blank" rel="external">http://controller/dashboard</a></p><p>domain:default</p><p>user name:admin</p><p>password:ADMIN_PASS</p><p>创建云主机类型</p><p>S135043199:1vcpu,64Mram,1g硬盘</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/m.png" class=""><br></p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/n.png"><br></p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/n.png"><br></p><p>2、以普通用户身份登录<a href="http://controller/dashboard" target="_blank" rel="external">http://controller/dashboard</a></p><p>domain:default</p><p>user name:demo</p><p>password:DEMO_PASS</p><p>创建2个云主机</p><p>实例名称:s135043199</p><p>镜像:cirros</p><p>flavor:s135043199</p><p>network:    selfservice</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/o.png"><br></p><p>3、通过控制台访问创建好的虚拟机s135043199-2</p><p>用户名cirros、密码cubswin:)</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/p.png"><br></p><p>测试两台虚拟机的连通性。</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/q.png" class=""><br></p><p>到此私有云平台就部署并测试成功。</p><p>&nbsp;</p><p><font face="楷体" size="4"><b>安全性建议</b></font>（–取自百度百科）：</p><p><em> MySQL服务器使用指定的用户账户，不是根MySQL管理账户。这个账户和密码将会暴露在每一个云结点上，即使使用基于证书的认证，因此所有结点需要访问这个数据库服务器。</em></p><p> MySQL配置文件中，限制访问服务器，OpenStack用户账户为唯一授权IP地址。</p><p><em> 移除任何不需要的OS组件并确保你所设置的服务器只支持通过SSH的基于密钥的登陆。</em></p><p> 默认MySQL和RabbitMQ（消息服务器）流量不加密。如果你隔离了管理网络和坚固的主机，这就不应该是一个很糟糕的风险。如果你的云网络易于嗅探（例如，它和其他服务器共享网络），你需要加密流量。你可以使用OpenSSL来进行MySQL 和RabbitMQ处理。）</p><p><br></p>
+         <p><b><font face="楷体" size="4">简介</font></b></p><p>OpenStack是一个旨在为公共及私有云的建设与管理提供软件的开源项目;是IaaS(基础设施即服务)组件，让任何人都可以自行建立和提供云端运算服务。此外，OpenStack也用作建立防火墙内的“私有云”（Private&nbsp;Cloud），提供机构或企业内各部门共享资源。</p><p><b><font face="楷体" size="4">构建思路</font></b></p><p>第一步是设置正确的硬件和网络环境。尽管OpenStack允许在一个单一的平面网络上部署一切，从安全的角度来看并不安全。<a id="more"></a>取决于你所使用的管理程序以及虚拟网络接口，它会允许guest虚拟机嗅探管理流量。建议至少使用两个网络：一个用来管理流量，一个用来进行虚拟机之间的对话。这意味着所有的云计算结点中你需要两个网卡（一个运行实例）和网络管理者。这些应该运行在不同的IP范围中。计算结点和实例的网络也需要支持VLAN标记，因为这是在“项目”之间隔绝流量所使用的机制。一个项目等价于你的亚马逊EC2账户，除了你不能按照你所希望的数目创建和分配之外。每一个项目都有自己的管理员和用户，在既定项目中的所有实例可以彼此通信。通过指派每一个项目自己的VLAN以及内部和外部的IP地址池来执行。</p><p>一旦硬件和网络设置好，下一步就是确定在哪里部署所有的OpenStack组件。标准部署应有一个控制器和一系列计算结点。控制器运行消息服务器，数据库和其他的组件来编排云，同时计算结点运行实例。但是你也可以分解控制器为地理的部分，从而改善性能，像把MySQL放在不同的物理盒中。对于安全而言，最关键的是确保每一部分都安装在安全的主机上，你只需要将其附加在网络上，让云运转即可。</p><p>只有两部分需要暴露给外面的世界（即使那只是你的企业网络）：API服务器/Web 控制台（如果开启）和网络管理者。这些服务器需要过硬，你甚至可以使用第三方网络接口来隔离后端管理用户连接产生的流量。</p><p><b><font face="楷体" size="4">操作</font></b></p><p><font size="3" face="楷体">准备</font></p><p>环境: windows系统，openstack云平台（172.17.142.2 cloud.X.X.cn）<br></p><p>修改windows系统主机名称&amp;IP地址映射文件：/windows/system32/drivers/etc/hosts<br></p><p>追加：172.17.142.2&nbsp;&nbsp;&nbsp;&nbsp;cloud.X.X.cn<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;172.17.143.130&nbsp;&nbsp;controller<br></p><p>ip地址172.17.143.130要根据后面绑定控制节点浮动ip来修改。<br></p><p>以用户名test，密码test登录云平台<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC5YLlguY27jgII=" title="https://cloud.X.X.cn。">https://cloud.X.X.cn。<i class="fa fa-external-link"></i></span></p><p><span style="font-family: 楷体; font-size: medium;">网络管理</span></p><p>1、创建网络<br></p><p>&nbsp;网络名称：135043204_network<br></p><p>&nbsp;网络地址：192.32.4.0/24<br></p><p>&nbsp;gateway: 192.32.4.254<br></p><p>&nbsp;地址池：192.32.4.10,192.32.4.200<br></p><p>&nbsp; DNS：211.71.232.65</p><p><img style="max-width: 100%; width: 602.8px; height: 114.4px;" src="http://n-b.oss-cn-beijing.aliyuncs.com/a.png" class=""><span style="font-family: 宋体; font-size: medium;"><br></span></p><p>2、创建路由器135043204_router<br></p><p>&nbsp; &nbsp; &nbsp;选择外部网络：admin_floating_net&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;配置路由器135043204_router，增加接口：选择子网135043204_network</p><p align="left" style="text-align: left;"><img style="max-width: 100%; width: 587.4px; height: 185.9px;" src="http://n-b.oss-cn-beijing.aliyuncs.com/b.png" class=""></p><p align="left" style="text-align: left;"><span style="font-family: 楷体; font-size: medium;">安装配置控制节点</span></p><p>1、以快照镜像mitaka-controller启动虚拟机；<br></p><p>2、实例名称为：135043204_controller，可用域：nova，实例数：1<br></p><p>&nbsp; &nbsp; &nbsp;源选实例快照：mitaka-controller<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flavor:4core8gram10gdisk&nbsp;</p><p>&nbsp; &nbsp; &nbsp;网络先选:135043204_network,再选ext_network<font color="#ff00ff">（tips：在选择网络时，系统默认为第一个网卡的网 &nbsp; 络建立路由）</font></p><p>&nbsp; &nbsp; &nbsp;安全组选：default<br></p><p>&nbsp; &nbsp; &nbsp;秘钥对选：创建135043204</p><p>&nbsp; &nbsp; &nbsp;启动实例。</p><p>&nbsp; &nbsp; &nbsp;绑定浮动ip（tips根据此浮动ip,修改/windows/system32/drivers/etc/hosts文件中的controller对应的ip.）</p><p><img style="max-width: 100%; width: 607.2px; height: 139.7px;" src="http://n-b.oss-cn-beijing.aliyuncs.com/c.png" class=""><br></p><p>3、通过浮动ip远程连接controller<br></p><p>&nbsp; &nbsp; &nbsp;直接通过Xshell，选择public&nbsp;key认证方法，导入创建的私钥135043204，用户名为：centos连接。</p><p>&nbsp; &nbsp; &nbsp;连接后，切换到root身份,root密码为huawei</p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;su&nbsp;-<br></p><p>&nbsp; &nbsp; &nbsp;修改/etc/ssh/sshd_config<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速定位password<br></p><p>&nbsp; &nbsp; &nbsp;将PasswordAuthentication&nbsp;no行中的no修改为yes</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;PasswordAuthentication&nbsp;yes</p><p>&nbsp; &nbsp; &nbsp;存盘退出。<br></p><p>&nbsp; &nbsp; &nbsp;重启sshd服务。<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;sshd<br></p><p>&nbsp; &nbsp; &nbsp;服务查看,注意颜色为红色的服务名称。<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;systemctl<br></p><p>&nbsp; &nbsp; &nbsp;禁用cloud相关服务<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;systemctl&nbsp;disable&nbsp;cloud-config&nbsp;cloud-init&nbsp;cloud-final&nbsp;cloud-init-local<br></p><p>&nbsp; &nbsp; &nbsp;主机名查看</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; hostname</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; cat&nbsp;/etc/hostname &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p><p>&nbsp; &nbsp; &nbsp;主机名设置<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;hostnamectl&nbsp;set-hostname&nbsp;controller<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;ip&nbsp;查看</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ip&nbsp;a</p><p>&nbsp; &nbsp; &nbsp;配置ip&amp;host映射<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/hosts<br></p><p>&nbsp; &nbsp; &nbsp;修改controller对应的ip，（tips：compute对应的ip根据计算节点ip来修改。）<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;192.32.4.13&nbsp;controller<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;192.32.4.15&nbsp;compute</p><p><img style="max-width: 100%; width: 585.2px; height: 348.7px;" src="http://n-b.oss-cn-beijing.aliyuncs.com/d.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;配置nosql数据库，修改bind_ip为192.32.4.13<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/mongod.conf&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;mongod</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/e.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;配置mysql数据库,修改bind-address为192.32.4.13</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;vi&nbsp;/etc/my.cnf.d/openstack.cnf&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;mariadb</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/d.png" class=""><br></p><p>&nbsp; &nbsp; &nbsp;重启rabbitmq-server<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;rabbitmq-server</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/g.png"><br></p><p>&nbsp; &nbsp; &nbsp;配置&nbsp;linuxbridge_agent，配置physical_interface_mappings，local_ip&nbsp;，配置local_ip为192.32.4.13<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;vi&nbsp;/etc/neutron/plugins/ml2/linuxbridge_agent.ini&nbsp;<br></p><p>&nbsp; &nbsp; &nbsp;重启neutron-linuxbridge-agent<br></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;systemctl&nbsp;restart&nbsp;neutron-linuxbridge-agent</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/h.png" class=""></p><p>&nbsp; &nbsp; &nbsp;查看日志：<br></p><p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cat /var/log/neutron/linuxbridge-agent.log</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat /var/log/neutron/dhcp-agent.log</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cat /var/log/neutron/server.log</p><p>&nbsp; &nbsp; &nbsp;重启controller</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;reboot</p><p><span style="font-family: 楷体; font-size: medium;">安装配置计算节点</span></p><p>以快照镜像mitaka-compute启动虚拟机；<br></p><p>实例名称为：135043204_compute，可用域：nova，实例数：1<br></p><p>源选实例快照：mitaka-compute<br></p><p>flavor:2core4g_10g<br></p><p>网络选:135043204_network,ext_network<br></p><p>安全组选：default<br></p><p>秘钥对选：135043204<br></p><p>单击启动实例。绑定浮动ip。</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/i.png"><br></p><p>通过浮动ip远程连接compute<br></p><p>直接通过Xshell，选择public&nbsp;key认证方法，使用私钥135043204，用户名为：centos连接。<br></p><p>连接后，切换到root身份<br></p><p>su&nbsp;-<br></p><p>修改/etc/ssh/sshd_config<br></p><p>快速定位password<br></p><p>将PasswordAuthentication&nbsp;no行中的no修改为yes<br></p><p>PasswordAuthentication&nbsp;yes<br></p><p>存盘退出。<br></p><p>重启sshd服务。<br></p><p>systemctl&nbsp;restart&nbsp;sshd</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/j.png"><br></p><p>服务查看<br></p><p>systemctl<br></p><p>禁用cloud相关服务<br></p><p>systemctl&nbsp;disable&nbsp;cloud-config&nbsp;cloud-init&nbsp;cloud-final&nbsp;cloud-init-local<br></p><p>主机名查看<br></p><p>&nbsp;&nbsp;hostname<br></p><p>&nbsp;&nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>主机名设置<br></p><p>&nbsp;&nbsp;hostnamectl&nbsp;set-hostname&nbsp;compute<br></p><p>&nbsp;&nbsp;cat&nbsp;/etc/hostname&nbsp;<br></p><p>ip&nbsp;查看<br></p><p>&nbsp;&nbsp;ip&nbsp;a</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/k.png"><br></p><p>配置ip&amp;host映射<br></p><p>&nbsp; &nbsp; &nbsp;vi&nbsp;/etc/hosts<br></p><p>配置&nbsp;linuxbridge_agent，配置physical_interface_mappings，local_ip&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;vi&nbsp;/etc/neutron/plugins/ml2/linuxbridge_agent.ini&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;&nbsp;local_ip&nbsp;=&nbsp;&nbsp;192.32.4.15<br></p><p>重启neutron-linuxbridge-agent<br></p><p>&nbsp;&nbsp;&nbsp;systemctl&nbsp;restart&nbsp;neutron-linuxbridge-agent<br></p><p>&nbsp;&nbsp;&nbsp;查看日志：<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/linuxbridge-agent.log&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/dhcp-agent.log&nbsp;<br></p><p>&nbsp;&nbsp;&nbsp;cat&nbsp;/var/log/neutron/server.log&nbsp;<br></p><p>配置/etc/nova/nova.conf，配置my_ip<br></p><p>&nbsp;&nbsp;my_ip&nbsp;=&nbsp;192.32.4.15</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/l.png" class=""></p><p>重新启动openstack-nova-compute<br></p><p>systemctl restart openstack-nova-compute</p><p>&nbsp;reboot</p><p><span style="font-family: 楷体; font-size: medium;">测试</span></p><p>1、以管理员身份登录<span class="exturl" data-url="aHR0cDovL2NvbnRyb2xsZXIvZGFzaGJvYXJk" title="http://controller/dashboard">http://controller/dashboard<i class="fa fa-external-link"></i></span></p><p>domain:default</p><p>user name:admin</p><p>password:ADMIN_PASS</p><p>创建云主机类型</p><p>S135043199:1vcpu,64Mram,1g硬盘</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/m.png" class=""><br></p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/n.png"><br></p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/n.png"><br></p><p>2、以普通用户身份登录<span class="exturl" data-url="aHR0cDovL2NvbnRyb2xsZXIvZGFzaGJvYXJk" title="http://controller/dashboard">http://controller/dashboard<i class="fa fa-external-link"></i></span></p><p>domain:default</p><p>user name:demo</p><p>password:DEMO_PASS</p><p>创建2个云主机</p><p>实例名称:s135043199</p><p>镜像:cirros</p><p>flavor:s135043199</p><p>network:    selfservice</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/o.png"><br></p><p>3、通过控制台访问创建好的虚拟机s135043199-2</p><p>用户名cirros、密码cubswin:)</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/p.png"><br></p><p>测试两台虚拟机的连通性。</p><p><img style="max-width:100%;" src="http://n-b.oss-cn-beijing.aliyuncs.com/q.png" class=""><br></p><p>到此私有云平台就部署并测试成功。</p><p>&nbsp;</p><p><font face="楷体" size="4"><b>安全性建议</b></font>（–取自百度百科）：</p><p><em> MySQL服务器使用指定的用户账户，不是根MySQL管理账户。这个账户和密码将会暴露在每一个云结点上，即使使用基于证书的认证，因此所有结点需要访问这个数据库服务器。</em></p><p> MySQL配置文件中，限制访问服务器，OpenStack用户账户为唯一授权IP地址。</p><p><em> 移除任何不需要的OS组件并确保你所设置的服务器只支持通过SSH的基于密钥的登陆。</em></p><p> 默认MySQL和RabbitMQ（消息服务器）流量不加密。如果你隔离了管理网络和坚固的主机，这就不应该是一个很糟糕的风险。如果你的云网络易于嗅探（例如，它和其他服务器共享网络），你需要加密流量。你可以使用OpenSSL来进行MySQL 和RabbitMQ处理。）</p><p><br></p>
       
     </div>
-    <div>
-      
+
+    
+
+    
+    
+    
+      <div>
+    
         <div>
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="icon ion-md-power"></i>感谢您的阅读-------------</div>
     
 </div>
+    
+      </div>
+
+    
+
+    
       
-    </div> 
-    <div>
-      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
         
 
-      
-    </div>
-
-    <div>
-      
-        
-  <div align="center">
- 
-   <div class="">
-   <p><span>
-   <br/><br/><b>本文出处：</b><a href="/2016/10/30/3/" title="OpenStack云计算平台初体验">http://sunu11.com/2016/10/30/3/</a><br/><span><span><span><span><span><span><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的。但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
-   </span></p>
-   </div>
- 
-  </div>
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
 
 
-      
-    </div>
+  
 
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>SuNu11</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="http://sunu11.com/2016/10/30/3/" title="OpenStack云计算平台初体验">http://sunu11.com/2016/10/30/3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
@@ -457,6 +648,10 @@
             <a href="/tags/OpenStack/" rel="tag"><i class="fa fa-tag"></i> OpenStack</a>
           
         </div>
+      
+
+      
+      
       
 
       
@@ -484,25 +679,25 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
           </div>
           
 
-
-          
-
   
-  </div>
-    
+    <div class="comments" id="gitalk-container">
+    </div>
+  
+
+
 
         </div>
         
@@ -517,143 +712,298 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/me.png"
-               alt="SuNu11" />
-          <p class="site-author-name" itemprop="name">SuNu11</p>
-          <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives/index.html">
-              <span class="site-state-item-count">32</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.png" alt="SuNu11">
+            
+              <p class="site-author-name" itemprop="name">SuNu11</p>
+              <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
           </div>
 
           
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">分类</span>
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
               </a>
             </div>
           
 
           
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">43</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N1bnUxMQ==" title="GitHub &rarr; https://github.com/sunu11"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOjk1ODEzMDQyMUBxcS5jb20=" title="E-Mail &rarr; mailto:958130421@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cDovL3dlaWJvLmNvbS9zdW51MTE=" title="Weibo &rarr; http://weibo.com/sunu11"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9zdV9udTEx" title="Twitter &rarr; https://twitter.com/su_nu11"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+                </span>
+              
             </div>
           
 
-        </nav>
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+             </div>
+          
 
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5zZWMtcmVkY2x1Yi5jb20v" title="http://www.sec-redclub.com/">Redbu11</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL2RicWYueHl6Lw==" title="http://dbqf.xyz/">大兄弟(独步清风)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy52aXJ6ei5jb20v" title="http://www.virzz.com/">V神(Virink)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5tb25idXJhbi5jbi8=" title="http://www.monburan.cn/">大兄弟(Monburan)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5jbmJsb2dzLmNvbS9uMWdodHdhdGNoZXIv" title="http://www.cnblogs.com/n1ghtwatcher/">老哥(n1ghtwatcher)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5nbGFtb3Iuc2l0ZS8=" title="http://www.glamor.site/">大诏(glamor)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcGlhb21pYW9ob25nY2hlbi8=" title="https://www.cnblogs.com/piaomiaohongchen/">超神哥</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3FjbG92ZXIuY24=" title="http://qclover.cn">华清(Qclover)</span>
+                  </li>
+                
+              </ul>
+            </div>
+          
 
-        <div class="links-of-author motion-element">
           
             
-              <span class="links-of-author-item">
-                <a href="http://mooder.f4ck0.com:8000/" target="_blank" title="Team Spaces">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  Team Spaces
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/sunu11" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/sunu11" target="_blank" title="微博">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  微博
-                </a>
-              </span>
-            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
           
         </div>
-
-        
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-globe"></i>
-              一路认识的师傅们
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.sec-redclub.com/" title="Redbu11" target="_blank">Redbu11</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://dbqf.xyz/" title="大兄弟独步清风" target="_blank">大兄弟独步清风</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.virzz.com/" title="V神Virink" target="_blank">V神Virink</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.monburan.cn/" title="大兄弟Monburan" target="_blank">大兄弟Monburan</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.cnblogs.com/n1ghtwatcher/" title="老哥n1ghtwatcher" target="_blank">老哥n1ghtwatcher</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.glamor.site/" title="大诏glamor" target="_blank">大诏glamor</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://www.cnblogs.com/piaomiaohongchen/" title="超神哥" target="_blank">超神哥</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://qclover.cn" title="华清Qclover" target="_blank">华清Qclover</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
-
-
-      </section>
-
       
 
     </div>
@@ -666,46 +1016,60 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5taWl0YmVpYW4uZ292LmNu">京ICP备16045158号 </span>&copy; 2016 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">SuNu11</span>
+
+  
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a>Hexo</a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.miitbeian.gov.cn" target="_blank" title="备案信息">京ICP备16045158号</a> 强力驱动
-</div>
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span></div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  <script src="https://s96.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"</script>
-   </span>
-  </a>
-</div>
-<br>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Mist</span></div>
+
+
 
 
         
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487"></script>
+  </div>
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+
+    
+
+    
+
+    
   </div>
 
   
 
-<script type="text/javascript">
+<script>
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -719,71 +1083,492 @@
 
 
 
-  
 
 
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
+    
+    
   
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
 
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  <script src="/js/src/utils.js?v=6.7.0"></script>
 
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
+  <script src="/js/src/motion.js?v=6.7.0"></script>
 
 
 
   
   
 
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '97b2e5deab70d3927e17',
+    clientSecret: '286219e6fdbe002564d7880370688c453c513d99',
+    repo: 'sunu11.github.io',
+    owner: 'sunu11',
+    admin: ['958130421@qq.com'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'sunu11.github.io',
+          owner: '',
+          admin: [''],
+          id: location.pathname,
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '97b2e5deab70d3927e17',
+    clientSecret: '286219e6fdbe002564d7880370688c453c513d99',
+    repo: 'sunu11.github.io',
+    owner: 'sunu11',
+    admin: ['958130421@qq.com'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'sunu11.github.io',
+          owner: '',
+          admin: [''],
+          id: location.pathname,
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
   
 
   
@@ -793,21 +1578,20 @@
   
 
   
-  
-  
-
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"></script>
-  </div>
-
-
-
-  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-  
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
 
   
+
   
+  <script src="/js/src/exturl.js?v=6.7.0"></script>
+
+
+  
+
+  
+
+  
+
 </body>
 </html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

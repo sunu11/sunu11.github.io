@@ -1,4 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6,15 +15,11 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -27,35 +32,39 @@
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
 
-  
-  
-  
-  
+
+
+
+
+
+
 
   
-    
-    
   
-
   
-
-  
-
-  
-
   
 
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -63,56 +72,40 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="bypass,xss," />
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
 
 
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/w.ico?v=6.7.0">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml" />
-
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/w.ico?v=6.7.0">
 
 
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/w.ico?v=6.7.0">
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/w.ico?v=5.1.0" />
+
+  <link rel="mask-icon" href="/images/w.ico?v=6.7.0" color="#222">
 
 
 
 
 
 
-<meta name="description" content="心得接着上一文过来，这一部分是个人的一些总结。对于挖掘xss漏洞，目的都是让自己的payload可以执行，在其探索的过程中，我个人首先会通过审查元素，了解其输入点，过滤规则，然后">
-<meta name="keywords" content="bypass,xss">
-<meta property="og:type" content="article">
-<meta property="og:title" content="我与XSS的感情之路(3)">
-<meta property="og:url" content="http://sunu11.com/2017/08/28/14/index.html">
-<meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="心得接着上一文过来，这一部分是个人的一些总结。对于挖掘xss漏洞，目的都是让自己的payload可以执行，在其探索的过程中，我个人首先会通过审查元素，了解其输入点，过滤规则，然后">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-03T11:56:59.172Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我与XSS的感情之路(3)">
-<meta name="twitter:description" content="心得接着上一文过来，这一部分是个人的一些总结。对于挖掘xss漏洞，目的都是让自己的payload可以执行，在其探索的过程中，我个人首先会通过审查元素，了解其输入点，过滤规则，然后">
 
-
-
-<script type="text/javascript" id="hexo.configurations">
+<script id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 'undefined',
-      author: '博主'
-    },
+    version: '6.7.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -124,18 +117,42 @@
 </script>
 
 
-
-  <link rel="canonical" href="http://sunu11.com/2017/08/28/14/"/>
-
+  
 
 
 
 
-  <title> 我与XSS的感情之路(3) | SuNu11'Blog </title>
-</head>
+  <meta name="description" content="心得接着上一文过来，这一部分是个人的一些总结。对于挖掘xss漏洞，目的都是让自己的payload可以执行，在其探索的过程中，我个人首先会通过审查元素，了解其输入点，过滤规则，然后">
+<meta name="keywords" content="bypass,xss">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我与XSS的感情之路(3)">
+<meta property="og:url" content="http://sunu11.com/2017/08/28/14/index.html">
+<meta property="og:site_name" content="SuNu11&#39;Blog">
+<meta property="og:description" content="心得接着上一文过来，这一部分是个人的一些总结。对于挖掘xss漏洞，目的都是让自己的payload可以执行，在其探索的过程中，我个人首先会通过审查元素，了解其输入点，过滤规则，然后">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-03T11:56:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我与XSS的感情之路(3)">
+<meta name="twitter:description" content="心得接着上一文过来，这一部分是个人的一些总结。对于挖掘xss漏洞，目的都是让自己的payload可以执行，在其探索的过程中，我个人首先会通过审查元素，了解其输入点，过滤规则，然后">
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
+
+  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2017/08/28/14/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>我与XSS的感情之路(3) | SuNu11'Blog</title>
   
 
 
@@ -145,136 +162,260 @@
 
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"></script>
-  </div>
 
 
 
 
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">SuNu11'Blog</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SuNu11'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">记录分享学习生活</h1>
+      
+    
+    
   </div>
-  <p class="site-subtitle"></p>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
+
 
 <nav class="site-nav">
-  
-
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-guide">
-          <a href="/Guide/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
-            
-            航海图
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
+          
+          <li class="menu-item menu-item-首页">
 
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-导航图">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Guide/" rel="section"><i class="menu-item-icon fa fa-fw fa-globe"></i> <br>导航图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-公益404">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404.html" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
       
     </ul>
   
 
   
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
 </nav>
 
 
 
- </div>
+  
+
+
+
+</div>
     </header>
+
+    
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
 
@@ -287,67 +428,91 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/08/28/14/">
+  
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="SuNu11">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/me.png">
-  </span>
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/08/28/14/">
 
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="SuNu11'Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="SuNu11'Blog" src="">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SuNu11">
+      <meta itemprop="description" content="淡泊以明志，宁静以致远">
+      <meta itemprop="image" content="/images/me.png">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SuNu11'Blog">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                我与XSS的感情之路(3)
+          <h2 class="post-title" itemprop="name headline">我与XSS的感情之路(3)
+
               
             
-          </h1>
+          </h2>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-28T15:18:08+08:00">
-                2017-08-28
-              </time>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-08-28 15:18:08" itemprop="dateCreated datePublished" datetime="2017-08-28T15:18:08+08:00">2017-08-28</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-03 19:56:59" itemprop="dateModified" datetime="2018-11-03T19:56:59+08:00">2018-11-03</time>
+              
             
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
+            
               <span class="post-meta-divider">|</span>
+            
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WEB安全/" itemprop="url" rel="index">
-                    <span itemprop="name">WEB安全</span>
-                  </a>
-                </span>
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
 
                 
                 
@@ -357,11 +522,12 @@
 
           
             
+            
           
 
           
-
           
+
           
 
           
@@ -372,7 +538,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -382,10 +550,10 @@
         <h3 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h3><p>接着上一文过来，这一部分是个人的一些总结。对于挖掘xss漏洞，目的都是让自己的payload可以执行，在其探索的过程中，我个人首先会通过审查元素，了解其输入点，过滤规则，然后<a id="more"></a>再针对性的进行payload的构造。首先，输入框、flash、css、上传点、http头部的字段、第三方插件、能主动修改其参数值的任意参数等等，存在输入的地方都有可能存在xss。明确好目标后，我习惯先输入一堆测试字符看看其过滤规则：<br><code>&#39;&#39;;!--&quot;&lt;XSS&gt;=&amp;{()}/&#39;script、on、alert、prompt、confirm、&lt;script src=&quot;http://x.js&quot;&gt; %c0u003cimg+src%3d1+onerror%3dalert(/xss/)+%c0u003e……</code><br>一般都能判断出如何过滤的，就像之前做题的过程中，都是经过测试才有结果，才能对症下药。</p>
 <p>然后对于过滤规则，我总结了这样几点：</p>
 <h4 id="1、大小写："><a href="#1、大小写：" class="headerlink" title="1、大小写："></a>1、大小写：</h4><p><code>&lt;ScRIpT&gt;alert(&#39;123&#39;)&lt;/sCRIpT&gt;</code></p>
-<h4 id="2、编码绕过："><a href="#2、编码绕过：" class="headerlink" title="2、编码绕过："></a>2、编码绕过：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.十六进制编码</div><div class="line">.jsfuck编码</div><div class="line">.url编码</div><div class="line">.unicode编码</div><div class="line">.加解密</div><div class="line">.HTML编码</div><div class="line">.hex编码</div><div class="line">.ASCII编码</div></pre></td></tr></table></figure>
+<h4 id="2、编码绕过："><a href="#2、编码绕过：" class="headerlink" title="2、编码绕过："></a>2、编码绕过：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.十六进制编码</span><br><span class="line">.jsfuck编码</span><br><span class="line">.url编码</span><br><span class="line">.unicode编码</span><br><span class="line">.加解密</span><br><span class="line">.HTML编码</span><br><span class="line">.hex编码</span><br><span class="line">.ASCII编码</span><br></pre></td></tr></table></figure>
 <h4 id="3、绕过magic-quotes-gpc："><a href="#3、绕过magic-quotes-gpc：" class="headerlink" title="3、绕过magic_quotes_gpc："></a>3、绕过magic_quotes_gpc：</h4><p><code>&lt;script&gt;String.fromCharCode(97, 108, 101, 114, 116, 40, 34, 88, 83, 83, 34, 41, 59)&lt;/script&gt;</code></p>
 <h4 id="4、闭合标签"><a href="#4、闭合标签" class="headerlink" title="4、闭合标签"></a>4、闭合标签</h4><p><code>&quot;&gt;&lt;script&gt;alert(/123/)&lt;/script&gt;</code><br><code>&lt;/script&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code></p>
-<h4 id="5、标签绕过"><a href="#5、标签绕过" class="headerlink" title="5、标签绕过"></a>5、标签绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;img src=&quot;x&quot; onerror=&quot;alert(1)&quot;&gt;</div><div class="line">&lt;button onclick=&quot;javascript:alert(&apos;xss&apos;)&gt;XSS&lt;/button&quot;&gt;</div><div class="line">&lt;title&gt;&lt;img a=&quot;&lt;/title&gt;&lt;img/src=1 onerror=alert(1)//&quot;&gt;</div><div class="line">&quot;onsubmit=javascript:alert(1)%20name=&quot;a</div><div class="line">&lt;svg/onload=prompt(1)&gt;等等</div></pre></td></tr></table></figure>
+<h4 id="5、标签绕过"><a href="#5、标签绕过" class="headerlink" title="5、标签绕过"></a>5、标签绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;x&quot; onerror=&quot;alert(1)&quot;&gt;</span><br><span class="line">&lt;button onclick=&quot;javascript:alert(&apos;xss&apos;)&gt;XSS&lt;/button&quot;&gt;</span><br><span class="line">&lt;title&gt;&lt;img a=&quot;&lt;/title&gt;&lt;img/src=1 onerror=alert(1)//&quot;&gt;</span><br><span class="line">&quot;onsubmit=javascript:alert(1)%20name=&quot;a</span><br><span class="line">&lt;svg/onload=prompt(1)&gt;等等</span><br></pre></td></tr></table></figure>
 <h4 id="6、其他符号绕过"><a href="#6、其他符号绕过" class="headerlink" title="6、其他符号绕过"></a>6、其他符号绕过</h4><table>
 <thead>
 <tr>
@@ -404,7 +572,7 @@
 <p>%00           |截断</p>
 <p><strong><em>另外在某些情况下，当”被过滤，可以在IE内核下使用两个反引号(`)TAB键上面的那个代替双引号.</em></strong></p>
 <h5 id="7、双字母绕过-lt-img-ononerrorerror-quot-123-quot-gt-、-lt-script-gt-alalertert-123-lt-script-gt"><a href="#7、双字母绕过-lt-img-ononerrorerror-quot-123-quot-gt-、-lt-script-gt-alalertert-123-lt-script-gt" class="headerlink" title="7、双字母绕过 &lt;img ononerrorerror=&quot;123&quot;&gt;、&lt;script&gt;alalertert(123)&lt;/script&gt;"></a>7、双字母绕过 <code>&lt;img ononerrorerror=&quot;123&quot;&gt;、&lt;script&gt;alalertert(123)&lt;/script&gt;</code></h5><h5 id="8、宽字节绕过"><a href="#8、宽字节绕过" class="headerlink" title="8、宽字节绕过"></a>8、宽字节绕过</h5><p>gbxxxx系列的编码，那么我们尝试一下宽字节  <code>%c0 %bf  %5c</code></p>
-<h4 id="9、其他事件绕过"><a href="#9、其他事件绕过" class="headerlink" title="9、其他事件绕过"></a>9、其他事件绕过</h4><p>（比如过滤了&lt;&gt;使用 <code>&quot;onmouseover=alert(11)  bad=</code>）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  onload</div><div class="line">  onclick</div><div class="line">  onerror</div><div class="line">  prompt</div><div class="line">  confirm</div><div class="line">  onmousemove</div></pre></td></tr></table></figure></p>
+<h4 id="9、其他事件绕过"><a href="#9、其他事件绕过" class="headerlink" title="9、其他事件绕过"></a>9、其他事件绕过</h4><p>（比如过滤了&lt;&gt;使用 <code>&quot;onmouseover=alert(11)  bad=</code>）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  onload</span><br><span class="line">  onclick</span><br><span class="line">  onerror</span><br><span class="line">  prompt</span><br><span class="line">  confirm</span><br><span class="line">  onmousemove</span><br></pre></td></tr></table></figure></p>
 <p><strong><em>附录1：</em></strong></p>
 <table>
 <thead>
@@ -457,59 +625,82 @@
 </tbody>
 </table>
 <h3 id="防御："><a href="#防御：" class="headerlink" title="防御："></a>防御：</h3><p>对于采用过滤、转义来防御xss漏洞最基本的方式，具体实现，必须基于代码，而对应的防御招式已经许多前辈们都有分享。我觉得做好编码、过滤的工作之后，下面两个措施也是有必要实施的。<br>1：为Cookie加上HttpOnly标记。保护好cookie，就算各种过滤都被绕过，也无法读取、修改cookie，能有效的减轻危害。<br>2：部署waf是一件很有效的工作。一个具有丰富规则库的waf能大幅度过滤掉恶意输入数据，个人感觉主要是能增加突破防御的难度，不仅仅针对于xss漏洞，其他的漏洞也是一样。能有效降低其风险。<br>下面是一个php的xss过滤器：(学习于网上，将该代码加入到核心函数库，然后再调用即可)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&lt;?php  </div><div class="line">    function RemoveXSS($val) &#123;  </div><div class="line">       // remove all non-printable characters. CR(0a) and LF(0b) and TAB(9) are allowed  </div><div class="line">       // this prevents some character re-spacing such as &lt;java\0script&gt;  </div><div class="line">       // note that you have to handle splits with \n, \r, and \t later since they *are* allowed in some inputs  </div><div class="line">       $val = preg_replace(&apos;/([\x00-\x08,\x0b-\x0c,\x0e-\x19])/&apos;, &apos;&apos;, $val);  </div><div class="line">         </div><div class="line">       // straight replacements, the user should never need these since they&apos;re normal characters  </div><div class="line">       // this prevents like &lt;IMG SRC=@avascript:alert(&apos;XSS&apos;)&gt;  </div><div class="line">       $search = &apos;abcdefghijklmnopqrstuvwxyz&apos;; </div><div class="line">       $search .= &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;;  </div><div class="line">       $search .= &apos;1234567890!@#$%^&amp;*()&apos;; </div><div class="line">       $search .= &apos;~`&quot;;:?+/=&#123;&#125;[]-_|\&apos;\\&apos;; </div><div class="line">       for ($i = 0; $i &lt; strlen($search); $i++) &#123; </div><div class="line">          // ;? matches the ;, which is optional </div><div class="line">          // 0&#123;0,7&#125; matches any padded zeros, which are optional and go up to 8 chars </div><div class="line">        </div><div class="line">          // @ @ search for the hex values </div><div class="line">          $val = preg_replace(&apos;/(&amp;#[xX]0&#123;0,8&#125;&apos;.dechex(ord($search[$i])).&apos;;?)/i&apos;, $search[$i], $val); // with a ; </div><div class="line">          // @ @ 0&#123;0,7&#125; matches &apos;0&apos; zero to seven times  </div><div class="line">          $val = preg_replace(&apos;/(&amp;#0&#123;0,8&#125;&apos;.ord($search[$i]).&apos;;?)/&apos;, $search[$i], $val); // with a ; </div><div class="line">       &#125; </div><div class="line">        </div><div class="line">       // now the only remaining whitespace attacks are \t, \n, and \r </div><div class="line">       $ra1 = Array(&apos;javascript&apos;, &apos;vbscript&apos;, &apos;expression&apos;, &apos;applet&apos;, &apos;meta&apos;, &apos;xml&apos;, &apos;blink&apos;, &apos;link&apos;, &apos;style&apos;, &apos;script&apos;, &apos;embed&apos;, &apos;object&apos;, &apos;iframe&apos;, &apos;frame&apos;, &apos;frameset&apos;, &apos;ilayer&apos;, &apos;layer&apos;, &apos;bgsound&apos;, &apos;title&apos;, &apos;base&apos;); </div><div class="line">       $ra2 = Array(&apos;onabort&apos;, &apos;onactivate&apos;, &apos;onafterprint&apos;, &apos;onafterupdate&apos;, &apos;onbeforeactivate&apos;, &apos;onbeforecopy&apos;, &apos;onbeforecut&apos;, &apos;onbeforedeactivate&apos;, &apos;onbeforeeditfocus&apos;, &apos;onbeforepaste&apos;, &apos;onbeforeprint&apos;, &apos;onbeforeunload&apos;, &apos;onbeforeupdate&apos;, &apos;onblur&apos;, &apos;onbounce&apos;, &apos;oncellchange&apos;, &apos;onchange&apos;, &apos;onclick&apos;, &apos;oncontextmenu&apos;, &apos;oncontrolselect&apos;, &apos;oncopy&apos;, &apos;oncut&apos;, &apos;ondataavailable&apos;, &apos;ondatasetchanged&apos;, &apos;ondatasetcomplete&apos;, &apos;ondblclick&apos;, &apos;ondeactivate&apos;, &apos;ondrag&apos;, &apos;ondragend&apos;, &apos;ondragenter&apos;, &apos;ondragleave&apos;, &apos;ondragover&apos;, &apos;ondragstart&apos;, &apos;ondrop&apos;, &apos;onerror&apos;, &apos;onerrorupdate&apos;, &apos;onfilterchange&apos;, &apos;onfinish&apos;, &apos;onfocus&apos;, &apos;onfocusin&apos;, &apos;onfocusout&apos;, &apos;onhelp&apos;, &apos;onkeydown&apos;, &apos;onkeypress&apos;, &apos;onkeyup&apos;, &apos;onlayoutcomplete&apos;, &apos;onload&apos;, &apos;onlosecapture&apos;, &apos;onmousedown&apos;, &apos;onmouseenter&apos;, &apos;onmouseleave&apos;, &apos;onmousemove&apos;, &apos;onmouseout&apos;, &apos;onmouseover&apos;, &apos;onmouseup&apos;, &apos;onmousewheel&apos;, &apos;onmove&apos;, &apos;onmoveend&apos;, &apos;onmovestart&apos;, &apos;onpaste&apos;, &apos;onpropertychange&apos;, &apos;onreadystatechange&apos;, &apos;onreset&apos;, &apos;onresize&apos;, &apos;onresizeend&apos;, &apos;onresizestart&apos;, &apos;onrowenter&apos;, &apos;onrowexit&apos;, &apos;onrowsdelete&apos;, &apos;onrowsinserted&apos;, &apos;onscroll&apos;, &apos;onselect&apos;, &apos;onselectionchange&apos;, &apos;onselectstart&apos;, &apos;onstart&apos;, &apos;onstop&apos;, &apos;onsubmit&apos;, &apos;onunload&apos;); </div><div class="line">       $ra = array_merge($ra1, $ra2); </div><div class="line">        </div><div class="line">       $found = true; // keep replacing as long as the previous round replaced something </div><div class="line">       while ($found == true) &#123; </div><div class="line">          $val_before = $val; </div><div class="line">          for ($i = 0; $i &lt; sizeof($ra); $i++) &#123; </div><div class="line">             $pattern = &apos;/&apos;; </div><div class="line">             for ($j = 0; $j &lt; strlen($ra[$i]); $j++) &#123; </div><div class="line">                if ($j &gt; 0) &#123; </div><div class="line">                   $pattern .= &apos;(&apos;;  </div><div class="line">                   $pattern .= &apos;(&amp;#[xX]0&#123;0,8&#125;([9ab]);)&apos;; </div><div class="line">                   $pattern .= &apos;|&apos;;  </div><div class="line">                   $pattern .= &apos;|(&amp;#0&#123;0,8&#125;([9|10|13]);)&apos;; </div><div class="line">                   $pattern .= &apos;)*&apos;; </div><div class="line">                &#125; </div><div class="line">                $pattern .= $ra[$i][$j]; </div><div class="line">             &#125; </div><div class="line">             $pattern .= &apos;/i&apos;;  </div><div class="line">             $replacement = substr($ra[$i], 0, 2).&apos;&lt;x&gt;&apos;.substr($ra[$i], 2); // add in &lt;&gt; to nerf the tag  </div><div class="line">             $val = preg_replace($pattern, $replacement, $val); // filter out the hex tags  </div><div class="line">             if ($val_before == $val) &#123;  </div><div class="line">                // no replacements were made, so exit the loop  </div><div class="line">                $found = false;  </div><div class="line">             &#125;  </div><div class="line">          &#125;  </div><div class="line">       &#125;  </div><div class="line">       return $val;  </div><div class="line">    &#125;   </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<p><strong><em>参考链接：</em></strong><br><a href="http://www.freebuf.com/sectool/108568.html" target="_blank" rel="external">http://www.freebuf.com/sectool/108568.html</a><br><a href="https://www.secpulse.com/archives/44299.html" target="_blank" rel="external">https://www.secpulse.com/archives/44299.html</a><br><a href="https://www.waitalone.cn/the-seven-principles-of-xss-defense.html" target="_blank" rel="external">https://www.waitalone.cn/the-seven-principles-of-xss-defense.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php  </span><br><span class="line">    function RemoveXSS($val) &#123;  </span><br><span class="line">       // remove all non-printable characters. CR(0a) and LF(0b) and TAB(9) are allowed  </span><br><span class="line">       // this prevents some character re-spacing such as &lt;java\0script&gt;  </span><br><span class="line">       // note that you have to handle splits with \n, \r, and \t later since they *are* allowed in some inputs  </span><br><span class="line">       $val = preg_replace(&apos;/([\x00-\x08,\x0b-\x0c,\x0e-\x19])/&apos;, &apos;&apos;, $val);  </span><br><span class="line">         </span><br><span class="line">       // straight replacements, the user should never need these since they&apos;re normal characters  </span><br><span class="line">       // this prevents like &lt;IMG SRC=@avascript:alert(&apos;XSS&apos;)&gt;  </span><br><span class="line">       $search = &apos;abcdefghijklmnopqrstuvwxyz&apos;; </span><br><span class="line">       $search .= &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;;  </span><br><span class="line">       $search .= &apos;1234567890!@#$%^&amp;*()&apos;; </span><br><span class="line">       $search .= &apos;~`&quot;;:?+/=&#123;&#125;[]-_|\&apos;\\&apos;; </span><br><span class="line">       for ($i = 0; $i &lt; strlen($search); $i++) &#123; </span><br><span class="line">          // ;? matches the ;, which is optional </span><br><span class="line">          // 0&#123;0,7&#125; matches any padded zeros, which are optional and go up to 8 chars </span><br><span class="line">        </span><br><span class="line">          // @ @ search for the hex values </span><br><span class="line">          $val = preg_replace(&apos;/(&amp;#[xX]0&#123;0,8&#125;&apos;.dechex(ord($search[$i])).&apos;;?)/i&apos;, $search[$i], $val); // with a ; </span><br><span class="line">          // @ @ 0&#123;0,7&#125; matches &apos;0&apos; zero to seven times  </span><br><span class="line">          $val = preg_replace(&apos;/(&amp;#0&#123;0,8&#125;&apos;.ord($search[$i]).&apos;;?)/&apos;, $search[$i], $val); // with a ; </span><br><span class="line">       &#125; </span><br><span class="line">        </span><br><span class="line">       // now the only remaining whitespace attacks are \t, \n, and \r </span><br><span class="line">       $ra1 = Array(&apos;javascript&apos;, &apos;vbscript&apos;, &apos;expression&apos;, &apos;applet&apos;, &apos;meta&apos;, &apos;xml&apos;, &apos;blink&apos;, &apos;link&apos;, &apos;style&apos;, &apos;script&apos;, &apos;embed&apos;, &apos;object&apos;, &apos;iframe&apos;, &apos;frame&apos;, &apos;frameset&apos;, &apos;ilayer&apos;, &apos;layer&apos;, &apos;bgsound&apos;, &apos;title&apos;, &apos;base&apos;); </span><br><span class="line">       $ra2 = Array(&apos;onabort&apos;, &apos;onactivate&apos;, &apos;onafterprint&apos;, &apos;onafterupdate&apos;, &apos;onbeforeactivate&apos;, &apos;onbeforecopy&apos;, &apos;onbeforecut&apos;, &apos;onbeforedeactivate&apos;, &apos;onbeforeeditfocus&apos;, &apos;onbeforepaste&apos;, &apos;onbeforeprint&apos;, &apos;onbeforeunload&apos;, &apos;onbeforeupdate&apos;, &apos;onblur&apos;, &apos;onbounce&apos;, &apos;oncellchange&apos;, &apos;onchange&apos;, &apos;onclick&apos;, &apos;oncontextmenu&apos;, &apos;oncontrolselect&apos;, &apos;oncopy&apos;, &apos;oncut&apos;, &apos;ondataavailable&apos;, &apos;ondatasetchanged&apos;, &apos;ondatasetcomplete&apos;, &apos;ondblclick&apos;, &apos;ondeactivate&apos;, &apos;ondrag&apos;, &apos;ondragend&apos;, &apos;ondragenter&apos;, &apos;ondragleave&apos;, &apos;ondragover&apos;, &apos;ondragstart&apos;, &apos;ondrop&apos;, &apos;onerror&apos;, &apos;onerrorupdate&apos;, &apos;onfilterchange&apos;, &apos;onfinish&apos;, &apos;onfocus&apos;, &apos;onfocusin&apos;, &apos;onfocusout&apos;, &apos;onhelp&apos;, &apos;onkeydown&apos;, &apos;onkeypress&apos;, &apos;onkeyup&apos;, &apos;onlayoutcomplete&apos;, &apos;onload&apos;, &apos;onlosecapture&apos;, &apos;onmousedown&apos;, &apos;onmouseenter&apos;, &apos;onmouseleave&apos;, &apos;onmousemove&apos;, &apos;onmouseout&apos;, &apos;onmouseover&apos;, &apos;onmouseup&apos;, &apos;onmousewheel&apos;, &apos;onmove&apos;, &apos;onmoveend&apos;, &apos;onmovestart&apos;, &apos;onpaste&apos;, &apos;onpropertychange&apos;, &apos;onreadystatechange&apos;, &apos;onreset&apos;, &apos;onresize&apos;, &apos;onresizeend&apos;, &apos;onresizestart&apos;, &apos;onrowenter&apos;, &apos;onrowexit&apos;, &apos;onrowsdelete&apos;, &apos;onrowsinserted&apos;, &apos;onscroll&apos;, &apos;onselect&apos;, &apos;onselectionchange&apos;, &apos;onselectstart&apos;, &apos;onstart&apos;, &apos;onstop&apos;, &apos;onsubmit&apos;, &apos;onunload&apos;); </span><br><span class="line">       $ra = array_merge($ra1, $ra2); </span><br><span class="line">        </span><br><span class="line">       $found = true; // keep replacing as long as the previous round replaced something </span><br><span class="line">       while ($found == true) &#123; </span><br><span class="line">          $val_before = $val; </span><br><span class="line">          for ($i = 0; $i &lt; sizeof($ra); $i++) &#123; </span><br><span class="line">             $pattern = &apos;/&apos;; </span><br><span class="line">             for ($j = 0; $j &lt; strlen($ra[$i]); $j++) &#123; </span><br><span class="line">                if ($j &gt; 0) &#123; </span><br><span class="line">                   $pattern .= &apos;(&apos;;  </span><br><span class="line">                   $pattern .= &apos;(&amp;#[xX]0&#123;0,8&#125;([9ab]);)&apos;; </span><br><span class="line">                   $pattern .= &apos;|&apos;;  </span><br><span class="line">                   $pattern .= &apos;|(&amp;#0&#123;0,8&#125;([9|10|13]);)&apos;; </span><br><span class="line">                   $pattern .= &apos;)*&apos;; </span><br><span class="line">                &#125; </span><br><span class="line">                $pattern .= $ra[$i][$j]; </span><br><span class="line">             &#125; </span><br><span class="line">             $pattern .= &apos;/i&apos;;  </span><br><span class="line">             $replacement = substr($ra[$i], 0, 2).&apos;&lt;x&gt;&apos;.substr($ra[$i], 2); // add in &lt;&gt; to nerf the tag  </span><br><span class="line">             $val = preg_replace($pattern, $replacement, $val); // filter out the hex tags  </span><br><span class="line">             if ($val_before == $val) &#123;  </span><br><span class="line">                // no replacements were made, so exit the loop  </span><br><span class="line">                $found = false;  </span><br><span class="line">             &#125;  </span><br><span class="line">          &#125;  </span><br><span class="line">       &#125;  </span><br><span class="line">       return $val;  </span><br><span class="line">    &#125;   </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p><strong><em>参考链接：</em></strong><br><span class="exturl" data-url="aHR0cDovL3d3dy5mcmVlYnVmLmNvbS9zZWN0b29sLzEwODU2OC5odG1s" title="http://www.freebuf.com/sectool/108568.html">http://www.freebuf.com/sectool/108568.html<i class="fa fa-external-link"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2VjcHVsc2UuY29tL2FyY2hpdmVzLzQ0Mjk5Lmh0bWw=" title="https://www.secpulse.com/archives/44299.html">https://www.secpulse.com/archives/44299.html<i class="fa fa-external-link"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cud2FpdGFsb25lLmNuL3RoZS1zZXZlbi1wcmluY2lwbGVzLW9mLXhzcy1kZWZlbnNlLmh0bWw=" title="https://www.waitalone.cn/the-seven-principles-of-xss-defense.html">https://www.waitalone.cn/the-seven-principles-of-xss-defense.html<i class="fa fa-external-link"></i></span></p>
 
       
     </div>
-    <div>
-      
+
+    
+
+    
+    
+    
+      <div>
+    
         <div>
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="icon ion-md-power"></i>感谢您的阅读-------------</div>
     
 </div>
+    
+      </div>
+
+    
+
+    
       
-    </div> 
-    <div>
-      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
         
 
-      
-    </div>
-
-    <div>
-      
-        
-  <div align="center">
- 
-   <div class="">
-   <p><span>
-   <br/><br/><b>本文出处：</b><a href="/2017/08/28/14/" title="我与XSS的感情之路(3)">http://sunu11.com/2017/08/28/14/</a><br/><span><span><span><span><span><span><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的。但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
-   </span></p>
-   </div>
- 
-  </div>
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
 
 
-      
-    </div>
+  
 
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>SuNu11</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="http://sunu11.com/2017/08/28/14/" title="我与XSS的感情之路(3)">http://sunu11.com/2017/08/28/14/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
@@ -520,6 +711,10 @@
             <a href="/tags/xss/" rel="tag"><i class="fa fa-tag"></i> xss</a>
           
         </div>
+      
+
+      
+      
       
 
       
@@ -547,25 +742,25 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
           </div>
           
 
-
-          
-
   
-  </div>
-    
+    <div class="comments" id="gitalk-container">
+    </div>
+  
+
+
 
         </div>
         
@@ -580,168 +775,324 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/me.png"
-               alt="SuNu11" />
-          <p class="site-author-name" itemprop="name">SuNu11</p>
-          <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives/index.html">
-              <span class="site-state-item-count">32</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.png" alt="SuNu11">
+            
+              <p class="site-author-name" itemprop="name">SuNu11</p>
+              <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
           </div>
 
           
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">分类</span>
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
               </a>
             </div>
           
 
           
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">43</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N1bnUxMQ==" title="GitHub &rarr; https://github.com/sunu11"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOjk1ODEzMDQyMUBxcS5jb20=" title="E-Mail &rarr; mailto:958130421@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cDovL3dlaWJvLmNvbS9zdW51MTE=" title="Weibo &rarr; http://weibo.com/sunu11"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9zdV9udTEx" title="Twitter &rarr; https://twitter.com/su_nu11"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+                </span>
+              
             </div>
           
 
-        </nav>
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+             </div>
+          
 
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5zZWMtcmVkY2x1Yi5jb20v" title="http://www.sec-redclub.com/">Redbu11</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL2RicWYueHl6Lw==" title="http://dbqf.xyz/">大兄弟(独步清风)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy52aXJ6ei5jb20v" title="http://www.virzz.com/">V神(Virink)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5tb25idXJhbi5jbi8=" title="http://www.monburan.cn/">大兄弟(Monburan)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5jbmJsb2dzLmNvbS9uMWdodHdhdGNoZXIv" title="http://www.cnblogs.com/n1ghtwatcher/">老哥(n1ghtwatcher)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5nbGFtb3Iuc2l0ZS8=" title="http://www.glamor.site/">大诏(glamor)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcGlhb21pYW9ob25nY2hlbi8=" title="https://www.cnblogs.com/piaomiaohongchen/">超神哥</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3FjbG92ZXIuY24=" title="http://qclover.cn">华清(Qclover)</span>
+                  </li>
+                
+              </ul>
+            </div>
+          
 
-        <div class="links-of-author motion-element">
           
             
-              <span class="links-of-author-item">
-                <a href="http://mooder.f4ck0.com:8000/" target="_blank" title="Team Spaces">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  Team Spaces
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/sunu11" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/sunu11" target="_blank" title="微博">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  微博
-                </a>
-              </span>
-            
           
+          
+
         </div>
-
-        
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-globe"></i>
-              一路认识的师傅们
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.sec-redclub.com/" title="Redbu11" target="_blank">Redbu11</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://dbqf.xyz/" title="大兄弟独步清风" target="_blank">大兄弟独步清风</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.virzz.com/" title="V神Virink" target="_blank">V神Virink</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.monburan.cn/" title="大兄弟Monburan" target="_blank">大兄弟Monburan</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.cnblogs.com/n1ghtwatcher/" title="老哥n1ghtwatcher" target="_blank">老哥n1ghtwatcher</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.glamor.site/" title="大诏glamor" target="_blank">大诏glamor</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://www.cnblogs.com/piaomiaohongchen/" title="超神哥" target="_blank">超神哥</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://qclover.cn" title="华清Qclover" target="_blank">华清Qclover</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
-
-
-      </section>
+      </div>
 
       
       <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
           <div class="post-toc">
 
             
-              
+            
+            
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#心得"><span class="nav-number">1.</span> <span class="nav-text">心得</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、大小写："><span class="nav-number">1.1.</span> <span class="nav-text">1、大小写：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、编码绕过："><span class="nav-number">1.2.</span> <span class="nav-text">2、编码绕过：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、绕过magic-quotes-gpc："><span class="nav-number">1.3.</span> <span class="nav-text">3、绕过magic_quotes_gpc：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、闭合标签"><span class="nav-number">1.4.</span> <span class="nav-text">4、闭合标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、标签绕过"><span class="nav-number">1.5.</span> <span class="nav-text">5、标签绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、其他符号绕过"><span class="nav-number">1.6.</span> <span class="nav-text">6、其他符号绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#7、双字母绕过-lt-img-ononerrorerror-quot-123-quot-gt-、-lt-script-gt-alalertert-123-lt-script-gt"><span class="nav-number">1.6.1.</span> <span class="nav-text">7、双字母绕过 <img ononerrorerror="123">、<script>alalertert(123)</script></span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8、宽字节绕过"><span class="nav-number">1.6.2.</span> <span class="nav-text">8、宽字节绕过</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9、其他事件绕过"><span class="nav-number">1.7.</span> <span class="nav-text">9、其他事件绕过</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防御："><span class="nav-number">2.</span> <span class="nav-text">防御：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#心得"><span class="nav-number">1.</span> <span class="nav-text">心得</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、大小写："><span class="nav-number">1.1.</span> <span class="nav-text">1、大小写：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、编码绕过："><span class="nav-number">1.2.</span> <span class="nav-text">2、编码绕过：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、绕过magic-quotes-gpc："><span class="nav-number">1.3.</span> <span class="nav-text">3、绕过magic_quotes_gpc：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、闭合标签"><span class="nav-number">1.4.</span> <span class="nav-text">4、闭合标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、标签绕过"><span class="nav-number">1.5.</span> <span class="nav-text">5、标签绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、其他符号绕过"><span class="nav-number">1.6.</span> <span class="nav-text">6、其他符号绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#7、双字母绕过-lt-img-ononerrorerror-quot-123-quot-gt-、-lt-script-gt-alalertert-123-lt-script-gt"><span class="nav-number">1.6.1.</span> <span class="nav-text">7、双字母绕过 &lt;img ononerrorerror=&quot;123&quot;&gt;、&lt;script&gt;alalertert(123)&lt;/script&gt;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8、宽字节绕过"><span class="nav-number">1.6.2.</span> <span class="nav-text">8、宽字节绕过</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9、其他事件绕过"><span class="nav-number">1.7.</span> <span class="nav-text">9、其他事件绕过</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防御："><span class="nav-number">2.</span> <span class="nav-text">防御：</span></a></li></ol></div>
             
 
           </div>
-        </section>
+        </div>
       <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
       
 
     </div>
@@ -754,46 +1105,60 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5taWl0YmVpYW4uZ292LmNu">京ICP备16045158号 </span>&copy; 2016 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">SuNu11</span>
+
+  
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a>Hexo</a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.miitbeian.gov.cn" target="_blank" title="备案信息">京ICP备16045158号</a> 强力驱动
-</div>
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span></div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  <script src="https://s96.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"</script>
-   </span>
-  </a>
-</div>
-<br>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Mist</span></div>
+
+
 
 
         
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487"></script>
+  </div>
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+
+    
+
+    
+
+    
   </div>
 
   
 
-<script type="text/javascript">
+<script>
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -807,71 +1172,492 @@
 
 
 
-  
 
 
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
+    
+    
   
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
 
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  <script src="/js/src/utils.js?v=6.7.0"></script>
 
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
+  <script src="/js/src/motion.js?v=6.7.0"></script>
 
 
 
   
   
 
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '97b2e5deab70d3927e17',
+    clientSecret: '286219e6fdbe002564d7880370688c453c513d99',
+    repo: 'sunu11.github.io',
+    owner: 'sunu11',
+    admin: ['958130421@qq.com'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'sunu11.github.io',
+          owner: '',
+          admin: [''],
+          id: location.pathname,
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '97b2e5deab70d3927e17',
+    clientSecret: '286219e6fdbe002564d7880370688c453c513d99',
+    repo: 'sunu11.github.io',
+    owner: 'sunu11',
+    admin: ['958130421@qq.com'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'sunu11.github.io',
+          owner: '',
+          admin: [''],
+          id: location.pathname,
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
   
 
   
@@ -881,21 +1667,20 @@
   
 
   
-  
-  
-
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"></script>
-  </div>
-
-
-
-  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-  
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
 
   
+
   
+  <script src="/js/src/exturl.js?v=6.7.0"></script>
+
+
+  
+
+  
+
+  
+
 </body>
 </html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

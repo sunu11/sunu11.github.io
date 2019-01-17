@@ -1,4 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6,15 +15,11 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -27,35 +32,39 @@
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
 
-  
-  
-  
-  
+
+
+
+
+
+
 
   
-    
-    
   
-
   
-
-  
-
-  
-
   
 
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -63,30 +72,57 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="DNS,nslookup," />
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
 
 
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/w.ico?v=6.7.0">
 
 
-
-  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml" />
-
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/w.ico?v=6.7.0">
 
 
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/w.ico?v=6.7.0">
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/w.ico?v=5.1.0" />
+
+  <link rel="mask-icon" href="/images/w.ico?v=6.7.0" color="#222">
 
 
 
 
 
 
-<meta name="description" content="本文将对dns域传送漏洞进行分析与总结，如有错误，欢迎指出。谢谢! 0x00 基础DNS: 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访">
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.7.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文将对dns域传送漏洞进行分析与总结，如有错误，欢迎指出。谢谢! 0x00 基础DNS: 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访">
 <meta name="keywords" content="DNS,nslookup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DNS域传送漏洞">
@@ -103,7 +139,7 @@
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/dns7.1.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/dns7.2.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/dns8.png">
-<meta property="og:updated_time" content="2018-10-18T07:49:34.793Z">
+<meta property="og:updated_time" content="2018-10-18T07:49:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS域传送漏洞">
 <meta name="twitter:description" content="本文将对dns域传送漏洞进行分析与总结，如有错误，欢迎指出。谢谢! 0x00 基础DNS: 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访">
@@ -111,41 +147,22 @@
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 'undefined',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2017/03/16/8/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
   };
 </script>
 
-
-
-  <link rel="canonical" href="http://sunu11.com/2017/03/16/8/"/>
-
-
-
-
-
-  <title> DNS域传送漏洞 | SuNu11'Blog </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>DNS域传送漏洞 | SuNu11'Blog</title>
   
 
 
@@ -155,136 +172,260 @@
 
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"></script>
-  </div>
 
 
 
 
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">SuNu11'Blog</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SuNu11'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">记录分享学习生活</h1>
+      
+    
+    
   </div>
-  <p class="site-subtitle"></p>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
+
 
 <nav class="site-nav">
-  
-
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-guide">
-          <a href="/Guide/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
-            
-            航海图
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
+          
+          <li class="menu-item menu-item-首页">
 
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-导航图">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Guide/" rel="section"><i class="menu-item-icon fa fa-fw fa-globe"></i> <br>导航图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-公益404">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404.html" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
       
     </ul>
   
 
   
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
 </nav>
 
 
 
- </div>
+  
+
+
+
+</div>
     </header>
+
+    
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
 
@@ -297,67 +438,91 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/03/16/8/">
+  
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="SuNu11">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/me.png">
-  </span>
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sunu11.com/2017/03/16/8/">
 
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="SuNu11'Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="SuNu11'Blog" src="">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SuNu11">
+      <meta itemprop="description" content="淡泊以明志，宁静以致远">
+      <meta itemprop="image" content="/images/me.png">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SuNu11'Blog">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                DNS域传送漏洞
+          <h2 class="post-title" itemprop="name headline">DNS域传送漏洞
+
               
             
-          </h1>
+          </h2>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T00:28:06+08:00">
-                2017-03-16
-              </time>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-03-16 00:28:06" itemprop="dateCreated datePublished" datetime="2017-03-16T00:28:06+08:00">2017-03-16</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-10-18 15:49:34" itemprop="dateModified" datetime="2018-10-18T15:49:34+08:00">2018-10-18</time>
+              
             
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
+            
               <span class="post-meta-divider">|</span>
+            
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
-                    <span itemprop="name">渗透测试</span>
-                  </a>
-                </span>
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/渗透测试/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a></span>
 
                 
                 
@@ -367,11 +532,12 @@
 
           
             
+            
           
 
           
-
           
+
           
 
           
@@ -382,7 +548,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -390,74 +558,97 @@
 
       
         <p>本文将对dns域传送漏洞进行分析与总结，如有错误，欢迎指出。谢谢!</p>
-<h2 id="0x00-基础"><a href="#0x00-基础" class="headerlink" title="0x00 基础"></a>0x00 基础</h2><p><strong>DNS:</strong> 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访<a id="more"></a>问互联网。DNS使用TCP和UDP端口53。当前，对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">常用DNS记录：</div><div class="line">主机记录(A记录):          A记录是用于名称解析的重要记录，它将特定的主机名映射到对应主机的IP地址上。</div><div class="line">IPv6主机记录(AAAA记录):  与A记录对应，用于将特定的主机名映射到一个主机的IPv6地址。 </div><div class="line">别名(CNAME记录):   	    CNAME记录用于将某个别名指向到某个A记录上，这样就不需要再为某个新名字另外创建一条新的A记录。</div><div class="line">电子邮件交换记录（MX记录):  记录一个邮件域名对应的IP地址</div><div class="line">域名服务器记录 (NS记录):  记录该域名由哪台域名服务器解析</div><div class="line">反向记录(PTR记录):    	也即从IP地址到域名的一条记录</div><div class="line">TXT记录：     			记录域名的相关文本信息</div></pre></td></tr></table></figure></p>
-<p><strong>DNS区域传送:</strong> DNS服务器分为主服务器、备份服务器和缓存服务器。而域传送指的是一台备用服务器使用来自主服务器的数据更新自己的域（zone）数据库。这为运行中的DNS服务提供了一定的冗余度，其目的是为了防止主的域名服务器因意外故障变得不可用时影响到整个域名的解析。<br><strong>DNS域传送漏洞:</strong> 一般DNS区域传送操作只在网络里真的有备用域名DNS服务器时才有必要用到，但许多DNS服务器却被错误地配置成只要有client发出请求，就会向对方提供一个zone数据库的详细信息，即允许不受信任的因特网用户执行DNS区域传送操作。<br><strong>危害:</strong> 便于快速判断出某个特定区域的所有主机，获取域信息，如网络拓扑结构、服务器ip地址，为攻击者的入侵提供大量敏感信息。<br><strong>nslookup</strong><br>nslookup是一个网络管理命令行工具，可用于许多计算机操作系统查询域名系统（DNS）以获取域名或IP地址映射或任何其他特定的DNS记录。<br>使用方式<br>非交互式：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns1.png" alt="icon"><br>交互式：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns2.png" alt="icon"><br><strong>dig</strong><br>dig是Linux默认自带的DNS拨测工具<a href="http://www.codeweblog.com/host-nslookup-dig%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank" rel="external">传送门</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">root@sunu11：~# dig -h</div><div class="line">  Usage:  dig [@global-server] [domain] [q-type] [q-class] &#123;q-opt&#125;</div><div class="line">          &#123;global-d-opt&#125; host [@local-server] &#123;local-d-opt&#125;</div><div class="line">          [ host [@local-server] &#123;local-d-opt&#125; [...]]</div><div class="line">  Where:  domain    is in the Domain Name System</div><div class="line">      q-class  is one of (in,hs,ch,...) [default: in]</div><div class="line">      q-type   is one of (a,any,mx,ns,soa,hinfo,axfr,txt,...) [default:a]</div><div class="line">               (Use ixfr=version for type ixfr)</div><div class="line">      q-opt    is one of:</div><div class="line">               -x dot-notation     (shortcut for reverse lookups)</div><div class="line">               -t type             (specify query type)</div><div class="line">      d-opt    is of the form +keyword[=value], where keyword is:</div><div class="line">               +[no]cmd            (Control display of command line)</div><div class="line">               +[no]comments       (Control display of comment lines)</div><div class="line">               +[no]question       (Control display of question)</div><div class="line">               +[no]answer         (Control display of answer)</div><div class="line">               +[no]authority      (Control display of authority)</div><div class="line">               +[no]additional     (Control display of additional)</div><div class="line">               +[no]stats          (Control display of statistics)</div><div class="line">               +[no]short          (Disable everything except short</div><div class="line">                                    form of answer)</div><div class="line">               +[no]all            (Set or clear all display flags)</div><div class="line">      global d-opts and servers (before host name) affect all queries.</div><div class="line">      local d-opts and servers (after host name) affect only that lookup.</div><div class="line">      -h                           (print help and exit)</div><div class="line">      -v                           (print version and exit)</div></pre></td></tr></table></figure></p>
-<h2 id="0x01-实施"><a href="#0x01-实施" class="headerlink" title="0x01 实施"></a>0x01 实施</h2><h3 id="一、收集dns服务器信息"><a href="#一、收集dns服务器信息" class="headerlink" title="一、收集dns服务器信息"></a>一、收集dns服务器信息</h3><p>1、手工使用nslookup命令、whois查询等手段进行对某个域名的dns服务器信息的收集<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns3.png" alt="icon"><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns4.png" alt="icon"><br>2、利用网络空间搜索引擎收集域名服务器信息。如（shadon、zoomeye、fofa等）<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns5.png" alt="icon"><br>3、使用<a href="https://github.com/robertdavidgraham/masscan" target="_blank" rel="external">MASSCAN</a> 进行端口扫描后，获取开放53号端口的dns服务器地址；请参考<a href="http://www.freebuf.com/sectool/112583.html" target="_blank" rel="external">使用指南</a>。<br>4、网上存在一些dns社工裤，也可以从中获取所需要的dns服务器信息。</p>
+<h2 id="0x00-基础"><a href="#0x00-基础" class="headerlink" title="0x00 基础"></a>0x00 基础</h2><p><strong>DNS:</strong> 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访<a id="more"></a>问互联网。DNS使用TCP和UDP端口53。当前，对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">常用DNS记录：</span><br><span class="line">主机记录(A记录):          A记录是用于名称解析的重要记录，它将特定的主机名映射到对应主机的IP地址上。</span><br><span class="line">IPv6主机记录(AAAA记录):  与A记录对应，用于将特定的主机名映射到一个主机的IPv6地址。 </span><br><span class="line">别名(CNAME记录):   	    CNAME记录用于将某个别名指向到某个A记录上，这样就不需要再为某个新名字另外创建一条新的A记录。</span><br><span class="line">电子邮件交换记录（MX记录):  记录一个邮件域名对应的IP地址</span><br><span class="line">域名服务器记录 (NS记录):  记录该域名由哪台域名服务器解析</span><br><span class="line">反向记录(PTR记录):    	也即从IP地址到域名的一条记录</span><br><span class="line">TXT记录：     			记录域名的相关文本信息</span><br></pre></td></tr></table></figure></p>
+<p><strong>DNS区域传送:</strong> DNS服务器分为主服务器、备份服务器和缓存服务器。而域传送指的是一台备用服务器使用来自主服务器的数据更新自己的域（zone）数据库。这为运行中的DNS服务提供了一定的冗余度，其目的是为了防止主的域名服务器因意外故障变得不可用时影响到整个域名的解析。<br><strong>DNS域传送漏洞:</strong> 一般DNS区域传送操作只在网络里真的有备用域名DNS服务器时才有必要用到，但许多DNS服务器却被错误地配置成只要有client发出请求，就会向对方提供一个zone数据库的详细信息，即允许不受信任的因特网用户执行DNS区域传送操作。<br><strong>危害:</strong> 便于快速判断出某个特定区域的所有主机，获取域信息，如网络拓扑结构、服务器ip地址，为攻击者的入侵提供大量敏感信息。<br><strong>nslookup</strong><br>nslookup是一个网络管理命令行工具，可用于许多计算机操作系统查询域名系统（DNS）以获取域名或IP地址映射或任何其他特定的DNS记录。<br>使用方式<br>非交互式：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns1.png" alt="icon"><br>交互式：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns2.png" alt="icon"><br><strong>dig</strong><br>dig是Linux默认自带的DNS拨测工具<span class="exturl" data-url="aHR0cDovL3d3dy5jb2Rld2VibG9nLmNvbS9ob3N0LW5zbG9va3VwLWRpZyVFNSU5MSVCRCVFNCVCQiVBNCVFNyU5QSU4NCVFNCVCRCVCRiVFNyU5NCVBOC8=" title="http://www.codeweblog.com/host-nslookup-dig%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/">传送门<i class="fa fa-external-link"></i></span><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">root@sunu11：~# dig -h</span><br><span class="line">  Usage:  dig [@global-server] [domain] [q-type] [q-class] &#123;q-opt&#125;</span><br><span class="line">          &#123;global-d-opt&#125; host [@local-server] &#123;local-d-opt&#125;</span><br><span class="line">          [ host [@local-server] &#123;local-d-opt&#125; [...]]</span><br><span class="line">  Where:  domain    is in the Domain Name System</span><br><span class="line">      q-class  is one of (in,hs,ch,...) [default: in]</span><br><span class="line">      q-type   is one of (a,any,mx,ns,soa,hinfo,axfr,txt,...) [default:a]</span><br><span class="line">               (Use ixfr=version for type ixfr)</span><br><span class="line">      q-opt    is one of:</span><br><span class="line">               -x dot-notation     (shortcut for reverse lookups)</span><br><span class="line">               -t type             (specify query type)</span><br><span class="line">      d-opt    is of the form +keyword[=value], where keyword is:</span><br><span class="line">               +[no]cmd            (Control display of command line)</span><br><span class="line">               +[no]comments       (Control display of comment lines)</span><br><span class="line">               +[no]question       (Control display of question)</span><br><span class="line">               +[no]answer         (Control display of answer)</span><br><span class="line">               +[no]authority      (Control display of authority)</span><br><span class="line">               +[no]additional     (Control display of additional)</span><br><span class="line">               +[no]stats          (Control display of statistics)</span><br><span class="line">               +[no]short          (Disable everything except short</span><br><span class="line">                                    form of answer)</span><br><span class="line">               +[no]all            (Set or clear all display flags)</span><br><span class="line">      global d-opts and servers (before host name) affect all queries.</span><br><span class="line">      local d-opts and servers (after host name) affect only that lookup.</span><br><span class="line">      -h                           (print help and exit)</span><br><span class="line">      -v                           (print version and exit)</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x01-实施"><a href="#0x01-实施" class="headerlink" title="0x01 实施"></a>0x01 实施</h2><h3 id="一、收集dns服务器信息"><a href="#一、收集dns服务器信息" class="headerlink" title="一、收集dns服务器信息"></a>一、收集dns服务器信息</h3><p>1、手工使用nslookup命令、whois查询等手段进行对某个域名的dns服务器信息的收集<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns3.png" alt="icon"><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns4.png" alt="icon"><br>2、利用网络空间搜索引擎收集域名服务器信息。如（shadon、zoomeye、fofa等）<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns5.png" alt="icon"><br>3、使用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JvYmVydGRhdmlkZ3JhaGFtL21hc3NjYW4=" title="https://github.com/robertdavidgraham/masscan">MASSCAN<i class="fa fa-external-link"></i></span> 进行端口扫描后，获取开放53号端口的dns服务器地址；请参考<span class="exturl" data-url="aHR0cDovL3d3dy5mcmVlYnVmLmNvbS9zZWN0b29sLzExMjU4My5odG1s" title="http://www.freebuf.com/sectool/112583.html">使用指南<i class="fa fa-external-link"></i></span>。<br>4、网上存在一些dns社工裤，也可以从中获取所需要的dns服务器信息。</p>
 <h3 id="二、检测DNS域传送漏洞"><a href="#二、检测DNS域传送漏洞" class="headerlink" title="二、检测DNS域传送漏洞"></a>二、检测DNS域传送漏洞</h3><h5 id="1、使用nmap扫描"><a href="#1、使用nmap扫描" class="headerlink" title="1、使用nmap扫描"></a>1、使用nmap扫描</h5><p>使用如下命令：</p>
 <blockquote>
 <p>nmap –script dns-zone-transfer –script-args dns-zone-transfer.domain=xxx -p 53 -Pn dns.xxx</p>
 </blockquote>
 <p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns6.png" alt="icon"><br><em>其中dns-zone-transfer.domain参数为指定要查询的域；dns.xxx 为指定的查询域名服务器</em></p>
 <h5 id="2、使用dig命令"><a href="#2、使用dig命令" class="headerlink" title="2、使用dig命令"></a>2、使用dig命令</h5><p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns7.1.png" alt="icon"><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns7.2.png" alt="icon"><br><em>其中@指定域名服务器；axfr 为域传送指令；xxx.edu.cn表示要查询的域名</em></p>
-<h5 id="3、nslookup命令"><a href="#3、nslookup命令" class="headerlink" title="3、nslookup命令"></a>3、nslookup命令</h5><h6 id="交互式："><a href="#交互式：" class="headerlink" title="交互式："></a>交互式：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1) 输入nslookup命令进入交互式shell界面;</div><div class="line">2) server 命令参数设定查询将要使用的DNS服务器;针对某个域名可先输入域名获取dns信息。</div><div class="line">3) ls命令列出某个域中的所有域名;如果太长不适合查看可定向保存至文件夹中。</div><div class="line">4) exit命令退出</div></pre></td></tr></table></figure>
+<h5 id="3、nslookup命令"><a href="#3、nslookup命令" class="headerlink" title="3、nslookup命令"></a>3、nslookup命令</h5><h6 id="交互式："><a href="#交互式：" class="headerlink" title="交互式："></a>交互式：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1) 输入nslookup命令进入交互式shell界面;</span><br><span class="line">2) server 命令参数设定查询将要使用的DNS服务器;针对某个域名可先输入域名获取dns信息。</span><br><span class="line">3) ls命令列出某个域中的所有域名;如果太长不适合查看可定向保存至文件夹中。</span><br><span class="line">4) exit命令退出</span><br></pre></td></tr></table></figure>
 <p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/dns8.png" alt="icon"></p>
 <h6 id="非交互式方法"><a href="#非交互式方法" class="headerlink" title="非交互式方法"></a>非交互式方法</h6><p>为了避免和nslookup交换，可以编写一个ls.bat。<code>echo ls %1 | nslookup – %2</code>通过执行<code>ls.bat xxx.edu.cn dns.xxx.edu.cn</code>进行测试。</p>
-<h2 id="0x02-拓展"><a href="#0x02-拓展" class="headerlink" title="0x02 拓展"></a>0x02 拓展</h2><h3 id="单个查询："><a href="#单个查询：" class="headerlink" title="单个查询："></a>单个查询：</h3><p>【使用<code>dztester.py [domain]</code>即可】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># coding:utf-8</div><div class="line"># Build by LandGrey 2016-12-03</div><div class="line">  import re</div><div class="line">  import os</div><div class="line">  import sys</div><div class="line">  </div><div class="line">  def dns_zone_tranfer_finder(domain):</div><div class="line">    print &apos;[+] Nslookup %s&apos; % domain</div><div class="line">    cmd_res = os.popen(&apos;nslookup -type=ns &apos; + domain).read()  # fetch DNS Server List</div><div class="line">    dns_servers = re.findall(&apos;nameserver = ([\w\.]+)&apos;, cmd_res)</div><div class="line">    if len(dns_servers) == 0:</div><div class="line">      print &apos;[+] No DNS Server Found!\n&apos;</div><div class="line">       exit(0)</div><div class="line">    for singledns in dns_servers:</div><div class="line">       print &apos;[+] Using @%s&apos; % singledns</div><div class="line">        cmd_res = os.popen(&apos;dig @%s axfr %s&apos; % (singledns, domain)).read()</div><div class="line">      # print cmd_res</div><div class="line">      if cmd_res.find(&apos;XFR size&apos;) &gt; 0:</div><div class="line">          print &apos;[+] Vulnerable dns server found:&apos;, singledns</div><div class="line">          print cmd_res</div><div class="line">      else:</div><div class="line">          print &apos;[+] No Vulnerable found&apos;</div><div class="line">def usage():</div><div class="line">  print &apos;[+] Usage: python DZT-tester.py [domain]\n&apos;</div><div class="line">  </div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">  if len(sys.argv) != 2:</div><div class="line">      usage()</div><div class="line">  elif &apos;-h&apos; in sys.argv[1]:</div><div class="line">      usage()</div><div class="line">  else:</div><div class="line">      domain = sys.argv[1]</div><div class="line">      print &apos;[+] Test %s&apos; % domain</div><div class="line">      dns_zone_tranfer_finder(domain)</div><div class="line">      print &apos;[+] Finished!&apos;</div></pre></td></tr></table></figure></p>
-<h3 id="批量查询脚本："><a href="#批量查询脚本：" class="headerlink" title="批量查询脚本："></a>批量查询脚本：</h3><p><strong>脚本同一目录下应有<code>dns-zone-transfer</code>目录；<code>dns-zone-transfer</code>目录下有‘dns’子目录；要检测的域名列表存放在<code>dns-zone-transfer\domain.txt</code>中，一行一个。结果存储在<code>dns-zone-transfer\dns</code>目录和<code>dns-zone-transfer\vulnerable_hosts.txt</code>文件中。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"># coding:utf-8</div><div class="line"></div><div class="line">import re</div><div class="line">import os</div><div class="line">import sys</div><div class="line">import threading</div><div class="line"></div><div class="line"></div><div class="line">def dns_zone_tranfer_finder():</div><div class="line">  global c_index</div><div class="line">  while True:</div><div class="line">      lock.acquire()</div><div class="line">      if c_index &gt;= len(DomainLists):</div><div class="line">          lock.release()</div><div class="line">          break</div><div class="line">      domain = DomainLists[c_index].lstrip(&apos;www.&apos;)</div><div class="line">      c_index += 1</div><div class="line">      lock.release()</div><div class="line">      cmd_res = os.popen(&apos;nslookup -type=ns &apos; + domain).read()    # fetch DNS Server List</div><div class="line">      dns_servers = re.findall(&apos;nameserver = ([\w\.]+)&apos;, cmd_res)</div><div class="line">      for server in dns_servers:</div><div class="line">          if len(server) &lt; 5:</div><div class="line">              server += domain</div><div class="line">          cmd_res = os.popen(&apos;dig @%s axfr %s +short&apos; % (server, domain)).read()</div><div class="line">          if cmd_res.find(&apos;XFR size&apos;) &gt; 0 \</div><div class="line">                  and cmd_res.find(&apos;Transfer failed.&apos;) &lt; 0 \</div><div class="line">                  and cmd_res.find(&apos;connection timed out&apos;) &lt; 0:</div><div class="line">              lock.acquire()</div><div class="line">              print &apos;*&apos; * 10 + &apos; Vulnerable dns server found:&apos;, server, &apos;*&apos; * 10</div><div class="line">              lock.release()</div><div class="line">              with open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;vulnerable_hosts.txt&apos;), &apos;a&apos;) as f:</div><div class="line">                  f.write(&apos;%s    %s\n&apos; % (server.ljust(30), domain))</div><div class="line">              with open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;dns&apos;, server + &apos;.txt&apos;), &apos;w&apos;) as f:</div><div class="line">                  f.write(cmd_res)</div><div class="line"></div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">  currentdir = os.path.dirname(sys.argv[0])</div><div class="line">  target = open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;domain.txt&apos;))</div><div class="line">  DomainLists = []</div><div class="line">  for host in target.readlines():</div><div class="line">      DomainLists.append(host)</div><div class="line">  print u&apos;采集 %d 个...&apos; % len(DomainLists)</div><div class="line">  threads = []</div><div class="line">  c_index = 0</div><div class="line">  lock = threading.Lock()</div><div class="line">  for i in range(10):</div><div class="line">      t = threading.Thread(target=dns_zone_tranfer_finder)</div><div class="line">      t.start()</div><div class="line">      threads.append(t)</div><div class="line">  for t in threads:</div><div class="line">      t.join()</div><div class="line">  print &apos;All Done!&apos;</div></pre></td></tr></table></figure></p>
+<h2 id="0x02-拓展"><a href="#0x02-拓展" class="headerlink" title="0x02 拓展"></a>0x02 拓展</h2><h3 id="单个查询："><a href="#单个查询：" class="headerlink" title="单个查询："></a>单个查询：</h3><p>【使用<code>dztester.py [domain]</code>即可】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># coding:utf-8</span><br><span class="line"># Build by LandGrey 2016-12-03</span><br><span class="line">  import re</span><br><span class="line">  import os</span><br><span class="line">  import sys</span><br><span class="line">  </span><br><span class="line">  def dns_zone_tranfer_finder(domain):</span><br><span class="line">    print &apos;[+] Nslookup %s&apos; % domain</span><br><span class="line">    cmd_res = os.popen(&apos;nslookup -type=ns &apos; + domain).read()  # fetch DNS Server List</span><br><span class="line">    dns_servers = re.findall(&apos;nameserver = ([\w\.]+)&apos;, cmd_res)</span><br><span class="line">    if len(dns_servers) == 0:</span><br><span class="line">      print &apos;[+] No DNS Server Found!\n&apos;</span><br><span class="line">       exit(0)</span><br><span class="line">    for singledns in dns_servers:</span><br><span class="line">       print &apos;[+] Using @%s&apos; % singledns</span><br><span class="line">        cmd_res = os.popen(&apos;dig @%s axfr %s&apos; % (singledns, domain)).read()</span><br><span class="line">      # print cmd_res</span><br><span class="line">      if cmd_res.find(&apos;XFR size&apos;) &gt; 0:</span><br><span class="line">          print &apos;[+] Vulnerable dns server found:&apos;, singledns</span><br><span class="line">          print cmd_res</span><br><span class="line">      else:</span><br><span class="line">          print &apos;[+] No Vulnerable found&apos;</span><br><span class="line">def usage():</span><br><span class="line">  print &apos;[+] Usage: python DZT-tester.py [domain]\n&apos;</span><br><span class="line">  </span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">  if len(sys.argv) != 2:</span><br><span class="line">      usage()</span><br><span class="line">  elif &apos;-h&apos; in sys.argv[1]:</span><br><span class="line">      usage()</span><br><span class="line">  else:</span><br><span class="line">      domain = sys.argv[1]</span><br><span class="line">      print &apos;[+] Test %s&apos; % domain</span><br><span class="line">      dns_zone_tranfer_finder(domain)</span><br><span class="line">      print &apos;[+] Finished!&apos;</span><br></pre></td></tr></table></figure></p>
+<h3 id="批量查询脚本："><a href="#批量查询脚本：" class="headerlink" title="批量查询脚本："></a>批量查询脚本：</h3><p><strong>脚本同一目录下应有<code>dns-zone-transfer</code>目录；<code>dns-zone-transfer</code>目录下有‘dns’子目录；要检测的域名列表存放在<code>dns-zone-transfer\domain.txt</code>中，一行一个。结果存储在<code>dns-zone-transfer\dns</code>目录和<code>dns-zone-transfer\vulnerable_hosts.txt</code>文件中。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"># coding:utf-8</span><br><span class="line"></span><br><span class="line">import re</span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">import threading</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def dns_zone_tranfer_finder():</span><br><span class="line">  global c_index</span><br><span class="line">  while True:</span><br><span class="line">      lock.acquire()</span><br><span class="line">      if c_index &gt;= len(DomainLists):</span><br><span class="line">          lock.release()</span><br><span class="line">          break</span><br><span class="line">      domain = DomainLists[c_index].lstrip(&apos;www.&apos;)</span><br><span class="line">      c_index += 1</span><br><span class="line">      lock.release()</span><br><span class="line">      cmd_res = os.popen(&apos;nslookup -type=ns &apos; + domain).read()    # fetch DNS Server List</span><br><span class="line">      dns_servers = re.findall(&apos;nameserver = ([\w\.]+)&apos;, cmd_res)</span><br><span class="line">      for server in dns_servers:</span><br><span class="line">          if len(server) &lt; 5:</span><br><span class="line">              server += domain</span><br><span class="line">          cmd_res = os.popen(&apos;dig @%s axfr %s +short&apos; % (server, domain)).read()</span><br><span class="line">          if cmd_res.find(&apos;XFR size&apos;) &gt; 0 \</span><br><span class="line">                  and cmd_res.find(&apos;Transfer failed.&apos;) &lt; 0 \</span><br><span class="line">                  and cmd_res.find(&apos;connection timed out&apos;) &lt; 0:</span><br><span class="line">              lock.acquire()</span><br><span class="line">              print &apos;*&apos; * 10 + &apos; Vulnerable dns server found:&apos;, server, &apos;*&apos; * 10</span><br><span class="line">              lock.release()</span><br><span class="line">              with open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;vulnerable_hosts.txt&apos;), &apos;a&apos;) as f:</span><br><span class="line">                  f.write(&apos;%s    %s\n&apos; % (server.ljust(30), domain))</span><br><span class="line">              with open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;dns&apos;, server + &apos;.txt&apos;), &apos;w&apos;) as f:</span><br><span class="line">                  f.write(cmd_res)</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">  currentdir = os.path.dirname(sys.argv[0])</span><br><span class="line">  target = open(os.path.join(currentdir, &apos;dns-zone-transfer&apos;, &apos;domain.txt&apos;))</span><br><span class="line">  DomainLists = []</span><br><span class="line">  for host in target.readlines():</span><br><span class="line">      DomainLists.append(host)</span><br><span class="line">  print u&apos;采集 %d 个...&apos; % len(DomainLists)</span><br><span class="line">  threads = []</span><br><span class="line">  c_index = 0</span><br><span class="line">  lock = threading.Lock()</span><br><span class="line">  for i in range(10):</span><br><span class="line">      t = threading.Thread(target=dns_zone_tranfer_finder)</span><br><span class="line">      t.start()</span><br><span class="line">      threads.append(t)</span><br><span class="line">  for t in threads:</span><br><span class="line">      t.join()</span><br><span class="line">  print &apos;All Done!&apos;</span><br></pre></td></tr></table></figure></p>
 <p><em>漏洞存在标识主要是dig命令结果中出现特征字符串<code>“XFR size”</code></em></p>
-<h2 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h2><p>linux系统和windows系统都可以检测出使用的DNS是否存在域传送漏洞，如果存在该漏洞，通过执行命令我们可以清楚的看到整个域下的域名解析信息。<br>解决方案：区域传送是DNS常用的功能，严格限制允许区域传送的主机是解决dns域传送漏洞的有效手段。<strong>最后感谢前辈们的文章与辛勤奉献！ 本文作技术研究使用，切勿用本文中的方法违法犯罪！</strong><br><strong>参考链接:</strong><br>李劼杰DNS域传送漏洞系列博客  <a href="http://www.lijiejie.com/?s=DNS%E5%9F%9F%E4%BC%A0%E9%80%81%E6%BC%8F%E6%B4%9E&amp;submit=Search" target="_blank" rel="external">http://www.lijiejie.com/?s=DNS%E5%9F%9F%E4%BC%A0%E9%80%81%E6%BC%8F%E6%B4%9E&amp;submit=Search</a><br>DNS域传送漏洞的收集、检测与利用  <a href="http://blog.csdn.net/c465869935/article/details/53444117" target="_blank" rel="external">http://blog.csdn.net/c465869935/article/details/53444117</a><br>DNS域传送漏洞利用  <a href="https://www.waitalone.cn/dns-domain-transfer-exploits.html" target="_blank" rel="external">https://www.waitalone.cn/dns-domain-transfer-exploits.html</a><br>lijiejie/edu-dns-zone-transfer <a href="https://github.com/lijiejie/edu-dns-zone-transfer/blob/master/vulnerable_hosts.txt" target="_blank" rel="external">https://github.com/lijiejie/edu-dns-zone-transfer/blob/master/vulnerable_hosts.txt</a></p>
+<h2 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h2><p>linux系统和windows系统都可以检测出使用的DNS是否存在域传送漏洞，如果存在该漏洞，通过执行命令我们可以清楚的看到整个域下的域名解析信息。<br>解决方案：区域传送是DNS常用的功能，严格限制允许区域传送的主机是解决dns域传送漏洞的有效手段。<strong>最后感谢前辈们的文章与辛勤奉献！ 本文作技术研究使用，切勿用本文中的方法违法犯罪！</strong><br><strong>参考链接:</strong><br>李劼杰DNS域传送漏洞系列博客  <span class="exturl" data-url="aHR0cDovL3d3dy5saWppZWppZS5jb20vP3M9RE5TJUU1JTlGJTlGJUU0JUJDJUEwJUU5JTgwJTgxJUU2JUJDJThGJUU2JUI0JTlFJmFtcDtzdWJtaXQ9U2VhcmNo" title="http://www.lijiejie.com/?s=DNS%E5%9F%9F%E4%BC%A0%E9%80%81%E6%BC%8F%E6%B4%9E&amp;submit=Search">http://www.lijiejie.com/?s=DNS%E5%9F%9F%E4%BC%A0%E9%80%81%E6%BC%8F%E6%B4%9E&amp;submit=Search<i class="fa fa-external-link"></i></span><br>DNS域传送漏洞的收集、检测与利用  <span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYzQ2NTg2OTkzNS9hcnRpY2xlL2RldGFpbHMvNTM0NDQxMTc=" title="http://blog.csdn.net/c465869935/article/details/53444117">http://blog.csdn.net/c465869935/article/details/53444117<i class="fa fa-external-link"></i></span><br>DNS域传送漏洞利用  <span class="exturl" data-url="aHR0cHM6Ly93d3cud2FpdGFsb25lLmNuL2Rucy1kb21haW4tdHJhbnNmZXItZXhwbG9pdHMuaHRtbA==" title="https://www.waitalone.cn/dns-domain-transfer-exploits.html">https://www.waitalone.cn/dns-domain-transfer-exploits.html<i class="fa fa-external-link"></i></span><br>lijiejie/edu-dns-zone-transfer <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpamllamllL2VkdS1kbnMtem9uZS10cmFuc2Zlci9ibG9iL21hc3Rlci92dWxuZXJhYmxlX2hvc3RzLnR4dA==" title="https://github.com/lijiejie/edu-dns-zone-transfer/blob/master/vulnerable_hosts.txt">https://github.com/lijiejie/edu-dns-zone-transfer/blob/master/vulnerable_hosts.txt<i class="fa fa-external-link"></i></span></p>
 <p>～～</p>
 
       
     </div>
-    <div>
-      
+
+    
+
+    
+    
+    
+      <div>
+    
         <div>
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="icon ion-md-power"></i>感谢您的阅读-------------</div>
     
 </div>
+    
+      </div>
+
+    
+
+    
       
-    </div> 
-    <div>
-      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
         
 
-      
-    </div>
-
-    <div>
-      
-        
-  <div align="center">
- 
-   <div class="">
-   <p><span>
-   <br/><br/><b>本文出处：</b><a href="/2017/03/16/8/" title="DNS域传送漏洞">http://sunu11.com/2017/03/16/8/</a><br/><span><span><span><span><span><span><b>本文基于：</b><a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布，欢迎转载，演绎或用于商业目的。但是必须保留本文的署名<a href="http://www.sunu11.com/">sunu11</a>及链接。
-   </span></p>
-   </div>
- 
-  </div>
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
 
 
-      
-    </div>
+  
 
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>SuNu11</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="http://sunu11.com/2017/03/16/8/" title="DNS域传送漏洞">http://sunu11.com/2017/03/16/8/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
@@ -468,6 +659,10 @@
             <a href="/tags/nslookup/" rel="tag"><i class="fa fa-tag"></i> nslookup</a>
           
         </div>
+      
+
+      
+      
       
 
       
@@ -495,25 +690,25 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
           </div>
           
 
-
-          
-
   
-  </div>
-    
+    <div class="comments" id="gitalk-container">
+    </div>
+  
+
+
 
         </div>
         
@@ -528,168 +723,324 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/me.png"
-               alt="SuNu11" />
-          <p class="site-author-name" itemprop="name">SuNu11</p>
-          <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives/index.html">
-              <span class="site-state-item-count">32</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.png" alt="SuNu11">
+            
+              <p class="site-author-name" itemprop="name">SuNu11</p>
+              <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
           </div>
 
           
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">分类</span>
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
               </a>
             </div>
           
 
           
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">43</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N1bnUxMQ==" title="GitHub &rarr; https://github.com/sunu11"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOjk1ODEzMDQyMUBxcS5jb20=" title="E-Mail &rarr; mailto:958130421@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cDovL3dlaWJvLmNvbS9zdW51MTE=" title="Weibo &rarr; http://weibo.com/sunu11"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9zdV9udTEx" title="Twitter &rarr; https://twitter.com/su_nu11"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+                </span>
+              
             </div>
           
 
-        </nav>
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+             </div>
+          
 
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5zZWMtcmVkY2x1Yi5jb20v" title="http://www.sec-redclub.com/">Redbu11</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL2RicWYueHl6Lw==" title="http://dbqf.xyz/">大兄弟(独步清风)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy52aXJ6ei5jb20v" title="http://www.virzz.com/">V神(Virink)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5tb25idXJhbi5jbi8=" title="http://www.monburan.cn/">大兄弟(Monburan)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5jbmJsb2dzLmNvbS9uMWdodHdhdGNoZXIv" title="http://www.cnblogs.com/n1ghtwatcher/">老哥(n1ghtwatcher)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5nbGFtb3Iuc2l0ZS8=" title="http://www.glamor.site/">大诏(glamor)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcGlhb21pYW9ob25nY2hlbi8=" title="https://www.cnblogs.com/piaomiaohongchen/">超神哥</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3FjbG92ZXIuY24=" title="http://qclover.cn">华清(Qclover)</span>
+                  </li>
+                
+              </ul>
+            </div>
+          
 
-        <div class="links-of-author motion-element">
           
             
-              <span class="links-of-author-item">
-                <a href="http://mooder.f4ck0.com:8000/" target="_blank" title="Team Spaces">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  Team Spaces
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/sunu11" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/sunu11" target="_blank" title="微博">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  微博
-                </a>
-              </span>
-            
           
+          
+
         </div>
-
-        
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-globe"></i>
-              一路认识的师傅们
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.sec-redclub.com/" title="Redbu11" target="_blank">Redbu11</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://dbqf.xyz/" title="大兄弟独步清风" target="_blank">大兄弟独步清风</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.virzz.com/" title="V神Virink" target="_blank">V神Virink</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.monburan.cn/" title="大兄弟Monburan" target="_blank">大兄弟Monburan</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.cnblogs.com/n1ghtwatcher/" title="老哥n1ghtwatcher" target="_blank">老哥n1ghtwatcher</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.glamor.site/" title="大诏glamor" target="_blank">大诏glamor</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://www.cnblogs.com/piaomiaohongchen/" title="超神哥" target="_blank">超神哥</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://qclover.cn" title="华清Qclover" target="_blank">华清Qclover</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
-
-
-      </section>
+      </div>
 
       
       <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
           <div class="post-toc">
 
             
-              
+            
+            
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-基础"><span class="nav-number">1.</span> <span class="nav-text">0x00 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-实施"><span class="nav-number">2.</span> <span class="nav-text">0x01 实施</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、收集dns服务器信息"><span class="nav-number">2.1.</span> <span class="nav-text">一、收集dns服务器信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、检测DNS域传送漏洞"><span class="nav-number">2.2.</span> <span class="nav-text">二、检测DNS域传送漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、使用nmap扫描"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">1、使用nmap扫描</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、使用dig命令"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">2、使用dig命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、nslookup命令"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">3、nslookup命令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#交互式："><span class="nav-number">2.2.0.3.1.</span> <span class="nav-text">交互式：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#非交互式方法"><span class="nav-number">2.2.0.3.2.</span> <span class="nav-text">非交互式方法</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-拓展"><span class="nav-number">3.</span> <span class="nav-text">0x02 拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单个查询："><span class="nav-number">3.1.</span> <span class="nav-text">单个查询：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量查询脚本："><span class="nav-number">3.2.</span> <span class="nav-text">批量查询脚本：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-总结"><span class="nav-number">4.</span> <span class="nav-text">0x03 总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-基础"><span class="nav-number">1.</span> <span class="nav-text">0x00 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-实施"><span class="nav-number">2.</span> <span class="nav-text">0x01 实施</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、收集dns服务器信息"><span class="nav-number">2.1.</span> <span class="nav-text">一、收集dns服务器信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、检测DNS域传送漏洞"><span class="nav-number">2.2.</span> <span class="nav-text">二、检测DNS域传送漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、使用nmap扫描"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">1、使用nmap扫描</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、使用dig命令"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">2、使用dig命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、nslookup命令"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">3、nslookup命令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#交互式："><span class="nav-number">2.2.0.3.1.</span> <span class="nav-text">交互式：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#非交互式方法"><span class="nav-number">2.2.0.3.2.</span> <span class="nav-text">非交互式方法</span></a></li></ol></li></ol></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-拓展"><span class="nav-number">3.</span> <span class="nav-text">0x02 拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单个查询："><span class="nav-number">3.1.</span> <span class="nav-text">单个查询：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量查询脚本："><span class="nav-number">3.2.</span> <span class="nav-text">批量查询脚本：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-总结"><span class="nav-number">4.</span> <span class="nav-text">0x03 总结</span></a></li></div>
             
 
           </div>
-        </section>
+        </div>
       <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
       
 
     </div>
@@ -702,46 +1053,60 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5taWl0YmVpYW4uZ292LmNu">京ICP备16045158号 </span>&copy; 2016 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">SuNu11</span>
+
+  
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a>Hexo</a>&nbsp&nbsp&nbsp&nbsp<a href="http://www.miitbeian.gov.cn" target="_blank" title="备案信息">京ICP备16045158号</a> 强力驱动
-</div>
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span></div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  <script src="https://s96.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"</script>
-   </span>
-  </a>
-</div>
-<br>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Mist</span></div>
+
+
 
 
         
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487"></script>
+  </div>
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+
+    
+
+    
+
+    
   </div>
 
   
 
-<script type="text/javascript">
+<script>
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -755,71 +1120,492 @@
 
 
 
-  
 
 
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
+    
+    
   
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
 
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  <script src="/js/src/utils.js?v=6.7.0"></script>
 
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
+  <script src="/js/src/motion.js?v=6.7.0"></script>
 
 
 
   
   
 
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '97b2e5deab70d3927e17',
+    clientSecret: '286219e6fdbe002564d7880370688c453c513d99',
+    repo: 'sunu11.github.io',
+    owner: 'sunu11',
+    admin: ['958130421@qq.com'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'sunu11.github.io',
+          owner: '',
+          admin: [''],
+          id: location.pathname,
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '97b2e5deab70d3927e17',
+    clientSecret: '286219e6fdbe002564d7880370688c453c513d99',
+    repo: 'sunu11.github.io',
+    owner: 'sunu11',
+    admin: ['958130421@qq.com'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'sunu11.github.io',
+          owner: '',
+          admin: [''],
+          id: location.pathname,
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
   
 
   
@@ -829,21 +1615,20 @@
   
 
   
-  
-  
-
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487" language="JavaScript"></script>
-  </div>
-
-
-
-  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-  
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
 
   
+
   
+  <script src="/js/src/exturl.js?v=6.7.0"></script>
+
+
+  
+
+  
+
+  
+
 </body>
 </html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
