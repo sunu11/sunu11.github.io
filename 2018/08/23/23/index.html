@@ -740,7 +740,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1173,9 +1173,9 @@
 
   
     
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <link rel="stylesheet" href="/css/gitalk.css">
+  <script src="/js/src/gitalk.min.js"></script>
+  <script src="/js/src/md5.min.js"></script>
    <script type="text/javascript">
         var gitalk = new Gitalk({
           clientID: 'daf81de63d9e084c5c7e',
@@ -1183,7 +1183,7 @@
           repo: 'blog-comment',
           owner: 'sunu11',
           admin: ['sunu11'],
-          id: md5(location.pathname),
+          id: md5(location.href),
           distractionFreeMode: 'false'
         })
         gitalk.render('gitalk-container')
