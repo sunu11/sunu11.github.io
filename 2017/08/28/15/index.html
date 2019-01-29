@@ -1199,8 +1199,8 @@ sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade
           repo: 'blog-comment',
           owner: 'sunu11',
           admin: ['sunu11'],
-          id: md5(location.href),
-          distractionFreeMode: 'false'
+          id: md5( location.pathname ),
+          distractionFreeMode: ''
         })
         gitalk.render('gitalk-container')
     </script>
