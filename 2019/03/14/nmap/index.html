@@ -122,18 +122,18 @@
 
 
 
-  <meta name="description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：1 Tcp SYN Scan (sS) 这">
+  <meta name="description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：">
 <meta name="keywords" content="内网渗透,信息收集,端口探测">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渗透测试利器--nmap">
 <meta property="og:url" content="http://sunu11.com/2019/03/14/nmap/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：1 Tcp SYN Scan (sS) 这">
+<meta property="og:description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-29T05:20:59.984Z">
+<meta property="og:updated_time" content="2019-03-31T14:16:49.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="渗透测试利器--nmap">
-<meta name="twitter:description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：1 Tcp SYN Scan (sS) 这">
+<meta name="twitter:description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：">
 
 
 
@@ -495,7 +495,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-29 13:20:59" itemprop="dateModified" datetime="2019-03-29T13:20:59+08:00">2019-03-29</time>
+                <time title="Modified: 2019-03-31 22:16:49" itemprop="dateModified" datetime="2019-03-31T22:16:49+08:00">2019-03-31</time>
               
             
           </span>
@@ -549,7 +549,7 @@
       
         <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Nmap Free Security Scanner, Port Scanner, &amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc.</p>
 <p><strong>本文主要用以总结nmap使用技巧与探测方法</strong></p>
-<h3 id="主要参数以及扫描方式："><a href="#主要参数以及扫描方式：" class="headerlink" title="主要参数以及扫描方式："></a>主要参数以及扫描方式：</h3><p>1 Tcp SYN Scan (sS) 这是一个基本的扫描方式,它被称为半开放扫描。Nmap发送SYN包到远程主机，它不会产生任何会话.不需要通过完整的握手，就能获得远程主机的信息。因此不会在目标主机上产生任何日志记录。<br>Nmap命令中没有指出扫描类型,默认的就是Tcp SYN.需要root/administrator权限.<br><code>nmap -sS 192.168.1.0/24</code><br>进行秘密SYN扫描，对象为主机Saznme所在的“C类”网段 的255台主机。</p>
+<h3 id="主要参数以及扫描方式："><a href="#主要参数以及扫描方式：" class="headerlink" title="主要参数以及扫描方式："></a>主要参数以及扫描方式：<a id="more"></a></h3><p>1 Tcp SYN Scan (sS) 这是一个基本的扫描方式,它被称为半开放扫描。Nmap发送SYN包到远程主机，它不会产生任何会话.不需要通过完整的握手，就能获得远程主机的信息。因此不会在目标主机上产生任何日志记录。<br>Nmap命令中没有指出扫描类型,默认的就是Tcp SYN.需要root/administrator权限.<br><code>nmap -sS 192.168.1.0/24</code><br>进行秘密SYN扫描，对象为主机Saznme所在的“C类”网段 的255台主机。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS 192.168.1.0/24</span><br><span class="line">You requested a scan type which requires root privileges.</span><br><span class="line">QUITTING!</span><br><span class="line"></span><br><span class="line">~                                                                                                                                  ⍉</span><br><span class="line">▶ sudo nmap -sS 192.168.1.0/24</span><br><span class="line">Password:</span><br><span class="line">Starting Nmap 7.70 ( https://nmap.org ) at 2019-03-14 20:49 CST</span><br></pre></td></tr></table></figure>
 <p>2 Tcp connect() scan(sT)如果不选择SYN扫描,TCP connect()扫描就是默认的扫描模式.<br>不同于Tcp SYN扫描,Tcp connect()扫描需要完成三次握手,并且要求底层的操作系统通过发出连接系统调用来建立与目标机和端口的连接。<br><code>nmap -sT 192.168.1.0/24</code></p>
 <p>3 Udp scan(sU) UDP扫描发送UDP数据包到目标主机，并等待响应,如果返回ICMP不可达的错误消息，说明端口是关闭的，如果得到正确的适当的回应，说明端口是开放的.<br>UDP扫描用-sU选项,UDP扫描发送空的(没有数据)UDP报头到每个目标端口:<br><code>nmap -sU 192.168.1.0/24</code><br>使用UDP ping探测主机：<br><code>nmap -PU 192.168.1.0/24</code></p>
@@ -569,6 +569,7 @@
 <h3 id="经验与bypass技巧："><a href="#经验与bypass技巧：" class="headerlink" title="经验与bypass技巧："></a>经验与bypass技巧：</h3><p>一般ids不会记录sS扫描方式，但是默认的sT一般会被察觉。<br>使用nmap -f host </p>
 <h3 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h3><p>1、NMAP时间设置：<br>Nmap  -T [0-5]目标<br><code>0:最缓慢的&lt;bypass waf or ids&gt; ------&gt; 4/5:加速扫描、最快速度扫描</code><br>2、扫描的并发设置以及主机分组设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Nmap  -min-parallelism [数量] [目标]    并发端口扫描的最小数量</span><br><span class="line">Nmap  -max-parallelism [数量] [目标]    最大数量</span><br><span class="line">Nmap  -max-hostgroup [数目] [目标] 并发扫描主机数的最大值</span><br><span class="line">Nmap  -min-hostgroup [数目] [目标] 并发扫描主机数的最小值</span><br></pre></td></tr></table></figure></p>
 <p>3、RTT超时设置<br><code>Nmap -initial-rtt-timeout [时间] [目标] 控制网络响应初始超时</code><br><code>Nmap -max-rtt-timeout [时间] [目标] 指定最大RTT数据包响应超时，对于扫描大块地址可适当提高以防止nmap断开</code><br>4、TTL设置<br><code>Nmap -ttl [时间] [目标]: TTL用于指定扫描中的TTL值</code><br>5、其他：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Nmap -max-retries [数目] [目标]: 每个探针的最大重传次数</span><br><span class="line">Nmap -scan-delay [时间] [目标]: 指定扫描延迟指示的Nmap在发送探针之间的指定的最小时间间隔是多久</span><br><span class="line">Nmap -host-timeout [时间] [目标]：指定Nmap在超时多少时间后放弃对主机的扫描</span><br><span class="line">Nmap -max-scan-delay [时间] [目标]：Nmap在发送探针之间的指定的最大时间间隔是多久。</span><br><span class="line">Nmap -min-rate [数量] [目标]：Nmap每秒钟发送的数据包数量最小是多少。</span><br><span class="line">Nmap -max-rate [数量] [目标]：Nmap每秒钟发送的数据包数量最大是多少</span><br><span class="line">Nmap -defeat-rst-ratelimit [目标]：在目标通过发送RST包来限制扫描速率的情况下非常有用，它可以加快扫描速度，然而会影响结果的准确度。</span><br></pre></td></tr></table></figure></p>
+<p>未完待续</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>官方书籍： <span class="exturl" data-url="aHR0cHM6Ly9ubWFwLm9yZy9ib29rL2ludHJvLmh0bWw=" title="https://nmap.org/book/intro.html">https://nmap.org/book/intro.html<i class="fa fa-external-link"></i></span><br>Nmap备忘单：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWJ1Zi5jb20vc2VjdG9vbC8xMDEzMzUuaHRtbA==" title="https://www.freebuf.com/sectool/101335.html">https://www.freebuf.com/sectool/101335.html<i class="fa fa-external-link"></i></span><br>脚本开发：<span class="exturl" data-url="aHR0cDovL3d3dy5mcmVlYnVmLmNvbS9zZWN0b29sLzE3NzMwMC5odG1s" title="http://www.freebuf.com/sectool/177300.html">http://www.freebuf.com/sectool/177300.html<i class="fa fa-external-link"></i></span></p>
 
       
