@@ -130,7 +130,7 @@
 <meta property="og:site_name" content="SuNu11&#39;Blog">
 <meta property="og:description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-31T14:16:49.088Z">
+<meta property="og:updated_time" content="2019-04-26T18:19:34.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="渗透测试利器--nmap">
 <meta name="twitter:description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：">
@@ -495,7 +495,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-31 22:16:49" itemprop="dateModified" datetime="2019-03-31T22:16:49+08:00">2019-03-31</time>
+                <time title="Modified: 2019-04-27 02:19:34" itemprop="dateModified" datetime="2019-04-27T02:19:34+08:00">2019-04-27</time>
               
             
           </span>
@@ -569,6 +569,7 @@
 <h3 id="经验与bypass技巧："><a href="#经验与bypass技巧：" class="headerlink" title="经验与bypass技巧："></a>经验与bypass技巧：</h3><p>一般ids不会记录sS扫描方式，但是默认的sT一般会被察觉。<br>使用nmap -f host </p>
 <h3 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h3><p>1、NMAP时间设置：<br>Nmap  -T [0-5]目标<br><code>0:最缓慢的&lt;bypass waf or ids&gt; ------&gt; 4/5:加速扫描、最快速度扫描</code><br>2、扫描的并发设置以及主机分组设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Nmap  -min-parallelism [数量] [目标]    并发端口扫描的最小数量</span><br><span class="line">Nmap  -max-parallelism [数量] [目标]    最大数量</span><br><span class="line">Nmap  -max-hostgroup [数目] [目标] 并发扫描主机数的最大值</span><br><span class="line">Nmap  -min-hostgroup [数目] [目标] 并发扫描主机数的最小值</span><br></pre></td></tr></table></figure></p>
 <p>3、RTT超时设置<br><code>Nmap -initial-rtt-timeout [时间] [目标] 控制网络响应初始超时</code><br><code>Nmap -max-rtt-timeout [时间] [目标] 指定最大RTT数据包响应超时，对于扫描大块地址可适当提高以防止nmap断开</code><br>4、TTL设置<br><code>Nmap -ttl [时间] [目标]: TTL用于指定扫描中的TTL值</code><br>5、其他：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Nmap -max-retries [数目] [目标]: 每个探针的最大重传次数</span><br><span class="line">Nmap -scan-delay [时间] [目标]: 指定扫描延迟指示的Nmap在发送探针之间的指定的最小时间间隔是多久</span><br><span class="line">Nmap -host-timeout [时间] [目标]：指定Nmap在超时多少时间后放弃对主机的扫描</span><br><span class="line">Nmap -max-scan-delay [时间] [目标]：Nmap在发送探针之间的指定的最大时间间隔是多久。</span><br><span class="line">Nmap -min-rate [数量] [目标]：Nmap每秒钟发送的数据包数量最小是多少。</span><br><span class="line">Nmap -max-rate [数量] [目标]：Nmap每秒钟发送的数据包数量最大是多少</span><br><span class="line">Nmap -defeat-rst-ratelimit [目标]：在目标通过发送RST包来限制扫描速率的情况下非常有用，它可以加快扫描速度，然而会影响结果的准确度。</span><br></pre></td></tr></table></figure></p>
+<p>小技巧：<br>1、 mac下建议扫描端口前加上sudo，有可能由于权限问题无法深入检测端口。</p>
 <p>未完待续</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>官方书籍： <span class="exturl" data-url="aHR0cHM6Ly9ubWFwLm9yZy9ib29rL2ludHJvLmh0bWw=" title="https://nmap.org/book/intro.html">https://nmap.org/book/intro.html<i class="fa fa-external-link"></i></span><br>Nmap备忘单：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWJ1Zi5jb20vc2VjdG9vbC8xMDEzMzUuaHRtbA==" title="https://www.freebuf.com/sectool/101335.html">https://www.freebuf.com/sectool/101335.html<i class="fa fa-external-link"></i></span><br>脚本开发：<span class="exturl" data-url="aHR0cDovL3d3dy5mcmVlYnVmLmNvbS9zZWN0b29sLzE3NzMwMC5odG1s" title="http://www.freebuf.com/sectool/177300.html">http://www.freebuf.com/sectool/177300.html<i class="fa fa-external-link"></i></span></p>
 
@@ -753,7 +754,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -887,7 +888,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

