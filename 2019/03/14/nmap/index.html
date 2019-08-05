@@ -130,7 +130,7 @@
 <meta property="og:site_name" content="SuNu11&#39;Blog">
 <meta property="og:description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-26T18:19:34.728Z">
+<meta property="og:updated_time" content="2019-05-30T07:33:29.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="渗透测试利器--nmap">
 <meta name="twitter:description" content="介绍Nmap Free Security Scanner, Port Scanner, &amp;amp; Network Exploration Tool. Download open source software for Linux, Windows, UNIX, FreeBSD, etc. 本文主要用以总结nmap使用技巧与探测方法 主要参数以及扫描方式：">
@@ -495,7 +495,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-27 02:19:34" itemprop="dateModified" datetime="2019-04-27T02:19:34+08:00">2019-04-27</time>
+                <time title="Modified: 2019-05-30 15:33:29" itemprop="dateModified" datetime="2019-05-30T15:33:29+08:00">2019-05-30</time>
               
             
           </span>
@@ -554,10 +554,10 @@
 <p>2 Tcp connect() scan(sT)如果不选择SYN扫描,TCP connect()扫描就是默认的扫描模式.<br>不同于Tcp SYN扫描,Tcp connect()扫描需要完成三次握手,并且要求底层的操作系统通过发出连接系统调用来建立与目标机和端口的连接。<br><code>nmap -sT 192.168.1.0/24</code></p>
 <p>3 Udp scan(sU) UDP扫描发送UDP数据包到目标主机，并等待响应,如果返回ICMP不可达的错误消息，说明端口是关闭的，如果得到正确的适当的回应，说明端口是开放的.<br>UDP扫描用-sU选项,UDP扫描发送空的(没有数据)UDP报头到每个目标端口:<br><code>nmap -sU 192.168.1.0/24</code><br>使用UDP ping探测主机：<br><code>nmap -PU 192.168.1.0/24</code></p>
 <p>4 FINscan(sF)有时候TcpSYN扫描不是最佳的扫描模式,因为有防火墙的存在.目标主机有时候可能有IDS和IPS系统的存在,防火墙会阻止掉SYN数据包。<br>发送一个设置了FIN标志的数据包并不需要完成TCP的握手.FIN扫描也不会在目标主机上创建日志</p>
-<p>5 PING扫描不同于其它的扫描方式，因为它只用于找出主机是否是存在在网络中的.它不是用来发现是否开放端口的.PING扫描需要ROOT权限，如果用户没有ROOT权限,PING扫描将会使用connect()调用.<br>nmap -PN 192.168.1.0/24 （不进行ping，突破防火墙）<br>-PA　TCP Ack Ping 扫描。<br>-PY 包含一个最小的INIT块的SCTP包 找到使用流控制传输协议（SCTP）主机。<br>-PE 将对指定主机执行ICMP（互联网控制消息协议）回显Ping<br>-PP 执行一次ICMP时间戳ping。<br>-PM 进行ICMP 地址掩码 ping.<br>-PO 执行IP协议Ping扫描<br>-PR 选项指示的Nmap对指定目标执行ARP（地址解析协议）ping操作<br>-PN 不进行ping主机<br>-PS TCP SYN Ping 扫描</p>
+<p>5 PING扫描不同于其它的扫描方式，因为它只用于找出主机是否是存在在网络中的.它不是用来发现是否开放端口的.PING扫描需要ROOT权限，如果用户没有ROOT权限,PING扫描将会使用connect()调用.<br>nmap -Pn 192.168.1.0/24 （不进行ping，突破防火墙）<br>-PA　TCP Ack Ping 扫描。<br>-PY 包含一个最小的INIT块的SCTP包 找到使用流控制传输协议（SCTP）主机。<br>-PE 将对指定主机执行ICMP（互联网控制消息协议）回显Ping<br>-PP 执行一次ICMP时间戳ping。<br>-PM 进行ICMP 地址掩码 ping.<br>-PO 执行IP协议Ping扫描<br>-PR 选项指示的Nmap对指定目标执行ARP（地址解析协议）ping操作<br>-Pn ～～不进行ping主机～～不进行主机存活发现（ps:nmap使用四种技术进行主机存活发现（icmp echo request、TCP SYN 、TCP ACK、ICMP timestamp request—-多谢香君、东城师父）<br>-PS TCP SYN Ping 扫描</p>
 <p>6 Idlescan(sL)Idlescan是一种先进的扫描技术，它不是用你真实的主机Ip发送数据包，而是使用另外一个目标网络的主机发送数据包<br>仅列出指定网络上的每台主机，不发送任何报文到目标主机：<br>nmap -sL 192.168.1.0/24</p>
 <p>7 版本检测(sV)版本检测是用来扫描目标主机和端口上运行的软件的版本.它不同于其它的扫描技术，它不是用来扫描目标主机上开放的端口，不过它需要从开放的端口获取信息来判断软件的版本.<br>使用版本检测扫描之前需要先用TCPSYN扫描开放了哪些端口.</p>
-<p>8 Nmap的OS检测（O）(“-osscan-guess”)Nmap最重要的特点之一是能够远程检测操作系统和软件，Nmap的OS检测技术在渗透测试中用来了解远程主机的操作系统和软件是非常有用的，通过获取的信息你可以知道已知的漏洞。Nmap有一个名为的nmap-OS-DB数据库，该数据库包含超过2600操作系统的信息。Nmap把TCP和UDP数据包发送到目标机器上，然后检查结果和数据库对照。Nmap的操作系统指纹识别技术：设备类型（路由器，工作组等）运行（运行的操作系统）操作系统的详细信息（操作系统的名称和版本）网络距离（目标和攻击者之间的距离跳）如果远程主机有防火墙，IDS和IPS系统，你可以使用-PN命令来确保不ping远程主机，因为有时候防火墙会组织掉ping请求.-PN命令告诉Nmap不用ping远程主机。<br>nmap -O -PN X.X.X.X</p>
+<p>8 Nmap的OS检测（O）(“-osscan-guess”)Nmap最重要的特点之一是能够远程检测操作系统和软件，Nmap的OS检测技术在渗透测试中用来了解远程主机的操作系统和软件是非常有用的，通过获取的信息你可以知道已知的漏洞。Nmap有一个名为的nmap-OS-DB数据库，该数据库包含超过2600操作系统的信息。Nmap把TCP和UDP数据包发送到目标机器上，然后检查结果和数据库对照。Nmap的操作系统指纹识别技术：设备类型（路由器，工作组等）运行（运行的操作系统）操作系统的详细信息（操作系统的名称和版本）网络距离（目标和攻击者之间的距离跳）如果远程主机有防火墙，IDS和IPS系统，你可以使用-Pn命令来确保不ping远程主机，因为有时候防火墙会组织掉ping请求.<br>nmap -O -Pn X.X.X.X</p>
 <p>9 SCTP INIT扫描<br>SCTP（Stream Control Transmission Protocol，流控制传输协议）是IETF（Internet Engineering Task Force，因特网工程任务组）在2000年定义的一个传输层（Transport Layer）协议。SCTP可以看作是TCP协议的改进，它改进了TCP的一些不足，SCTP INIT Ping扫描通过向目标发送INIT包，根据目标主机的相应判断目标主机是否存活。<br><code>nmap -PY -v 192.168.1.1</code></p>
 <p>其他参数：<br>-sX： XmasTree scan  设置FIN，PSH，URG和标志。<br>-sN： Null 扫描模式,不设置任何位（TCP标志标头是0）。<br><code>用于逃脱一些防火墙和包过滤软件能够对发送到被限制端口的SYN数据包进行的监视</code><br>-sF:  FIN扫描 设置只是TCP FIN位。<br>–sA: TCP ACK 扫描 没有判断端口的开放情况。它是用来绘制出防火墙规则，对哪些端口进行了保护。<br>-S ip: 伪装源ip进行扫描，需要使用使用–e指定网卡并且使用-Pn参数<br>-scanflag 自定义扫描类型 通过指定任意TCP标志来设计自己的扫描<br><code>nmap -e 目标网卡 目标ip -S 伪装ip -Pn</code><br>nmap -iflist：查看本地路由与接口<br>-b <ftp relay="" host=""> 使用FTP bounce scan扫描方式  </ftp></p>
 <p>nmap常用扫描方式：<br>ping扫描（-sP)<br>nmap -sP target ping 扫描，检测存活性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">▶ nmap -sP 192.168.1.0/24</span><br><span class="line">Starting Nmap 7.70 ( https://nmap.org ) at 2019-03-14 20:44 CST</span><br><span class="line">Nmap scan report for 192.168.1.1</span><br><span class="line">Host is up (0.024s latency).</span><br><span class="line">Nmap scan report for 192.168.1.100</span><br><span class="line">Host is up (0.029s latency).</span><br><span class="line">Nmap scan report for 192.168.1.103</span><br><span class="line">Host is up (0.010s latency).</span><br><span class="line">Nmap scan report for 192.168.1.112</span><br><span class="line">Host is up (0.0018s latency).</span><br><span class="line">Nmap scan report for 192.168.1.119</span><br><span class="line">Host is up (0.041s latency).</span><br><span class="line">Nmap done: 256 IP addresses (5 hosts up) scanned in 9.53 seconds</span><br></pre></td></tr></table></figure></p>
@@ -569,8 +569,7 @@
 <h3 id="经验与bypass技巧："><a href="#经验与bypass技巧：" class="headerlink" title="经验与bypass技巧："></a>经验与bypass技巧：</h3><p>一般ids不会记录sS扫描方式，但是默认的sT一般会被察觉。<br>使用nmap -f host </p>
 <h3 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h3><p>1、NMAP时间设置：<br>Nmap  -T [0-5]目标<br><code>0:最缓慢的&lt;bypass waf or ids&gt; ------&gt; 4/5:加速扫描、最快速度扫描</code><br>2、扫描的并发设置以及主机分组设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Nmap  -min-parallelism [数量] [目标]    并发端口扫描的最小数量</span><br><span class="line">Nmap  -max-parallelism [数量] [目标]    最大数量</span><br><span class="line">Nmap  -max-hostgroup [数目] [目标] 并发扫描主机数的最大值</span><br><span class="line">Nmap  -min-hostgroup [数目] [目标] 并发扫描主机数的最小值</span><br></pre></td></tr></table></figure></p>
 <p>3、RTT超时设置<br><code>Nmap -initial-rtt-timeout [时间] [目标] 控制网络响应初始超时</code><br><code>Nmap -max-rtt-timeout [时间] [目标] 指定最大RTT数据包响应超时，对于扫描大块地址可适当提高以防止nmap断开</code><br>4、TTL设置<br><code>Nmap -ttl [时间] [目标]: TTL用于指定扫描中的TTL值</code><br>5、其他：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Nmap -max-retries [数目] [目标]: 每个探针的最大重传次数</span><br><span class="line">Nmap -scan-delay [时间] [目标]: 指定扫描延迟指示的Nmap在发送探针之间的指定的最小时间间隔是多久</span><br><span class="line">Nmap -host-timeout [时间] [目标]：指定Nmap在超时多少时间后放弃对主机的扫描</span><br><span class="line">Nmap -max-scan-delay [时间] [目标]：Nmap在发送探针之间的指定的最大时间间隔是多久。</span><br><span class="line">Nmap -min-rate [数量] [目标]：Nmap每秒钟发送的数据包数量最小是多少。</span><br><span class="line">Nmap -max-rate [数量] [目标]：Nmap每秒钟发送的数据包数量最大是多少</span><br><span class="line">Nmap -defeat-rst-ratelimit [目标]：在目标通过发送RST包来限制扫描速率的情况下非常有用，它可以加快扫描速度，然而会影响结果的准确度。</span><br></pre></td></tr></table></figure></p>
-<p>小技巧：<br>1、 mac下建议扫描端口前加上sudo，有可能由于权限问题无法深入检测端口。</p>
-<p>未完待续</p>
+<p>小技巧：<br>1、mac下建议扫描端口前加上sudo，有可能由于权限问题无法深入检测端口。<br>2、扫描过程中加上-n 可禁止反向dns解析，增加速度<br>3、使用–packet-trace 进行数据包跟踪。<br>未完待续</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>官方书籍： <span class="exturl" data-url="aHR0cHM6Ly9ubWFwLm9yZy9ib29rL2ludHJvLmh0bWw=" title="https://nmap.org/book/intro.html">https://nmap.org/book/intro.html<i class="fa fa-external-link"></i></span><br>Nmap备忘单：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWJ1Zi5jb20vc2VjdG9vbC8xMDEzMzUuaHRtbA==" title="https://www.freebuf.com/sectool/101335.html">https://www.freebuf.com/sectool/101335.html<i class="fa fa-external-link"></i></span><br>脚本开发：<span class="exturl" data-url="aHR0cDovL3d3dy5mcmVlYnVmLmNvbS9zZWN0b29sLzE3NzMwMC5odG1s" title="http://www.freebuf.com/sectool/177300.html">http://www.freebuf.com/sectool/177300.html<i class="fa fa-external-link"></i></span></p>
 
       
@@ -1007,6 +1006,10 @@
                 
                   <li class="links-of-blogroll-item">
                     <span class="exturl" data-url="aHR0cDovL3FjbG92ZXIuY24=" title="http://qclover.cn">华清(Qclover)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly9sb25lbHlzZWMuY29tLw==" title="https://lonelysec.com/">薯片(CK)</span>
                   </li>
                 
               </ul>
