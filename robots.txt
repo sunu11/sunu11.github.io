@@ -10,5 +10,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: http://www.sunu11.com/sitemap.xml
-Sitemap: http://www.sunu11.com/baidusitemap.xml
+Sitemap: http://sunu11.com/sitemap.xml
+Sitemap: http://sunu11.com/baidusitemap.xml
