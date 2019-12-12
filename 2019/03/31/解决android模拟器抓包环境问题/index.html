@@ -122,23 +122,23 @@
 
 
 
-  <meta name="description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分">
+  <meta name="description" content="前言无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的暴露面都是不可忽视的一部分">
 <meta name="keywords" content="app攻防">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决android模拟器抓包环境问题">
 <meta property="og:url" content="http://sunu11.com/2019/03/31/解决android模拟器抓包环境问题/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分">
+<meta property="og:description" content="前言无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的暴露面都是不可忽视的一部分">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/android-1.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/android-2_cert_ok.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/android-3_result_ok.png">
 <meta property="og:image" content="https://n-b.oss-cn-beijing.aliyuncs.com/android-5.png">
 <meta property="og:image" content="https://n-b.oss-cn-beijing.aliyuncs.com/android-6.png">
-<meta property="og:updated_time" content="2019-12-12T10:08:51.585Z">
+<meta property="og:updated_time" content="2019-12-12T10:18:35.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决android模拟器抓包环境问题">
-<meta name="twitter:description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分">
+<meta name="twitter:description" content="前言无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的暴露面都是不可忽视的一部分">
 <meta name="twitter:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/android-1.png">
 
 
@@ -501,7 +501,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-12-12 18:08:51" itemprop="dateModified" datetime="2019-12-12T18:08:51+08:00">2019-12-12</time>
+                <time title="Modified: 2019-12-12 18:18:35" itemprop="dateModified" datetime="2019-12-12T18:18:35+08:00">2019-12-12</time>
               
             
           </span>
@@ -553,10 +553,10 @@
       
 
       
-        <p><strong>无论</strong>是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分<a id="more"></a>。这里就涉及到一个很关键的模块，如何抓到app客户端与服务端的交互数据包。从防御方法上来讲，我所了解到的主要有以下几个情况：</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>无论</strong>是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的暴露面都是不可忽视的一部分<a id="more"></a>。这里就涉及到一个很关键的模块，如何抓到app客户端与服务端的交互数据包。从防御方法上来讲，我所了解到的主要有以下几个情况：</p>
 <p>1、远古时期，无ssl证书，明文传输数据。<br>2、采用ssl证书加密，但未使用做ssl Pining技术<br>3、采用ssl证书加密，但使用了ssl pining技术。<br>4、双向加密</p>
 <p>而对于上述几种情况的抓包，第一种，几乎遇不到了，忽略2333.<br>第二种则需要根据android版本以及app的版本号来确定抓包方法，在这贴一下android版本中微信信任证书的情况作为示例：<br>安卓系统 7.0 以下版本，都会信任系统提供的证书<br>安卓系统 7.0 以上版本，微信 7.0 以下版本，微信会信任系统提供的证书<br>安卓系统 7.0 以上版本，微信 7.0 以上版本，微信只信任它自己配置的证书列表</p>
-<p>下面就简单记录一下抓取app数据包的过程。<br>个人比较喜欢使用burpsuite，因此做了以下尝试：</p>
+<h2 id="经历与经验"><a href="#经历与经验" class="headerlink" title="经历与经验"></a>经历与经验</h2><p>下面就简单记录一下抓取app数据包的过程。<br>个人比较喜欢使用burpsuite，因此做了以下尝试：</p>
 <h3 id="方案1"><a href="#方案1" class="headerlink" title="方案1:"></a>方案1:</h3><p>1、下载网易mumu模拟器并安装。<br>地址：<span class="exturl" data-url="aHR0cDovL2ExMS5nZGwubmV0ZWFzZS5jb20vbmVtdS0yLjAuMjMtMTEwMTE1MzMxNS5leGU=" title="http://a11.gdl.netease.com/nemu-2.0.23-1101153315.exe">http://a11.gdl.netease.com/nemu-2.0.23-1101153315.exe<i class="fa fa-external-link"></i></span><br>模拟器2:腾讯网游助手（该模拟器微信不会被检测，但mac下经测试，某些app存在秒退现象）：<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9zeXpzLnFxLmNvbS8=" title="https://syzs.qq.com/">https://syzs.qq.com/<i class="fa fa-external-link"></i></span></p>
 <p>2、将burp证书用openssl将DER转换为PEM，然后输出subject_hash_old值并重命名该文件：命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">▶ openssl x509 -inform DER -in /Users/sunu11/Downloads/cacert.der  -out cacert.pem</span><br><span class="line">▶ openssl x509 -inform PEM -subject_hash_old -in cacert.pem|head -1</span><br><span class="line">get hash</span><br><span class="line">mv cacert.pem &lt;hash&gt;.0</span><br></pre></td></tr></table></figure></p>
 <p>3、下载adb <span class="exturl" data-url="aHR0cDovL2FkYnNoZWxsLmNvbS9kb3dubG9hZHM=" title="http://adbshell.com/downloads">http://adbshell.com/downloads<i class="fa fa-external-link"></i></span> ，连接模拟器，将证书传入系统证书文件夹下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">adb devices</span><br><span class="line">adb connect 127.0.0.1:6555</span><br><span class="line">adb root</span><br><span class="line">adb remount //重新挂载为可写</span><br><span class="line">adb push 9a5ba575.0 /sdcard/</span><br><span class="line"></span><br><span class="line">adb connect 127.0.0.1:7555</span><br><span class="line">adb shell</span><br><span class="line">cat /sdcard/9a5ba575.0 &gt; /system/etc/security/cacerts/9a5ba575.0 //此处由于网易mumu共享文件夹中文编码在cmd中显示存在问题，无法直接mv</span><br><span class="line"></span><br><span class="line">chmod 644 /system/etc/security/cacerts/9a5ba575.0 //修改权限为644</span><br></pre></td></tr></table></figure></p>
@@ -568,8 +568,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">刷机必须解锁，也就是说能够进入bl界面，像华为这种，无法解锁的目前我也不知道怎么刷机。</span><br><span class="line">下载镜像包后解压到platform-tools目录。</span><br><span class="line">adb reboot bootloader</span><br><span class="line">进入镜像包解压目录。</span><br><span class="line">./flash-all.sh</span><br><span class="line">到这里基本上重启系统就更替完成了，但是由于我们想获取root权限，就需要安装一些其他软件，比如magisk、superSu等。这就需要用到下一步：。</span><br><span class="line">重启刷入twrp(有些情况img与zip都需要刷入，twrp是第三方recovery环境，可以刷任意系统扩展包）</span><br><span class="line">下载地址(能用最新的就用，老的也有可能有bug)：</span><br><span class="line">https://dl.twrp.me/sailfish/</span><br><span class="line">adb reboot bootloader</span><br><span class="line">fastboot boot twrp-3.3</span><br><span class="line">为了避免其他bug，先重启一波再进入rec</span><br><span class="line">然后安装magisk（获取root权限）</span><br><span class="line">https://github.com/topjohnwu/Magisk/releases/download/v20.1/Magisk-v20.1.zip</span><br><span class="line">在安装好之后，重启进入系统。</span><br><span class="line">magisk工具也有一个插件MagiskTrustUserCerts，这个装上之后，也能抓取某些app没有使用ssl Pining技术的数据包。</span><br><span class="line">然后再安装xp框架。</span><br><span class="line">这里两种方式：</span><br><span class="line">1、在coolapk.com安装xposed installer，安装好apk后，进入软件。用梯子直接下载。</span><br><span class="line">2、在下面链接下载xposed进入rec刷入系统：</span><br><span class="line">https://dl-xda.xposed.info/framework/sdk27/arm64/xposed-v90-sdk27-arm64-beta3.zip</span><br></pre></td></tr></table></figure>
 <p>我自己先尝试的pxeil手机，在最后用coolapk安装xposed由于没有vpn，安装没成功，但是学弟翻墙后一键安装成功了：如图：<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/android-5.png" alt="图5"><br>然后我尝试进rec刷，一直爆错，因此更换成nexus5了。但是查资料有发现V2EX上有网上也有一种报错的解决方案<span class="exturl" data-url="aHR0cHM6Ly93d3cudjJleC5jb20vdC8zOTY0NzY=" title="https://www.v2ex.com/t/396476">https://www.v2ex.com/t/396476<i class="fa fa-external-link"></i></span>。说是用Flashfire可以刷成功，但是我记得迷迷糊糊有成功过一回，但是照样抓包不完全，遂弃之～</p>
 <h3 id="方案3"><a href="#方案3" class="headerlink" title="方案3:"></a>方案3:</h3><p>对于双向证书校验一般情况抓包都会报错，原因在于服务器也会对客户端的证书进行验证，不通过则拒绝连接。因此在确定app是采用双向认证后，我们就需要获取服务端匹配的证书，用它对服务端进行匹配。<br>由于我本人没有实际对双向认证的app进行过抓包，但是通过学习安全客的这篇文章发现思路还是不难：<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuYW5xdWFua2UuY29tL3Bvc3QvaWQvMTkwMDgw" title="https://www.anquanke.com/post/id/190080">https://www.anquanke.com/post/id/190080<i class="fa fa-external-link"></i></span><br>由于app采用双向认证，那客户端肯定能找到其证书文件，在获取到证书文件后，需要找到其安装密码.<br>在这一步有可能涉及到脱壳的知识，本文不做过多描述，在脱壳后用IDA加载二进制文件，在String窗口搜索证书的相关内容，追到证书密钥即可。然后再通过密钥在本机安装好证书：<br>用burp添加客户端证书:<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/android-6.png" alt="图6"><br>然后选中该证书进行抓包即可。</p>
-<p>在尝试用pxeil去抓https的数据包，一直不想放弃，恶心了好几天。后来发现确实有可能不是操作问题后选择了换机器2333，以下是过程中的一些体会：<br>    1、其实，在过程中，有同事可以在windows系统上使用夜神抓取app的数据包，经过查看确实也是采用xp+justTrustMe模块。<br>    2、由于xp官方仅仅支持到android8.1，后续推荐使用类xp框架<span class="exturl" data-url="aHR0cHM6Ly90YWljaGkuY29vbC9SRUFETUVfQ04uaHRtbA==" title="https://taichi.cool/README_CN.html">太极<i class="fa fa-external-link"></i></span>。网上是有使用太极替代xp的例子。<br>    3、钱还是个好东西，朋友用的iphone(越狱)，直接使用charles安装证书后就顺利抓到了ios端app的数据包。</p>
-<p>其实除了上面的方法，还有其他的很多思路，下面仅作记录，方便以后查阅：<br>1、有网友提出另一种抓包方式抓取微信PC端的流量，类似内网渗透中代理内网流量，在SocksCap64中设置代理服务器为burp的地址和端口，代理方式HTTP.然后设置微信走socksCap64代理。通过burpsuite抓包即可。—这种思路某些情况下没能成功23333.</p>
+<p>在尝试用pxeil去抓https的数据包，一直不想放弃，恶心了好几天。后来发现确实有可能不是操作问题后选择了换机器2333，以下是过程中的一些体会：<br>    1、其实，在过程中，有同事可以在windows系统上使用夜神抓取app的数据包，经过查看确实也是采用xp+justTrustMe模块。<br>    2、由于xp官方仅仅支持到android8.1，后续推荐使用类xp框架<span class="exturl" data-url="aHR0cHM6Ly90YWljaGkuY29vbC9SRUFETUVfQ04uaHRtbA==" title="https://taichi.cool/README_CN.html">太极<i class="fa fa-external-link"></i></span>。网上是有使用太极替代xp的例子。当然有有xp支持android9，不过需要安装魔图，而我第一次购买的二手机则是用的这种姿势，貌似那个验证码是tx的，抓包就卡在获取验证码处，因此放弃高版本android型号。<br>    3、钱还是个好东西，朋友用的iphone(越狱)，直接使用charles安装证书后就顺利抓到了ios端app的数据包。</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>其实除了上面的方法，还有其他的很多思路，下面仅作记录，方便以后查阅：<br>1、有网友提出另一种抓包方式抓取微信PC端的流量，类似内网渗透中代理内网流量，在SocksCap64中设置代理服务器为burp的地址和端口，代理方式HTTP.然后设置微信走socksCap64代理。通过burpsuite抓包即可。—这种思路某些情况下没能成功23333.</p>
 <p>2、将apk解包,通过控制app的证书信任机制再重打包安装进行抓包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在res/xml/network_security_config.xml中加入：</span><br><span class="line">&lt;network-security-config&gt; </span><br><span class="line">  &lt;debug-overrides&gt; </span><br><span class="line">    &lt;trust-anchors&gt; </span><br><span class="line">      &lt;!-- Trust user added CAs while debuggable only --&gt;</span><br><span class="line">      &lt;certificates src=&quot;user&quot; /&gt; </span><br><span class="line">    &lt;/trust-anchors&gt; </span><br><span class="line">  &lt;/debug-overrides&gt; </span><br><span class="line">&lt;/network-security-config&gt;</span><br></pre></td></tr></table></figure></p>
 <p>然后在app的manifest文件中引入上面的文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest ... &gt;</span><br><span class="line">    &lt;application android:networkSecurityConfig=&quot;@xml/network_security_config&quot; ... &gt;</span><br><span class="line">        ...</span><br><span class="line">    &lt;/application&gt;</span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure></p>
 <p>这里有个前提，重打包过程ok。不然坑很多。</p>
@@ -1037,7 +1037,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案1"><span class="nav-number">1.</span> <span class="nav-text">方案1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案2"><span class="nav-number">2.</span> <span class="nav-text">方案2:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案3"><span class="nav-number">3.</span> <span class="nav-text">方案3:</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#经历与经验"><span class="nav-number">2.</span> <span class="nav-text">经历与经验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案1"><span class="nav-number">2.1.</span> <span class="nav-text">方案1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案2"><span class="nav-number">2.2.</span> <span class="nav-text">方案2:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案3"><span class="nav-number">2.3.</span> <span class="nav-text">方案3:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充"><span class="nav-number">3.</span> <span class="nav-text">补充</span></a></li></ol></div>
             
 
           </div>
