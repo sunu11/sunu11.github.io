@@ -18,8 +18,8 @@
   
   <entry>
     <title>免杀</title>
-    <link href="http://sunu11.com/2019/09/05/%E5%85%8D%E6%9D%80/"/>
-    <id>http://sunu11.com/2019/09/05/免杀/</id>
+    <link href="http://sunu11.com/2019/09/05/Trojans_avoid_killing/"/>
+    <id>http://sunu11.com/2019/09/05/Trojans_avoid_killing/</id>
     <published>2019-09-05T08:10:19.000Z</published>
     <updated>2019-09-05T08:10:19.110Z</updated>
     
@@ -32,8 +32,8 @@
   
   <entry>
     <title>参考文章</title>
-    <link href="http://sunu11.com/2019/09/03/%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0/"/>
-    <id>http://sunu11.com/2019/09/03/参考文章/</id>
+    <link href="http://sunu11.com/2019/09/03/papers/"/>
+    <id>http://sunu11.com/2019/09/03/papers/</id>
     <published>2019-09-03T02:45:59.000Z</published>
     <updated>2019-09-05T08:00:42.478Z</updated>
     
@@ -52,8 +52,8 @@
   
   <entry>
     <title>windows下命令执行</title>
-    <link href="http://sunu11.com/2019/09/02/windows%E4%B8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/"/>
-    <id>http://sunu11.com/2019/09/02/windows下命令执行/</id>
+    <link href="http://sunu11.com/2019/09/02/Command%20execution%20under%20windows/"/>
+    <id>http://sunu11.com/2019/09/02/Command execution under windows/</id>
     <published>2019-09-02T08:39:12.000Z</published>
     <updated>2019-09-12T07:02:37.057Z</updated>
     
@@ -74,8 +74,8 @@
   
   <entry>
     <title>解决android模拟器抓包环境问题</title>
-    <link href="http://sunu11.com/2019/03/31/%E8%A7%A3%E5%86%B3android%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%97%AE%E9%A2%98/"/>
-    <id>http://sunu11.com/2019/03/31/解决android模拟器抓包环境问题/</id>
+    <link href="http://sunu11.com/2019/03/31/APP_capturing_packets/"/>
+    <id>http://sunu11.com/2019/03/31/APP_capturing_packets/</id>
     <published>2019-03-31T11:49:24.000Z</published>
     <updated>2019-12-12T10:18:35.410Z</updated>
     
@@ -124,8 +124,8 @@
   
   <entry>
     <title>命令执行的一些总结与tips</title>
-    <link href="http://sunu11.com/2019/01/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%80%BB%E7%BB%93%E4%B8%8Etips/"/>
-    <id>http://sunu11.com/2019/01/15/命令执行总结与tips/</id>
+    <link href="http://sunu11.com/2019/01/15/Command%20execution%20summary%20and%20tips/"/>
+    <id>http://sunu11.com/2019/01/15/Command execution summary and tips/</id>
     <published>2019-01-15T03:13:35.000Z</published>
     <updated>2019-04-29T14:24:21.570Z</updated>
     
@@ -194,8 +194,8 @@
   
   <entry>
     <title>Axis2恶意部署getshell</title>
-    <link href="http://sunu11.com/2018/11/03/Axis2%E6%81%B6%E6%84%8F%E9%83%A8%E7%BD%B2getshell/"/>
-    <id>http://sunu11.com/2018/11/03/Axis2恶意部署getshell/</id>
+    <link href="http://sunu11.com/2018/11/03/Axis2%20getshell/"/>
+    <id>http://sunu11.com/2018/11/03/Axis2 getshell/</id>
     <published>2018-11-03T13:42:06.000Z</published>
     <updated>2018-11-10T12:11:18.000Z</updated>
     
@@ -220,8 +220,8 @@
   
   <entry>
     <title>如果获取站点真实ip</title>
-    <link href="http://sunu11.com/2018/11/03/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E7%AB%99%E7%82%B9%E7%9C%9F%E5%AE%9Eip/"/>
-    <id>http://sunu11.com/2018/11/03/如何获取站点真实ip/</id>
+    <link href="http://sunu11.com/2018/11/03/How%20to%20get%20the%20real%20IP%20of%20the%20site/"/>
+    <id>http://sunu11.com/2018/11/03/How to get the real IP of the site/</id>
     <published>2018-11-03T13:16:00.000Z</published>
     <updated>2018-11-10T12:09:27.000Z</updated>
     
@@ -244,8 +244,8 @@
   
   <entry>
     <title>mysql两种经典提权方式</title>
-    <link href="http://sunu11.com/2018/11/03/%E7%BB%8F%E5%85%B8%E6%8F%90%E6%9D%83%E6%96%B9%E5%BC%8F%E8%AE%B0%E5%BD%95/"/>
-    <id>http://sunu11.com/2018/11/03/经典提权方式记录/</id>
+    <link href="http://sunu11.com/2018/11/03/Classic_elevation_of_authority_record/"/>
+    <id>http://sunu11.com/2018/11/03/Classic_elevation_of_authority_record/</id>
     <published>2018-11-03T11:47:30.000Z</published>
     <updated>2018-11-10T12:12:10.000Z</updated>
     
@@ -284,11 +284,11 @@
       <category term="WEB安全" scheme="http://sunu11.com/categories/WEB%E5%AE%89%E5%85%A8/"/>
     
     
-      <category term="baserCMS" scheme="http://sunu11.com/tags/baserCMS/"/>
-    
       <category term="漏洞披漏" scheme="http://sunu11.com/tags/%E6%BC%8F%E6%B4%9E%E6%8A%AB%E6%BC%8F/"/>
     
       <category term="代码审计" scheme="http://sunu11.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+      <category term="baserCMS" scheme="http://sunu11.com/tags/baserCMS/"/>
     
   </entry>
   
@@ -312,9 +312,9 @@
     
       <category term="漏洞披漏" scheme="http://sunu11.com/tags/%E6%BC%8F%E6%B4%9E%E6%8A%AB%E6%BC%8F/"/>
     
-      <category term="代码审计" scheme="http://sunu11.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
-    
       <category term="glxcms" scheme="http://sunu11.com/tags/glxcms/"/>
+    
+      <category term="代码审计" scheme="http://sunu11.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
   </entry>
   
