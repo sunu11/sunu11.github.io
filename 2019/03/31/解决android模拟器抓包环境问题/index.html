@@ -122,23 +122,23 @@
 
 
 
-  <meta name="description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分–。这里就涉及到一个很关键的模块，如何抓到app客户端与服务端的交互数据包。从防御方法上来讲，我所了解到的主要有以下几个情况： 1、远古时期，无ssl证书，明文传输数据。2、采用ssl证书加密，但未使用做ssl Pining技术3、采用ssl证书加密，但使用了ssl pining技术。4、双向加密 而对于上述几">
+  <meta name="description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分">
 <meta name="keywords" content="app攻防">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决android模拟器抓包环境问题">
 <meta property="og:url" content="http://sunu11.com/2019/03/31/解决android模拟器抓包环境问题/index.html">
 <meta property="og:site_name" content="SuNu11&#39;Blog">
-<meta property="og:description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分–。这里就涉及到一个很关键的模块，如何抓到app客户端与服务端的交互数据包。从防御方法上来讲，我所了解到的主要有以下几个情况： 1、远古时期，无ssl证书，明文传输数据。2、采用ssl证书加密，但未使用做ssl Pining技术3、采用ssl证书加密，但使用了ssl pining技术。4、双向加密 而对于上述几">
+<meta property="og:description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/android-1.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/android-2_cert_ok.png">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/android-3_result_ok.png">
 <meta property="og:image" content="https://n-b.oss-cn-beijing.aliyuncs.com/android-5.png">
 <meta property="og:image" content="https://n-b.oss-cn-beijing.aliyuncs.com/android-6.png">
-<meta property="og:updated_time" content="2019-12-12T10:04:27.333Z">
+<meta property="og:updated_time" content="2019-12-12T10:08:51.585Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决android模拟器抓包环境问题">
-<meta name="twitter:description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分–。这里就涉及到一个很关键的模块，如何抓到app客户端与服务端的交互数据包。从防御方法上来讲，我所了解到的主要有以下几个情况： 1、远古时期，无ssl证书，明文传输数据。2、采用ssl证书加密，但未使用做ssl Pining技术3、采用ssl证书加密，但使用了ssl pining技术。4、双向加密 而对于上述几">
+<meta name="twitter:description" content="无论是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分">
 <meta name="twitter:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/android-1.png">
 
 
@@ -501,7 +501,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-12-12 18:04:27" itemprop="dateModified" datetime="2019-12-12T18:04:27+08:00">2019-12-12</time>
+                <time title="Modified: 2019-12-12 18:08:51" itemprop="dateModified" datetime="2019-12-12T18:08:51+08:00">2019-12-12</time>
               
             
           </span>
@@ -553,12 +553,12 @@
       
 
       
-        <p><strong>无论</strong>是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分<br>–<br>。这里就涉及到一个很关键的模块，如何抓到app客户端与服务端的交互数据包。从防御方法上来讲，我所了解到的主要有以下几个情况：</p>
+        <p><strong>无论</strong>是日常渗透测试还是在做红蓝对抗，或者甲方自查风险，手机端的包露面都是不可忽视的一部分<a id="more"></a>。这里就涉及到一个很关键的模块，如何抓到app客户端与服务端的交互数据包。从防御方法上来讲，我所了解到的主要有以下几个情况：</p>
 <p>1、远古时期，无ssl证书，明文传输数据。<br>2、采用ssl证书加密，但未使用做ssl Pining技术<br>3、采用ssl证书加密，但使用了ssl pining技术。<br>4、双向加密</p>
 <p>而对于上述几种情况的抓包，第一种，几乎遇不到了，忽略2333.<br>第二种则需要根据android版本以及app的版本号来确定抓包方法，在这贴一下android版本中微信信任证书的情况作为示例：<br>安卓系统 7.0 以下版本，都会信任系统提供的证书<br>安卓系统 7.0 以上版本，微信 7.0 以下版本，微信会信任系统提供的证书<br>安卓系统 7.0 以上版本，微信 7.0 以上版本，微信只信任它自己配置的证书列表</p>
 <p>下面就简单记录一下抓取app数据包的过程。<br>个人比较喜欢使用burpsuite，因此做了以下尝试：</p>
 <h3 id="方案1"><a href="#方案1" class="headerlink" title="方案1:"></a>方案1:</h3><p>1、下载网易mumu模拟器并安装。<br>地址：<span class="exturl" data-url="aHR0cDovL2ExMS5nZGwubmV0ZWFzZS5jb20vbmVtdS0yLjAuMjMtMTEwMTE1MzMxNS5leGU=" title="http://a11.gdl.netease.com/nemu-2.0.23-1101153315.exe">http://a11.gdl.netease.com/nemu-2.0.23-1101153315.exe<i class="fa fa-external-link"></i></span><br>模拟器2:腾讯网游助手（该模拟器微信不会被检测，但mac下经测试，某些app存在秒退现象）：<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9zeXpzLnFxLmNvbS8=" title="https://syzs.qq.com/">https://syzs.qq.com/<i class="fa fa-external-link"></i></span></p>
-<p>2、将burp证书用openssl将DER转换为PEM，<a id="more"></a>然后输出subject_hash_old值并重命名该文件：命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">▶ openssl x509 -inform DER -in /Users/sunu11/Downloads/cacert.der  -out cacert.pem</span><br><span class="line">▶ openssl x509 -inform PEM -subject_hash_old -in cacert.pem|head -1</span><br><span class="line">get hash</span><br><span class="line">mv cacert.pem &lt;hash&gt;.0</span><br></pre></td></tr></table></figure></p>
+<p>2、将burp证书用openssl将DER转换为PEM，然后输出subject_hash_old值并重命名该文件：命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">▶ openssl x509 -inform DER -in /Users/sunu11/Downloads/cacert.der  -out cacert.pem</span><br><span class="line">▶ openssl x509 -inform PEM -subject_hash_old -in cacert.pem|head -1</span><br><span class="line">get hash</span><br><span class="line">mv cacert.pem &lt;hash&gt;.0</span><br></pre></td></tr></table></figure></p>
 <p>3、下载adb <span class="exturl" data-url="aHR0cDovL2FkYnNoZWxsLmNvbS9kb3dubG9hZHM=" title="http://adbshell.com/downloads">http://adbshell.com/downloads<i class="fa fa-external-link"></i></span> ，连接模拟器，将证书传入系统证书文件夹下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">adb devices</span><br><span class="line">adb connect 127.0.0.1:6555</span><br><span class="line">adb root</span><br><span class="line">adb remount //重新挂载为可写</span><br><span class="line">adb push 9a5ba575.0 /sdcard/</span><br><span class="line"></span><br><span class="line">adb connect 127.0.0.1:7555</span><br><span class="line">adb shell</span><br><span class="line">cat /sdcard/9a5ba575.0 &gt; /system/etc/security/cacerts/9a5ba575.0 //此处由于网易mumu共享文件夹中文编码在cmd中显示存在问题，无法直接mv</span><br><span class="line"></span><br><span class="line">chmod 644 /system/etc/security/cacerts/9a5ba575.0 //修改权限为644</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/android-1.png" alt="图1"><br>然后重启模拟器，在受信任的凭据处即可看到burp的证书已经添加至系统证书下：<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/android-2_cert_ok.png" alt="图2"></p>
 <p>4、挂代理，抓包即可，基本上微信公众号，app、浏览器等数据包都可监听。<br><img src="http://n-b.oss-cn-beijing.aliyuncs.com/android-3_result_ok.png" alt="图3"></p>
