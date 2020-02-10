@@ -434,6 +434,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sunu11.com/2020/01/07/AMQ-7370/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SuNu11">
+      <meta itemprop="description" content="淡泊以明志，宁静以致远">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SuNu11'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/01/07/AMQ-7370/" class="post-title-link" itemprop="url">Apache ActiveMQ Log4j远程代码执行漏洞复现学习</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-01-07 22:30:30" itemprop="dateCreated datePublished" datetime="2020-01-07T22:30:30+08:00">2020-01-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-02-10 11:27:08" itemprop="dateModified" datetime="2020-02-10T11:27:08+08:00">2020-02-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前几天log4j1.2.17版本以下爆出存在对socket传入的序列化数据直接反序列化，从而对如果引入了存在漏洞的jar包就能进行rce攻击。刚好看到AMQ 5.15.10 / 5.15.11爆出Log4j存在远程代码执行漏洞，因此学习一波。</p>
+<h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>首先下载受影响AMQ版本：<br><span class="exturl" data-url="aHR0cDovL2FjdGl2ZW1xLmFwYWNoZS5vcmcvYWN0aXZlbXEtNTE1MTEtcmVsZWFzZQ==" title="http://activemq.apache.org/activemq-51511-release">http://activemq.apache.org/activemq-51511-release<i class="fa fa-external-link"></i></span><br>这里有个小坑，我下载后运行activemq由于系统升级了macOS Catalina 出现下图报错：<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/AMQ-7370-1.png" alt="AMQ-7370-1"><br>经过查找解决方式，发现网上也木有，但是可以直接通过brew install activemq 下载activemq-5.15.10版本。且可以运行：<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/AMQ-7370-2.png" alt="AMQ-7370-2"></p>
+<p>然后使用ysoserial生成恶意序列化数据通过nc发送给61616端口即可看到dnslog信息：</p>
+<p>修复：</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+      <div>
+    
+      </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://sunu11.com/2019/12/26/log4j小于1.2.17 Deserialization vulnerability/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1708,7 +1887,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-02-10 11:23:19" itemprop="dateModified" datetime="2020-02-10T11:23:19+08:00">2020-02-10</time>
+                <time title="Modified: 2020-02-10 11:26:12" itemprop="dateModified" datetime="2020-02-10T11:26:12+08:00">2020-02-10</time>
               
             
           </span>
@@ -1995,188 +2174,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://sunu11.com/2018/11/28/ohters/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="SuNu11">
-      <meta itemprop="description" content="淡泊以明志，宁静以致远">
-      <meta itemprop="image" content="/images/me.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SuNu11'Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/11/28/ohters/" class="post-title-link" itemprop="url">其他分享的一些东西</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-11-28 13:32:38" itemprop="dateCreated datePublished" datetime="2018-11-28T13:32:38+08:00">2018-11-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-01-15 17:52:09" itemprop="dateModified" datetime="2019-01-15T17:52:09+08:00">2019-01-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/other/" itemprop="url" rel="index"><span itemprop="name">other</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>记录一下，方便以后查询。
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/11/28/ohters/" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-      <div>
-    
-      </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2225,7 +2222,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
