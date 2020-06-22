@@ -103,7 +103,7 @@
   <entry>
     <title><![CDATA[其他分享的一些东西]]></title>
     <url>%2F2018%2F11%2F28%2Fohters%2F</url>
-    <content type="text"><![CDATA[记录一下，方便以后查询。 代码审计ucms1.4.5后台sql注入漏洞 https://www.t00ls.net/thread-48432-1-1.htmlDedeCMS V5.7 SP2前台文件上传(需要后台权限CVE-2018-20129)复现分析 https://www.t00ls.net/thread-49086-1-1.html CTFH1 CTF Writeup(简单翻译）https://www.t00ls.net/thread-48659-1-1.html网鼎杯部分题writeup https://topsec.wiki/36t9aJda/?thread-495.htmEDU-CTF2018_Web:TwoFile https://www.t00ls.net/thread-49523-1-1.html learning papers常见未授权访问漏洞总结(小维)：https://xz.aliyun.com/t/6103]]></content>
+    <content type="text"><![CDATA[记录一下，方便以后查询。 代码审计ucms1.4.5后台sql注入漏洞 https://www.t00ls.net/thread-48432-1-1.htmlDedeCMS V5.7 SP2前台文件上传(需要后台权限CVE-2018-20129)复现分析 https://www.t00ls.net/thread-49086-1-1.html CTFH1 CTF Writeup(简单翻译）https://www.t00ls.net/thread-48659-1-1.html网鼎杯部分题writeup https://topsec.wiki/36t9aJda/?thread-495.htmEDU-CTF2018_Web:TwoFile https://www.t00ls.net/thread-49523-1-1.html learning papers常见未授权访问漏洞总结(小维)：https://xz.aliyun.com/t/6103Spring Boot漏洞:https://www.chabug.org/web/1795.htmlhttps://github.com/LandGrey/SpringBootVulExploit]]></content>
       <categories>
         <category>other</category>
       </categories>
